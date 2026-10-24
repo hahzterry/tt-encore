@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -53,15 +53,15 @@
     <div class="splash-inner">
       <h1>ENCORE</h1>
       <div class="tag">⚡ LIVE-NATIVE V2G ENGINE</div>
-      <div class="sub">v0.6 · iso voxel · 30 秒一局</div>
+      <div class="sub">v0.6 · iso voxel · 30s rounds</div>
 
       <div class="template-card gta" data-game="gta">
         <div class="ico-box">GTA</div>
         <div class="t-copy">
           <div class="t-kicker">STREET HEIST</div>
           <div class="t-name">GTA HEIST RUN</div>
-          <div class="t-desc">5 车道抢店 · 警车追逐 · 氮气冲刺</div>
-          <div class="t-feel">抢完跑路 · 警灯追逐 · 30s win</div>
+          <div class="t-desc">5-lane store robbery · Police chase · Nitro boost</div>
+          <div class="t-feel">Rob and run · Sirens chase · 30s win</div>
         </div>
       </div>
 
@@ -70,8 +70,8 @@
         <div class="t-copy">
           <div class="t-kicker">TOYBOX OBBY</div>
           <div class="t-name">ROBLOX CHAOS OBBY</div>
-          <div class="t-desc">横版跑酷 · 二段跳跃 · 混沌事件预警</div>
-          <div class="t-feel">看预警起跳 · 存档点救命 · 30s clear</div>
+          <div class="t-desc">Side-scrolling parkour · Double jump · Chaos event warnings</div>
+          <div class="t-feel">Jump on warnings · Checkpoints save you · 30s clear</div>
         </div>
       </div>
 
@@ -80,8 +80,8 @@
         <div class="t-copy">
           <div class="t-kicker">FINAL CIRCLE</div>
           <div class="t-name">FREE FIRE FINAL CIRCLE</div>
-          <div class="t-desc">决赛圈 · Gloo 墙 · 翻滚闪避 · BOOYAH</div>
-          <div class="t-feel">进圈拉枪 · Gloo 墙反打 · BOOYAH</div>
+          <div class="t-desc">Final circle · Gloo walls · Roll dodge · BOOYAH</div>
+          <div class="t-feel">Enter circle and shoot · Gloo wall counterplay · BOOYAH</div>
         </div>
       </div>
 
@@ -673,7 +673,7 @@
   };
 
   // iOS/Safari start AudioContext suspended — MUST resume() on a user gesture
-  // or NOTHING plays (this was the "没有声音" root cause). Call on first touch.
+  // or NOTHING plays (this was the "no audio" root cause). Call on first touch.
   let _audioResumed = false;
   function resumeAudio() {
     if (_audioResumed) return;
@@ -939,7 +939,7 @@
       e.preventDefault(); e.stopPropagation();
       skillHeld[k] = true; el.classList.add('held'); skillPressT[k] = performance.now();
       // [A] GTA nitro: fire on PRESS (onActionDown) so it triggers instantly even
-      // while the left thumb holds the steering joystick (user: "摇杆和加速不能同时触发").
+      // while the left thumb holds the steering joystick (user: "joystick and nitro can't fire simultaneously").
       // Games without onActionDown keep the release-timed onAction path (Roblox jump).
       if (k === 'q' && window.current && current.onActionDown) { current.onActionDown(); el._firedDown = true; }
       else if (!usesAction()) trySkillPress(k);
@@ -3068,34 +3068,34 @@
                   navigator.maxTouchPoints > 0 ||
                   matchMedia('(pointer: coarse)').matches;
 
-  // ONE plain-language sentence (做什么 + 目标), gettable in ~3s — these games are
+  // ONE plain-language sentence (what to do + goal), readable in ~3s — these games are
   // basic and viewers already know GTA/Roblox/FF, so a list of rows just makes them
   // swipe away. `goal` = the big one-liner; `ctrl` = one tiny control hint.
   const HOW_TO_PLAY = {
     fps: {
-      title: '掩体射击',
-      goal: '瞄准开枪,清光所有敌人就赢',
-      ctrl: isTouch ? '左手拖着走躲掩体 · 右手拖屏自动开枪' : 'WASD 走位躲掩体 · 鼠标瞄准自动开火',
+      title: 'Cover Shooter',
+      goal: 'Aim and shoot, clear all enemies to win',
+      ctrl: isTouch ? 'Left thumb drag to move/hide · Right thumb drag screen to auto-fire' : 'WASD to move/hide · Mouse to aim and auto-fire',
     },
     moba: {
-      title: '抢大龙',
-      goal: '走位放招,推掉大龙就赢',
-      ctrl: isTouch ? '左手走位打钱 · Q/W 按住瞄、松手放招' : 'WASD 走位 · Q/W 按住瞄、松手放招',
+      title: 'Steal Dragon',
+      goal: 'Position and cast skills, take down the dragon to win',
+      ctrl: isTouch ? 'Left thumb move/farm · Hold Q/W to aim, release to cast' : 'WASD to move · Hold Q/W to aim, release to cast',
     },
     br: {
-      title: 'Free Fire 决赛圈',
-      goal: '活到最后一个 = 吃鸡 BOOYAH',
-      ctrl: isTouch ? '左手跑位 · 右手开枪 · E 放墙挡子弹' : 'WASD 跑位 · 右键/空格开枪 · E 放墙',
+      title: 'Free Fire Final Circle',
+      goal: 'Survive to be the last one = BOOYAH',
+      ctrl: isTouch ? 'Left thumb run · Right thumb shoot · E to deploy wall' : 'WASD to run · Right-click/Space to shoot · E for wall',
     },
     roblox: {
-      title: 'Roblox 闯关',
-      goal: '跳到最右边的终点旗就通关',
-      ctrl: isTouch ? '左手拖着走 · 点右边跳(空中再点跳更远)' : '← → 走 · 空格跳(空中再按跳更远)',
+      title: 'Roblox Obby',
+      goal: 'Jump to the finish flag on the far right to clear',
+      ctrl: isTouch ? 'Left thumb drag to move · Tap right to jump (tap again mid-air to go further)' : '← → to move · Space to jump (press again mid-air to go further)',
     },
     gta: {
-      title: '开车抢钱',
-      goal: '开车抢光所有店,别被警察抓',
-      ctrl: isTouch ? '左手开车 · 冲进发光的店自动打劫' : 'A/D 开车 · 冲进发光的店自动打劫',
+      title: 'Drive and Rob',
+      goal: 'Drive to rob all stores, don\'t get caught by the police',
+      ctrl: isTouch ? 'Left thumb drive · Rush into glowing stores to auto-rob' : 'A/D to drive · Rush into glowing stores to auto-rob',
     },
   };
 
@@ -3205,14 +3205,14 @@
     document.getElementById('splash').classList.remove('on');
     document.getElementById('end').classList.remove('on');
     // How-to shows ONLY the first time you play each game this session. Replays
-    // (重玩) and gift re-launches skip it — by then you know the rules; popping it
+    // (replay) and gift re-launches skip it — by then you know the rules; popping it
     // every time just gets in the way. Tracked per-game so a DIFFERENT game still
     // teaches its own controls.
     if (!howToSeen(key)) { markHowToSeen(key); showTutorial(key); }
     else { tutorialActive = false; showBanner('GO!', '#25F4EE', 0.7); }
   }
 
-  // Per-game "已经看过教程" flag. sessionStorage so it survives replays AND the
+  // Per-game "already seen tutorial" flag. sessionStorage so it survives replays AND the
   // gift re-launch (fresh iframe, same origin/session); falls back to an in-memory
   // map if storage is unavailable (some embedded contexts throw).
   const _seenHowtoMem = {};
@@ -3244,7 +3244,7 @@
       if (state.bots && state.bots.length > desired) {
         state.bots.length = desired;
       }
-      // BR: keep the lobby count in sync with the ACTUAL bots so 清场 = 吃鸡 works
+      // BR: keep the lobby count in sync with the ACTUAL bots so clearing the map = BOOYAH works
       // regardless of the configured enemy_count (startPlayers was baked at init to
       // 10; trimming bots without this left the win needing eliminations that can
       // never happen).

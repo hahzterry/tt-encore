@@ -5,7 +5,7 @@ Batch-generate 42 Encore hackathon sprite raw PNGs via Google AI Studio (Nano Ba
 Setup (one-time):
     pip3 install --user --break-system-packages google-genai
     # get free API key: https://aistudio.google.com/apikey
-    export GEMINI_API_KEY=your_key_here
+    export GEMINI_API_KEY=
 
 Run:
     cd ~/Documents/encore-hackathon/prototype/assets

@@ -86,7 +86,7 @@
         <rect x="10" y="20" width="6" height="6" fill="#a08a4a"/>
         <circle cx="58" cy="55" r="2" fill="#26d36a"/>
       </svg>
-      <div class="label">CẢNH BÁO</div>
+      <div class="label">WARNING</div>
     </div>
 
     <div class="stream-compass" data-show-in="fps">
@@ -96,7 +96,7 @@
 
     <div class="stream-weapon" data-show-in="fps">
       <div class="ammo">8<span class="of">/167</span></div>
-      <div class="reload">Thay đạn</div>
+      <div class="reload">Reload</div>
       <div class="row"><div>61</div><div>0%</div><div>∞</div></div>
     </div>
 
@@ -134,7 +134,7 @@
     <div class="host-pill">
       <div class="avatar"><span class="initial" id="host-initial">T</span><span class="live-dot"></span></div>
       <div class="meta">
-        <div class="name" id="host-name">TK Sói</div>
+        <div class="name" id="host-name">Wizard of Hahz</div>
         <div class="hearts"><span id="host-likes">118.1K</span> likes</div>
       </div>
       <button id="follow-btn" class="follow">+ Follow</button>
@@ -228,7 +228,7 @@
         <div class="badge">✦</div>
         <div class="text">
           <div class="name">Encore</div>
-          <div class="sub">AI · forked from TK Sói</div>
+          <div class="sub">AI · forked from Wizard of Hahz</div>
         </div>
       </div>
       <div class="right">
@@ -289,7 +289,7 @@
           </div>
           <div class="sheet-result-rank-meta">
             <div class="row"><span class="k">Score</span><span class="v"><span id="result-score">0</span>/<span id="result-max">0</span></span></div>
-            <div class="row"><span class="k">Host</span><span class="v">TK Sói <span id="host-score">0</span>/<span id="host-max">0</span></span></div>
+            <div class="row"><span class="k">Host</span><span class="v">Wizard of Hahz <span id="host-score">0</span>/<span id="host-max">0</span></span></div>
           </div>
         </div>
 
@@ -309,7 +309,7 @@
             <div class="sheet-result-clip-half host">
               <canvas class="sheet-result-clip-video" id="result-clip-host-canvas"></canvas>
               <div class="sheet-result-clip-tag tl">⏵ LIVE</div>
-              <div class="sheet-result-clip-tag tr">@TK_Soi</div>
+              <div class="sheet-result-clip-tag tr">@TK_Wolf</div>
               <div class="sheet-result-clip-caption" id="result-clip-host-caption">1v3 retake</div>
             </div>
             <!-- middle divider: ⚡ ENCORE -->
@@ -349,7 +349,7 @@
         <!-- WINNER ONLY: caption (AI-generated, editable) -->
         <div class="sheet-result-caption-wrap" id="result-caption-wrap">
           <div class="sheet-result-section-label">Caption <button class="sheet-result-caption-edit" id="result-caption-edit">edit</button></div>
-          <div class="sheet-result-caption" id="result-caption-text">Played @TK_Soi's 1v3 clutch in CS — ranked #2 🎮 ▶ Play CS → #Encore #CSgaming</div>
+          <div class="sheet-result-caption" id="result-caption-text">Played @TK_Wolf's 1v3 clutch in CS — ranked #2 🎮 ▶ Play CS → #Encore #CSgaming</div>
         </div>
 
         <!-- WINNER ONLY: publish bar — user-initiated, NOT auto. -->
@@ -427,7 +427,7 @@
           <button class="back" id="ranking-back" aria-label="back">‹</button>
           <div class="titles">
             <div class="h">Encore Ranking</div>
-            <div class="s" id="ranking-sub">Aim · from TK Sói's highlight</div>
+            <div class="s" id="ranking-sub">Aim · from Wizard of Hahz's highlight</div>
           </div>
           <div class="badge">Live · 472 plays</div>
         </div>
@@ -567,7 +567,7 @@
     const viewers = qp.get('viewers');
     if (host) {
       // v0.9 TikTok-fidelity: also set the avatar initial letter so each
-      // host pill reads as their own person (TK Sói→T, RoadKing88→R,
+      // host pill reads as their own person (Wizard of Hahz→T, RoadKing88→R,
       // PixelMax→P). Color theming for the avatar gradient is delegated
       // to a data-mode-* attribute below.
       const n = document.getElementById('host-name');
@@ -599,547 +599,4 @@
   })();
 
   // liveCanvasRAF is declared before any call to startLiveCanvasScene to avoid a
-  // TDZ ReferenceError on first paint. The canvas is the always-drawing fallback;
-  // real footage (below) layers on top when available.
-  const liveCanvas = document.getElementById('live-canvas');
-  let liveCanvasRAF = null;
-  const MODE_VIDEO = {
-    br: '../../reference/videos/FF.mp4',
-    gta: '../../reference/videos/GTA.mp4',
-    roblox: '../../reference/videos/roblox.mp4',
-  };
-  const vidKey = (currentMode === 'fps') ? 'br' : currentMode;
-  const modeVid = MODE_VIDEO[vidKey];
-
-  function showCanvas() {
-    dom.video.classList.remove('on');   // back to opacity:0 (CSS handles fade-out)
-    dom.video.style.display = 'none';
-    liveCanvas.style.display = '';
-    if (!liveCanvasRAF) startLiveCanvasScene(currentMode);
-  }
-
-  function showVideo(url) {
-    if (liveCanvasRAF) { cancelAnimationFrame(liveCanvasRAF); liveCanvasRAF = null; }
-    liveCanvas.style.display = 'none';
-    dom.video.style.display = '';
-    dom.video.setAttribute('src', url);
-    dom.video.load();
-    // PR #43 CSS gives <video> default opacity:0 + transitions to opacity:1
-    // only when class "on" is present. Without this line the video plays
-    // invisibly underneath (display:block but opacity:0) — the bug PM saw.
-    const reveal = () => dom.video.classList.add('on');
-    dom.video.addEventListener('playing', reveal, { once: true });
-    // Try immediate play. If browser allows (Chrome/Safari w/ muted+playsinline),
-    // the playing event fires → reveal. Otherwise fall back to WeChat path below.
-    const tryPlay = () => dom.video.play().then(reveal).catch(() => {
-      // WeChat / QQ in-app browser: autoplay blocked even with muted+playsinline.
-      // Strategy:
-      //   1. Reveal anyway so the first decoded frame (from preload=metadata)
-      //      is visible — a still frame is way better than a black box.
-      //   2. Bind a one-shot global gesture (any tap inside the iframe) that
-      //      retries play(); WeChat then permits it.
-      //   3. Hook WeixinJSBridgeReady — if the bridge fires before any tap,
-      //      autoplay is also unlocked at that point on iOS WeChat 8.0+.
-      reveal();
-      const gestureRetry = () => {
-        dom.video.play().catch(() => { /* still blocked — user can tap again */ });
-        document.removeEventListener('touchend', gestureRetry, true);
-        document.removeEventListener('click', gestureRetry, true);
-      };
-      document.addEventListener('touchend', gestureRetry, { capture: true, once: true });
-      document.addEventListener('click', gestureRetry, { capture: true, once: true });
-    });
-    tryPlay();
-    // WeChat-specific: WeixinJSBridge fires after the in-app browser inits,
-    // and at that point muted-autoplay is allowed even without user gesture.
-    // No-op outside WeChat. Listen as both event + 'ready' bridge call.
-    if (typeof WeixinJSBridge !== 'undefined') {
-      try { WeixinJSBridge.invoke('getNetworkType', {}, () => tryPlay()); } catch (_) {}
-    } else {
-      document.addEventListener('WeixinJSBridgeReady', tryPlay, { once: true });
-    }
-  }
-
-  if (modeVid) {
-    fetch(modeVid, { method: 'HEAD' }).then(res => {
-      if (res.ok) {
-        if (liveCanvasRAF) { cancelAnimationFrame(liveCanvasRAF); liveCanvasRAF = null; }
-        showVideo(modeVid);
-      } else {
-        showCanvas();
-      }
-    }).catch(() => {
-      showCanvas();
-    });
-  } else {
-    showCanvas();
-  }
-
-  // Show only the HUD blocks matching this mode (relevant only on the canvas
-  // fallback; hidden below once real footage plays).
-  document.querySelectorAll('#stream-bg [data-show-in]').forEach(el => {
-    const modes = el.dataset.showIn.split(/\s+/);
-    el.style.display = modes.includes(currentMode) ? '' : 'none';
-  });
-
-  // (Real game-stream footage for the LIVE background is handled by the
-  // MODE_VIDEO / showVideo() block above — zihui's #37, GitHub-hosted clips.)
-
-  // Vision detection cache — observer-client populates this when a real
-  // V2G highlight is detected. encore-sheet calls pickConfig() to decide
-  // which Mario template to launch; if no cached detection is available
-  // we now FORCE a template match with the current LIVE game-mode (v2 — was random).
-  let cachedDetection = null;
-  function setEncoreDetection(config, notify = true) {
-    if (!config) {
-      cachedDetection = null;
-      return;
-    }
-    const prev = cachedDetection;
-    cachedDetection = config;
-    if (notify) {
-      const sameTemplate = prev && prev.template === config.template && prev.theme === config.theme;
-      if (!sameTemplate) {
-        LiveRoom.pushAck('AI Encore ready');
-      }
-    }
-  }
-  const pickConfig = () => {
-    if (cachedDetection) {
-      const c = cachedDetection;
-      cachedDetection = null;
-      return c;
-    }
-    // Genre-match: LIVE 在播什么 → Encore 也开什么
-    return buildConfigForTemplate(TEMPLATE_FOR_MODE[currentMode]);
-  };
-
-  // Build a V2GResponse config for a specific template
-  // (mirrors encore-sheet.js makeRandomConfig logic but with template forced)
-  function buildConfigForTemplate(template) {
-    const THEMES = {
-      fps:    ['desert', 'snow', 'cyber',  'jungle'],
-      moba:   ['grass',  'lava', 'ice',    'twilight'],
-      br:     ['forest', 'desert', 'island','wasteland'],
-      roblox: ['grass',  'snow', 'lava',   'space'],
-      gta:    ['night',  'rain', 'sunset', 'snownight'],
-    };
-    const DESC = {
-      fps: '1vN clutch', moba: 'dragon pit fight', br: 'free fire final circle',
-      roblox: 'platform parkour', gta: 'shop heist run',
-    };
-    const themes = THEMES[template] || THEMES.br;
-    const theme = themes[Math.floor(Math.random() * themes.length)];
-    let scenario;
-    if (template === 'roblox') {
-      scenario = { platform_count: 18, gap_range_min: 80, gap_range_max: 220,
-                   seed: Math.floor(Math.random()*100000), description: DESC[template] };
-    } else if (template === 'gta') {
-      scenario = { shop_count: 4, cop_spawn_rate: 0.2, map_size: 1500, description: DESC[template] };
-    } else if (template === 'br') {
-      // Free Fire is a 10-player lobby — 9 bots, NOT the 2-4 legacy-FPS count
-      // (that trimmed the lobby to 2 and made 清场吃鸡 impossible).
-      scenario = { enemy_count: 9, hp_start: 100,
-                   weapon: ['pistol','smg','rifle','sniper'][Math.floor(Math.random()*4)],
-                   description: DESC[template] };
-    } else {
-      const weapons = ['pistol','smg','rifle','sniper'];
-      scenario = { enemy_count: 2 + Math.floor(Math.random()*3),
-                   hp_start: [60,80,100][Math.floor(Math.random()*3)],
-                   description: DESC[template] };
-      if (template === 'fps') scenario.weapon = weapons[Math.floor(Math.random()*4)];
-    }
-    return {
-      highlight: true, confidence: 1.0, template, theme, scenario,
-      _meta: { tokens_in: 0, tokens_out: 0, model: 'live-mode-match' }
-    };
-  }
-
-  // ── Canvas2D LIVE scene renderers (procedural placeholder until real
-  //    game footage is sourced for all 3 modes). Each scene runs at 60fps
-  //    via requestAnimationFrame, designed to fill #live-canvas.
-  //    Note: liveCanvasRAF is declared earlier (above the call to
-  //    startLiveCanvasScene) to avoid a TDZ ReferenceError.
-  function startLiveCanvasScene(mode) {
-    if (liveCanvasRAF) cancelAnimationFrame(liveCanvasRAF);
-    const cv = liveCanvas;
-    const fit = () => {
-      const r = cv.getBoundingClientRect();
-      if (r.width === 0) return false;
-      cv.width  = Math.round(r.width);
-      cv.height = Math.round(r.height);
-      return true;
-    };
-    if (!fit()) { requestAnimationFrame(() => startLiveCanvasScene(mode)); return; }
-    const ctx = cv.getContext('2d');
-    if (!ctx) { requestAnimationFrame(() => startLiveCanvasScene(mode)); return; }  // ctx loss — retry rather than throw + kill the loop
-    const start = performance.now();
-    const draw = (now) => {
-      const t = now - start;
-      if (mode === 'fps')    drawFpsScene(ctx, cv.width, cv.height, t);
-      if (mode === 'gta')    drawGtaScene(ctx, cv.width, cv.height, t);
-      if (mode === 'roblox') drawRobloxScene(ctx, cv.width, cv.height, t);
-      liveCanvasRAF = requestAnimationFrame(draw);
-    };
-    liveCanvasRAF = requestAnimationFrame(draw);
-  }
-
-  // FPS mode: third-person wasteland scene — dusk sky + ruined skyline +
-  // dune ground + pixel soldier (back view, rifle) + crosshair +
-  // intermittent muzzle flash + distant enemy silhouette + drifting dust.
-  function drawFpsScene(ctx, w, h, t) {
-    // Dusk sky gradient
-    const sky = ctx.createLinearGradient(0, 0, 0, h * 0.6);
-    sky.addColorStop(0,   '#1a1410');
-    sky.addColorStop(0.5, '#7a3a1c');
-    sky.addColorStop(1,   '#d97a2b');
-    ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, w, h * 0.6);
-    // Sun haze
-    const sun = ctx.createRadialGradient(w * 0.7, h * 0.5, 0, w * 0.7, h * 0.5, w * 0.45);
-    sun.addColorStop(0, 'rgba(255,200,120,0.45)');
-    sun.addColorStop(1, 'rgba(255,200,120,0)');
-    ctx.fillStyle = sun;
-    ctx.fillRect(0, 0, w, h);
-    // Distant ruined skyline
-    const horizonY = h * 0.55;
-    ctx.fillStyle = '#1c0e08';
-    const ruins = [60, 110, 40, 130, 70, 90, 50, 120, 80, 100];
-    for (let i = 0; i < ruins.length; i++) {
-      const bx = i * (w / ruins.length);
-      const bh = ruins[i] * 0.55;
-      // Jagged top
-      ctx.fillRect(bx, horizonY - bh, w / ruins.length - 4, bh);
-      // Notch out a "broken" gap
-      if (i % 2 === 0) {
-        ctx.fillStyle = 'rgba(122,58,28,0.6)';
-        ctx.fillRect(bx + 6, horizonY - bh + 6, 4, 12);
-        ctx.fillStyle = '#1c0e08';
-      }
-    }
-    // Wasteland ground (sandy → dark)
-    const ground = ctx.createLinearGradient(0, horizonY, 0, h);
-    ground.addColorStop(0,   '#7a5230');
-    ground.addColorStop(0.5, '#4f3520');
-    ground.addColorStop(1,   '#2c1d12');
-    ctx.fillStyle = ground;
-    ctx.fillRect(0, horizonY, w, h - horizonY);
-    // Dune ripples (scrolling slowly toward player)
-    const dy = (t * 0.04) % 24;
-    ctx.fillStyle = 'rgba(255,200,120,0.08)';
-    for (let i = 0; i < 12; i++) {
-      const y = horizonY + 16 + i * 24 + dy;
-      if (y < h) ctx.fillRect(0, y, w, 2);
-    }
-    // Distant enemy silhouette (walks left ↔ right)
-    const enX = w * 0.5 + Math.sin(t * 0.0007) * (w * 0.25);
-    const enY = horizonY + 18;
-    ctx.fillStyle = '#0a0604';
-    ctx.fillRect(enX - 3, enY - 14, 6, 10);   // body
-    ctx.fillRect(enX - 2, enY - 18, 4, 4);    // head
-    ctx.fillRect(enX - 3, enY - 4,  2, 5);    // leg L
-    ctx.fillRect(enX + 1, enY - 4,  2, 5);    // leg R
-    // Pixel soldier (back view, lower-center)
-    const sx = w * 0.5;
-    const sy = h * 0.78;
-    // Shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.45)';
-    ctx.fillRect(sx - 18, sy + 26, 36, 5);
-    // Backpack
-    ctx.fillStyle = '#3a2818';
-    ctx.fillRect(sx - 10, sy - 18, 20, 22);
-    // Helmet
-    ctx.fillStyle = '#4a4032';
-    ctx.fillRect(sx - 9, sy - 30, 18, 8);
-    ctx.fillRect(sx - 10, sy - 25, 20, 3);   // strap
-    // Shoulders / arms
-    ctx.fillStyle = '#5a4a32';
-    ctx.fillRect(sx - 14, sy - 16, 4, 18);
-    ctx.fillRect(sx + 10, sy - 16, 4, 18);
-    // Rifle (extending forward + slightly right)
-    ctx.fillStyle = '#1c1410';
-    ctx.fillRect(sx + 8, sy - 10, 28, 3);
-    ctx.fillRect(sx + 30, sy - 12, 6, 7);    // muzzle block
-    // Legs / boots
-    ctx.fillStyle = '#3c2e1c';
-    ctx.fillRect(sx - 8, sy + 4, 6, 22);
-    ctx.fillRect(sx + 2, sy + 4, 6, 22);
-    ctx.fillStyle = '#1a120a';
-    ctx.fillRect(sx - 9, sy + 24, 8, 3);
-    ctx.fillRect(sx + 1, sy + 24, 8, 3);
-    // Muzzle flash (intermittent — ~3 per second)
-    const flashPhase = (t % 320);
-    if (flashPhase < 60) {
-      const fa = 1 - (flashPhase / 60);
-      ctx.fillStyle = `rgba(255,220,120,${0.9 * fa})`;
-      ctx.beginPath();
-      ctx.moveTo(sx + 36, sy - 8);
-      ctx.lineTo(sx + 50, sy - 12);
-      ctx.lineTo(sx + 46, sy - 8);
-      ctx.lineTo(sx + 50, sy - 4);
-      ctx.closePath();
-      ctx.fill();
-      // Flash glow on scene
-      ctx.fillStyle = `rgba(255,200,80,${0.15 * fa})`;
-      ctx.fillRect(0, 0, w, h);
-    }
-    // Crosshair (center-screen, dim)
-    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
-    ctx.lineWidth = 1;
-    const cx = w * 0.5, cy = h * 0.45;
-    ctx.beginPath();
-    ctx.moveTo(cx - 8, cy); ctx.lineTo(cx - 2, cy);
-    ctx.moveTo(cx + 2, cy); ctx.lineTo(cx + 8, cy);
-    ctx.moveTo(cx, cy - 8); ctx.lineTo(cx, cy - 2);
-    ctx.moveTo(cx, cy + 2); ctx.lineTo(cx, cy + 8);
-    ctx.stroke();
-    // Drifting dust particles
-    ctx.fillStyle = 'rgba(255,220,160,0.4)';
-    for (let i = 0; i < 14; i++) {
-      const px = ((i * 73 + t * 0.05) % w);
-      const py = horizonY + ((i * 37 + t * 0.08) % (h - horizonY));
-      ctx.fillRect(px, py, 2, 2);
-    }
-  }
-
-  // GTA mode: top-down city night scene with cars + neon
-  function drawGtaScene(ctx, w, h, t) {
-    // Asphalt + sky
-    const sky = ctx.createLinearGradient(0, 0, 0, h);
-    sky.addColorStop(0,    '#1a0e1f');
-    sky.addColorStop(0.4,  '#2c1840');
-    sky.addColorStop(1,    '#0a060f');
-    ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, w, h);
-    // Distant city skyline
-    const horizonY = h * 0.45;
-    ctx.fillStyle = '#0e0820';
-    for (let i = 0; i < 10; i++) {
-      const bx = i * (w/10);
-      const bh = 30 + Math.sin(i * 1.3) * 20;
-      ctx.fillRect(bx, horizonY - bh, w/10 - 2, bh);
-      // Lit windows
-      ctx.fillStyle = (i % 2 === 0) ? '#ffd23f' : '#25F4EE';
-      for (let y = horizonY - bh + 4; y < horizonY - 4; y += 6) {
-        if ((y + i) % 12 < 4) ctx.fillRect(bx + 2, y, 2, 2);
-      }
-      ctx.fillStyle = '#0e0820';
-    }
-    // Road
-    const roadTop = h * 0.55;
-    ctx.fillStyle = '#1a1820';
-    ctx.fillRect(0, roadTop, w, h - roadTop);
-    // Lane stripes scrolling
-    const stripeSpeed = (t * 0.4) % 60;
-    ctx.fillStyle = '#ffd23f';
-    for (let i = -1; i < 10; i++) {
-      const y = roadTop + 20 + i * 60 + stripeSpeed;
-      if (y > roadTop && y < h - 10) ctx.fillRect(w/2 - 3, y, 6, 24);
-    }
-    // Cars passing (2 lanes)
-    const carY1 = roadTop + 80 + Math.sin(t * 0.001) * 30;
-    const carY2 = roadTop + 180 + Math.cos(t * 0.0008) * 30;
-    drawPixelCar(ctx, w * 0.3, carY1, '#FE2C55');
-    drawPixelCar(ctx, w * 0.65, carY2, '#25F4EE');
-    // Player car (center)
-    drawPixelCar(ctx, w * 0.48, h * 0.78, '#ffd23f', true);
-    // Neon glow overlay
-    const glow = ctx.createRadialGradient(w/2, h*0.8, 0, w/2, h*0.8, w*0.4);
-    glow.addColorStop(0, 'rgba(255,210,63,0.12)');
-    glow.addColorStop(1, 'rgba(255,210,63,0)');
-    ctx.fillStyle = glow;
-    ctx.fillRect(0, 0, w, h);
-    // Police flash (intermittent)
-    if ((t % 2000) < 200) {
-      ctx.fillStyle = 'rgba(254,44,85,0.25)';
-      ctx.fillRect(0, 0, w, h);
-    } else if ((t % 2000) > 1000 && (t % 2000) < 1200) {
-      ctx.fillStyle = 'rgba(37,244,238,0.25)';
-      ctx.fillRect(0, 0, w, h);
-    }
-  }
-  function drawPixelCar(ctx, x, y, color, isPlayer) {
-    const w = isPlayer ? 24 : 18;
-    const h = isPlayer ? 36 : 28;
-    // Shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.fillRect(x - w/2 + 2, y - h/2 + 4, w, h);
-    // Body
-    ctx.fillStyle = color;
-    ctx.fillRect(x - w/2, y - h/2, w, h);
-    // Roof
-    ctx.fillStyle = 'rgba(0,0,0,0.3)';
-    ctx.fillRect(x - w/2 + 3, y - h/4, w - 6, h/2);
-    // Headlights
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(x - w/2 + 2, y - h/2 + 1, 3, 2);
-    ctx.fillRect(x + w/2 - 5, y - h/2 + 1, 3, 2);
-  }
-
-  // Roblox mode: side-view chunky pixel platforms + jumping character
-  function drawRobloxScene(ctx, w, h, t) {
-    // Sky gradient (blue → pink, Roblox feel)
-    const sky = ctx.createLinearGradient(0, 0, 0, h);
-    sky.addColorStop(0, '#5cb3ff');
-    sky.addColorStop(0.5, '#ffb3d9');
-    sky.addColorStop(1, '#7ed957');
-    ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, w, h);
-    // Clouds (parallax)
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    for (let i = 0; i < 4; i++) {
-      const cx = ((t * 0.03 + i * 200) % (w + 100)) - 50;
-      const cy = 40 + (i % 2) * 30;
-      ctx.fillRect(cx, cy, 50, 16);
-      ctx.fillRect(cx + 10, cy - 8, 30, 8);
-    }
-    // Platforms scrolling left → right
-    const scrollX = (t * 0.08) % 150;
-    const platforms = [
-      { x: 100, y: h * 0.85, w: 80, c: '#8b4513' },
-      { x: 250, y: h * 0.72, w: 70, c: '#228b22' },
-      { x: 400, y: h * 0.82, w: 90, c: '#8b4513' },
-      { x: 550, y: h * 0.65, w: 70, c: '#228b22' },
-      { x: 700, y: h * 0.80, w: 80, c: '#8b4513' },
-    ];
-    platforms.forEach(p => {
-      const x = (p.x - scrollX);
-      const adjX = x < -100 ? x + 750 : x;
-      // Block
-      ctx.fillStyle = p.c;
-      ctx.fillRect(adjX, p.y, p.w, 30);
-      // Top grass/edge
-      ctx.fillStyle = p.c === '#228b22' ? '#4caf50' : '#a0522d';
-      ctx.fillRect(adjX, p.y, p.w, 4);
-    });
-    // Pixel character (Roblox blocky)
-    const charY = h * 0.6 + Math.sin(t * 0.004) * 30; // bouncing
-    const charX = w * 0.4;
-    // Body (blocky)
-    ctx.fillStyle = '#ff6b35';  // orange shirt
-    ctx.fillRect(charX - 8, charY - 4, 16, 16);
-    // Head
-    ctx.fillStyle = '#ffd9a5';
-    ctx.fillRect(charX - 7, charY - 18, 14, 14);
-    // Eyes
-    ctx.fillStyle = '#000';
-    ctx.fillRect(charX - 4, charY - 13, 2, 2);
-    ctx.fillRect(charX + 2, charY - 13, 2, 2);
-    // Legs
-    ctx.fillStyle = '#1565c0';  // blue pants
-    ctx.fillRect(charX - 6, charY + 12, 5, 10);
-    ctx.fillRect(charX + 1, charY + 12, 5, 10);
-    // Trail particles
-    ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    for (let i = 1; i < 5; i++) {
-      ctx.fillRect(charX - 8 - i * 4, charY + 20, 3, 3);
-    }
-    // Checkpoint flag in distance
-    const flagX = w * 0.85 - (scrollX * 0.3) % 100 + 50;
-    ctx.fillStyle = '#888';
-    ctx.fillRect(flagX, h * 0.55, 2, 60);
-    ctx.fillStyle = '#FE2C55';
-    ctx.beginPath();
-    ctx.moveTo(flagX, h * 0.55);
-    ctx.lineTo(flagX + 20, h * 0.6);
-    ctx.lineTo(flagX, h * 0.65);
-    ctx.fill();
-  }
-
-  // Initialize sheet first (so live-room can call into it)
-  EncoreSheet.init({
-    sheet: dom.sheet,
-    backdrop: dom.sheetBackdrop,
-    closeBtn: dom.sheetClose,
-    pickConfig,
-    onAck: (label) => LiveRoom.pushAck(label),
-  });
-
-  // Initialize live-room chrome
-  LiveRoom.init({
-    video:       dom.video,
-    shim:        dom.shim,
-    hlPopup:     dom.hl,
-    hlPlay:      dom.hlPlay,
-    hlDismiss:   dom.hlDismiss,
-    chatArea:    dom.chat,
-    encoreBtn:   dom.encoreBtn,
-    railEncore:  dom.railEncore,
-    audienceBtn: dom.audienceBtn,
-    followBtn:   dom.followBtn,
-    closeBtn:    dom.closeBtn,
-    chatInput:   dom.chatInput,
-    iconBtns:    dom.iconBtns,
-    ackLayer:    dom.ackLayer,
-    onEncoreOpen: () => EncoreSheet.open(),
-  });
-
-  // Feed mode: the autoplay shim is hidden (parent feed.html already
-  // captured the user gesture), so LiveRoom's onShimTap handler — which
-  // also seeds the chat — never fires. Dispatch the click manually now
-  // that LiveRoom.init has wired up its once-listener.
-  if (new URLSearchParams(location.search).get('feed') === '1' && dom.shim) {
-    dom.shim.dispatchEvent(new Event('click'));
-  }
-
-  // Observer (background V2G sampling)
-  if (window.ObserverClient) {
-    window.ObserverClient.start({
-      video: dom.video,
-      onHighlight: (config) => {
-        setEncoreDetection(config);
-      },
-      onStatus: (status, msg) => LiveRoom.setStatus(status, msg),
-      onCost: (cost) => LiveRoom.setCost(cost),
-    });
-  }
-
-  window.setEncoreDetection = setEncoreDetection;
-
-  // ── v0.8 URL-hash demo driver ────────────────────────────────────────
-  // Allows direct preview of the split-screen result page without playing
-  // a full game. Used for design review, judge demo backup, and screenshot
-  // generation. Strips after applying so a refresh doesn't re-trigger.
   //
-  //   streamer.html#result-winner  → Top-3 winner state (clip + caption + countdown)
-  //   streamer.html#result-lost    → Non-winner state (💎 Spotlight pay card)
-  //   streamer.html#result-gate    → Any state + Enhance gift-gate ON (host requires gift)
-  function applyHashDriver() {
-    const h = (location.hash || '').toLowerCase();
-    if (!h.startsWith('#result-')) return;
-    // Dismiss autoplay shim so the sheet is visible
-    if (dom.shim) dom.shim.style.display = 'none';
-    // Make chrome visible enough for context (without full live-room init flow)
-    if (dom.chat) dom.chat.classList.remove('hidden');
-    // Stamp result via public API
-    requestAnimationFrame(() => {
-      if (h === '#result-winner') {
-        EncoreSheet.forceResult({ won: true, score: 7, max: 8 });
-      } else if (h === '#result-lost') {
-        EncoreSheet.forceResult({ won: false, score: 4, max: 8 });
-      } else if (h === '#result-gate') {
-        EncoreSheet.forceResult({ won: false, score: 4, max: 8 });
-        const gate = document.getElementById('result-enhance-gate');
-        if (gate) gate.hidden = false;
-      }
-    });
-  }
-  // Run on initial load + on hash change (live preview iteration)
-  applyHashDriver();
-  window.addEventListener('hashchange', applyHashDriver);
-
-  // ── Export LIVE scene renderers + current mode so encore-sheet.js can
-  //    paint the matching host scene into the winner-clip composer.
-  //    (Genre-match: the clip's top half mirrors what the streamer was
-  //    actually playing when the highlight triggered.)
-  window.LiveScenes = {
-    fps:    drawFpsScene,
-    gta:    drawGtaScene,
-    roblox: drawRobloxScene,
-  };
-  window.LiveMode = currentMode;
-})();
-</script>
-
-</body>
-</html>

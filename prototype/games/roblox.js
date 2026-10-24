@@ -4,9 +4,9 @@
 //  A clean 2D side-scroller obby: you SEE the scene from the side, platforms
 //  are solid blocks, gravity pulls DOWN, you run + jump and land ON TOP of the
 //  next block — landing is unambiguous (no 2.5D guessing). The challenge + the
-//  novelty come from telegraphed CHAOS EVENTS (妖风/落雷/翻转/电话/变大变小/打滑/
-//  地震): each warns first, then hits, and is survivable through a clear operation
-//  — "不操作会死, 操作能活". Reach the flag in ~30s.
+//  novelty come from telegraphed CHAOS EVENTS (Wind/Thunder/Flip/Phone/Scale/Slip/
+//  Quake): each warns first, then hits, and is survivable through a clear operation
+//  — "Do nothing and die, do the action and survive". Reach the flag in ~30s.
 //
 //  World coords:  x = horizontal progress (→ right), y = height (↑ up).
 //  Camera scrolls horizontally to follow the player; vertical is fixed.
@@ -63,12 +63,12 @@
   const T = {
     move:   { walk: 160 },                                  // px/s horizontal (player-paced)
     jump:   { vy: 540, gravity: 1900, doubleVy: 520,                       // tap = snappy fixed jump; mid-air tap = DOUBLE JUMP
-              coyote: 0.18, buffer: 0.18,                                  // generous edge grace + pre-land buffer (kills "断触")
+              coyote: 0.18, buffer: 0.18,                                  // generous edge grace + pre-land buffer (kills "dropped input")
               stamMax: 100, stamCost: 55, stamRegen: 24 },                 // double jump regens ~every 2.3s — lifesaver, not infinite
     plat:   { count: 16, gapMin: 34, gapMax: 56, stepMax: 28, wMin: 84, wMax: 128, thick: 30 },   // easy footing — the challenge is the events, not the gaps
     cam:    { restX: 0.30, followLerp: 0.16, restY: 0.52, followLerpY: 0.12 },
     fall:   { deathY: -170 },                               // py below this = fell
-    events: { firstRollAt: 8, rollGap: [4.5, 7], lastRollT: 26.5, warnDur: 0.95 },   // 8s safe intro (small白 learn longer); stop rolling at 26.5 so no lethal snatches a 95% win
+    events: { firstRollAt: 8, rollGap: [4.5, 7], lastRollT: 26.5, warnDur: 0.95 },   // 8s safe intro (let beginners learn longer); stop rolling at 26.5 so no lethal snatches a 95% win
     juice:  { landShake: 3, hardShake: 6, landHitstop: 0.03, hardHitstop: 0.07 },
     obby:   { moveRange: 48, moveSpeed: 1.5, vanishPeriod: 2.8, bounceVy: 900, checkpointEvery: 5 },
     respawn:{ immune: 0.8 },                                  // brief post-respawn grace so you don't instantly re-die
@@ -95,17 +95,17 @@
   //   SLIP   → small careful taps, don't slide off
   // The 3 FLAVOR ones don't kill — they crank the pressure while a lethal looms.
   const EVENTS = {
-    WIND:    { dur: 2.6, color: '#7fd6ff', warn: '妖风! 顶住方向走',   label: '妖风四起!', wind: true,    lethal: true },
-    THUNDER: { dur: 0.8, color: '#ffe24a', warn: '落雷! 跳离红块',     label: '⚡落雷!',    thunder: true, lethal: true },
-    CRUSH:   { dur: 0.7, color: '#ff5a5a', warn: '落石! 左右躲开',     label: '落石砸下!', crush: true,   lethal: true },
-    LASER:   { dur: 0.7, color: '#ff3df0', warn: '激光! 起跳越过',     label: '激光横扫!', laser: true,   lethal: true },
-    SLIP:    { dur: 2.4, color: '#5ae0ff', warn: '打滑! 轻推稳住',     label: '打滑啦!',   slip: true,    lethal: true },
-    METEOR:  { dur: 0.7, color: '#ff7a3c', warn: '陨石! 踩开落点',     label: '陨石坠落!', crush: true, meteor: true, lethal: true },   // 《自然灾害生存》梗:地上落点阴影 → 踩开(复用落石机制 + 陨石皮)
-    REDLIGHT:{ dur: 1.7, color: '#ff3b3b', warn: '红灯! 松手别动',     label: '红灯 · 别动!', redlight: true, lethal: true },   // 红灯绿灯 / Squid Game 梗:亮红灯就别动,动 = 死(全新"静止"动词)
-    QUAKE:   { dur: 2.0, color: '#cc8844', warn: '地震! 站稳再跳',     label: '地震啦!',   quake: true },
-    PHONE:   { dur: 2.4, color: '#7ac8ff', warn: '来电! 点屏幕接听',   label: '妈妈来电!', phone: true },   // kid-safe / 中性:不分性别、不教挂断长辈
-    FLIP:    { dur: 2.0, color: '#b886ff', warn: '镜像! 反着走',       label: '左右颠倒!', invert: true, mirror: true },
-    VFLIP:   { dur: 1.8, color: '#86c5ff', warn: '天翻地覆! 站稳别乱跳', label: '上下颠倒!', vflip: true },   // 比左右镜像更夸张:整屏垂直翻转
+    WIND:    { dur: 2.6, color: '#7fd6ff', warn: 'WIND! Hold your direction',   label: 'Winds!', wind: true,    lethal: true },
+    THUNDER: { dur: 0.8, color: '#ffe24a', warn: 'THUNDER! Jump off the red block',     label: '⚡Thunder!',    thunder: true, lethal: true },
+    CRUSH:   { dur: 0.7, color: '#ff5a5a', warn: 'CRUSH! Dodge left or right',     label: 'Falling rocks!', crush: true,   lethal: true },
+    LASER:   { dur: 0.7, color: '#ff3df0', warn: 'LASER! Jump over it',     label: 'Laser sweep!', laser: true,   lethal: true },
+    SLIP:    { dur: 2.4, color: '#5ae0ff', warn: 'SLIP! Tap lightly to stay',     label: 'Slipping!',   slip: true,    lethal: true },
+    METEOR:  { dur: 0.7, color: '#ff7a3c', warn: 'METEOR! Step off the shadow',     label: 'Meteor strike!', crush: true, meteor: true, lethal: true },   // "Natural Disaster Survival" meme: shadow on ground → step off (reuses crush mechanic + meteor skin)
+    REDLIGHT:{ dur: 1.7, color: '#ff3b3b', warn: 'RED LIGHT! Release and freeze',     label: 'Red Light · Freeze!', redlight: true, lethal: true },   // Red Light Green Light / Squid Game meme: when red light is on, don't move. Moving = death (brand new "freeze" verb)
+    QUAKE:   { dur: 2.0, color: '#cc8844', warn: 'QUAKE! Steady before jumping',     label: 'Earthquake!',   quake: true },
+    PHONE:   { dur: 2.4, color: '#7ac8ff', warn: 'INCOMING CALL! Tap screen to answer',   label: 'Mom is calling!', phone: true },   // kid-safe / neutral: gender-neutral, doesn't teach hanging up on elders
+    FLIP:    { dur: 2.0, color: '#b886ff', warn: 'MIRROR! Walk reversed',       label: 'Left/Right flipped!', invert: true, mirror: true },
+    VFLIP:   { dur: 1.8, color: '#86c5ff', warn: 'UPSIDE DOWN! Steady, no wild jumps', label: 'Upside down!', vflip: true },   // More exaggerated than left/right mirror: whole screen flips vertically
   };
   const LETHAL = ['WIND', 'THUNDER', 'CRUSH', 'LASER', 'SLIP', 'METEOR', 'REDLIGHT'];
   const FLAVOR = ['QUAKE', 'PHONE', 'FLIP', 'VFLIP'];
@@ -114,34 +114,34 @@
   // game. None of these kill on their own — they re-flavor the whole run, fair.
   const RUNMODS = [
     { key: 'NONE',    banner: null },
-    { key: 'LOWGRAV', banner: '本局 · 月球重力', gravK: 0.6 },
-    { key: 'WINDY',   banner: '本局 · 大风天',   windConst: 1 },
-    { key: 'GIANT',   banner: '本局 · 巨人模式', scale: 1.45 },
-    { key: 'MINI',    banner: '本局 · 迷你模式', scale: 0.62 },
-    { key: 'STORM',   banner: '本局 · 混沌风暴', stormK: 0.62 },
+    { key: 'LOWGRAV', banner: 'This run · Moon Gravity', gravK: 0.6 },
+    { key: 'WINDY',   banner: 'This run · Windy Day',   windConst: 1 },
+    { key: 'GIANT',   banner: 'This run · Giant Mode', scale: 1.45 },
+    { key: 'MINI',    banner: 'This run · Mini Mode', scale: 0.62 },
+    { key: 'STORM',   banner: 'This run · Chaos Storm', stormK: 0.62 },
   ];
 
   // Per-run BACKDROPS — make every 30s LOOK different, not just play different
-  // (用户: "每局规则变了但背景都是蓝天白云"). Each special run-mod overrides the
+  // (user: "rules change every run but background is always blue sky"). Each special run-mod overrides the
   // sky + adds a weather layer; NONE keeps the theme's own sky so the 4 themes
   // still read distinctly. ALL weather renders BEHIND the platforms → it never
-  // hides an event telegraph or a hazard (公平不偷袭).
+  // hides an event telegraph or a hazard (fair, no cheap shots).
   const BACKDROPS = {
     NONE:    { weather: 'clouds' },
-    LOWGRAV: { skyTop:'#05030f', sky:'#241a4d', weather:'stars', moon:true, slab:'#6f6aa0', slabA:0.16 },   // 月球重力 → 星空/月面
-    WINDY:   { skyTop:'#e8923f', sky:'#ffd98a', weather:'leaves', cloud:'#ffe9c8', slab:'#c0884a', slabA:0.18 }, // 大风天 → 斜风线+落叶
-    GIANT:   { skyTop:'#5a1840', sky:'#ff8a5a', weather:'clouds', sun:true, cloud:'#ffd0b0', slab:'#a85a6a', slabA:0.18 }, // 巨人 → 落日
-    MINI:    { skyTop:'#aacbe6', sky:'#eef7ff', weather:'snow', cloud:'#ffffff', slab:'#bcd0e0', slabA:0.20 }, // 迷你 → 下雪
-    STORM:   { skyTop:'#161a22', sky:'#3a4250', weather:'rain', lightning:true, slab:'#566070', slabA:0.16 }, // 混沌风暴 → 压暗+雨+闪电
+    LOWGRAV: { skyTop:'#05030f', sky:'#241a4d', weather:'stars', moon:true, slab:'#6f6aa0', slabA:0.16 },   // Moon gravity → Starfield/Moonscape
+    WINDY:   { skyTop:'#e8923f', sky:'#ffd98a', weather:'leaves', cloud:'#ffe9c8', slab:'#c0884a', slabA:0.18 }, // Windy → Slanted wind lines + falling leaves
+    GIANT:   { skyTop:'#5a1840', sky:'#ff8a5a', weather:'clouds', sun:true, cloud:'#ffd0b0', slab:'#a85a6a', slabA:0.18 }, // Giant → Sunset
+    MINI:    { skyTop:'#aacbe6', sky:'#eef7ff', weather:'snow', cloud:'#ffffff', slab:'#bcd0e0', slabA:0.20 }, // Mini → Snowing
+    STORM:   { skyTop:'#161a22', sky:'#3a4250', weather:'rain', lightning:true, slab:'#566070', slabA:0.16 }, // Chaos Storm → Darkened + Rain + Lightning
   };
   function bgOf(state) { const k = state && state.runMod && state.runMod.key; return BACKDROPS[k] || BACKDROPS.NONE; }
   function wrap(v, span) { return ((v % span) + span) % span; }   // positive modulo for looping particle fields
 
-  // Escalation: a SCIENTIFIC difficulty curve tuned for a first-timer (小白/大妈).
+  // Escalation: a SCIENTIFIC difficulty curve tuned for a first-timer (beginner/non-gamer).
   // First ~7s are danger-free (learn move+jump). Events then ease in with LONG
   // warnings + big gaps + mostly-survivable, ramping to a real challenge by ~25s.
   // k goes 0 (t≈8s) → 1 (t≈28s). storm run-mod tightens the gap further.
-  // Tuned EASIER for 小白 (user: still a touch hard): longer warnings, sparser
+  // Tuned EASIER for beginners (user: still a touch hard): longer warnings, sparser
   // events, lower lethality cap, slower ramp — still a real curve, just gentler.
   function difficulty(t, runMod) {
     const k = Math.max(0, Math.min(1, (t - 8) / 20));
@@ -157,7 +157,7 @@
   // ── Palettes ── (sky / hills / block top+side / player) per theme
   const PALETTES = {
     grass: { sky:'#7ec0ff', skyTop:'#3aa1ff', hill:'#5aa53f', hill2:'#4a8c33',
-             top:'#7fe26a', side:'#43ا'.replace('ا',''), end:'#ff77aa', player:'#ffcc44', head:'#ffe6a8' },
+             top:'#7fe26a', side:'#3f9a34', end:'#ff77aa', player:'#ffcc44', head:'#ffe6a8' },
     snow:  { sky:'#cfeeff', skyTop:'#88c4ee', hill:'#a9c4d6', hill2:'#8fb0c4',
              top:'#ffffff', side:'#9fb9cc', end:'#ff99cc', player:'#ff6633', head:'#ffe6a8' },
     lava:  { sky:'#3a1410', skyTop:'#5a1414', hill:'#3a1810', hill2:'#27110a',
@@ -165,15 +165,13 @@
     space: { sky:'#0a0428', skyTop:'#1a0e44', hill:'#1a0e30', hill2:'#120a22',
              top:'#b48cff', side:'#5b3aa6', end:'#ffee44', player:'#88eeff', head:'#cfd6ff' },
   };
-  // fix the grass.side typo above with a clean value
-  PALETTES.grass.side = '#3f9a34';
 
   // THE classic Roblox "noob" — yellow head+arms, BLUE torso, GREEN legs. Kept
   // constant across themes because that exact tricolor IS the instant-recognition
   // signal (web-researched). Without it the blocky guy just reads as Mario.
   const NOOB = { skin: '#f7c93b', shirt: '#1f86e0', legs: '#4aab3e' };
   // 1/8 rare easter-egg skin: an all-gold noob (+ a tiny crown). Pure delight,
-  // zero gameplay change — the "卧槽我抽到金色!" share-bait moment.
+  // zero gameplay change — the "Wow I got the gold one!" share-bait moment.
   const GOLD_NOOB = { skin: '#ffd23c', shirt: '#f5a623', legs: '#d98a1f' };
 
   function mulberry32(seed) { let a = seed >>> 0; return function() {
@@ -189,7 +187,7 @@
   // ── Platform generator ── a chain of solid blocks with gaps + gentle height
   // steps, every gap clearable by a generous jump. Each: {x(center), y(top), w, type}.
   function generatePlatforms(scenario) {
-    const seed = (scenario.seed | 0) || ((Math.random() * 1e9) | 0);   // no host seed → a FRESH random course every play (replays vary, not 写死的同一关)
+    const seed = (scenario.seed | 0) || ((Math.random() * 1e9) | 0);   // no host seed → a FRESH random course every play (replays vary, not hardcoded the same level)
     const rand = mulberry32(seed);
     // per-round CHARACTER so consecutive 30s feel different (not just shuffled): one course leans springy / shifty / crumbly / balanced. Difficulty CURVE stays the healthy one — this only changes WHICH obstacles, not how hard.
     const FLAVORS = ['balanced', 'springy', 'shifty', 'crumbly'], flavor = FLAVORS[(rand() * FLAVORS.length) | 0];
@@ -310,7 +308,7 @@
         };
         View.camX = player.px; View.camY = player.py;
         const fit = () => { fitView(); };
-        const runMod = RUNMODS[(Math.random() * RUNMODS.length) | 0];   // 每局换规则: one modifier per spawn → each 30s feels different
+        const runMod = RUNMODS[(Math.random() * RUNMODS.length) | 0];   // Rules change every run: one modifier per spawn → each 30s feels different
         $setState({
           template: 'roblox', theme: palette, themeName, themeKey, scenario,
           platforms, player, finishX, startX: 0,
@@ -325,16 +323,16 @@
 
       // PRESS fires the jump instantly (zero release-lag); HOLD while rising keeps
       // you climbing (variable height, capped); RELEASE just ends the hold-boost.
-      // Move & jump are independent inputs now → 边走边跳 works (no drift cancel).
+      // Move & jump are independent inputs now → jump while moving works (no drift cancel).
       // Coyote (edge grace) + pre-land buffer keep it forgiving, never "push".
       onActionDown() {
         const state = $state(); if (!state || !state.player) return;
         const p = state.player;
         if (!p.alive || p.finished) return;
-        if (state.evt && state.evt.cfg && state.evt.cfg.phone) { state.evt = null; $sfx('pickup'); return; }  // 接电话: 按一下挂断
+        if (state.evt && state.evt.cfg && state.evt.cfg.phone) { state.evt = null; $sfx('pickup'); return; }  // Answer phone: tap to hang up
         const grounded = canJump(p);
         if (grounded) doJump(p);                                            // grounded (or coyote) → normal jump
-        else if (!p.airJumped && p.stamina >= T.jump.stamCost) doDoubleJump(state, p);   // mid-air → DOUBLE JUMP if 耐力够
+        else if (!p.airJumped && p.stamina >= T.jump.stamCost) doDoubleJump(state, p);   // mid-air → DOUBLE JUMP if stamina allows
         else p.jumpBuffer = T.jump.buffer;                                  // can't jump now → buffer for landing
         if (p._giftOofT > 0) {                                              // OOF spring: BIG bouncy launch + the iconic meme
           p.vy = Math.max(p.vy, T.jump.vy * 1.5);
@@ -355,8 +353,8 @@
         if (state.shakeT > 0) state.shakeT = Math.max(0, state.shakeT - dt);
         if (!state._announced && state.time > 0.35) { state._announced = true;
           if (state.runMod && state.runMod.banner) { try { if (window.showBanner) window.showBanner(state.runMod.banner, '#ffe24a', 1.8); } catch (_) {} } }
-        if (!state._climax && state.time >= 22 && p.alive && !p.finished) { state._climax = true;   // 30s arc → a clear escalating finale (上瘾峰值)
-          try { if (window.showBanner) window.showBanner('⚡ 最后冲刺!', '#ff4655', 1.6); } catch (_) {} addShake(state, 7, 0.35); }
+        if (!state._climax && state.time >= 22 && p.alive && !p.finished) { state._climax = true;   // 30s arc → a clear escalating finale (addictive peak)
+          try { if (window.showBanner) window.showBanner('⚡ Final Sprint!', '#ff4655', 1.6); } catch (_) {} addShake(state, 7, 0.35); }
 
         if (p.alive && !p.finished) {
           const t = state.time;
@@ -369,15 +367,15 @@
           const em = eventMod(state);
           const rm = state.runMod || {};
           let steerX = mvx;
-          if (em.invert) steerX = -steerX;                              // 翻转: controls mirror
+          if (em.invert) steerX = -steerX;                              // Flip: controls mirror
           const moveGate = em.freeze ? 0 : 1;
-          if (em.redlight && Math.abs(mvx) > 0.12 && p.immuneT <= 0) killPlayer(state);   // 红灯! 动 = 死(站住别动才活)
+          if (em.redlight && Math.abs(mvx) > 0.12 && p.immuneT <= 0) killPlayer(state);   // Red Light! Move = death (stand still to live)
 
           // ── horizontal move (player-paced) + slip momentum + wind push ──
           if (em.slip) { p.vx = (p.vx || 0) * 0.95 + steerX * T.move.walk * 0.06; p.px += p.vx * dt; }
           else { p.px += steerX * T.move.walk * moveGate * dt; p.vx = 0; }
-          if (em.wind) p.px += em.windDir * em.windForce * dt;          // 妖风: counter-walk or get pushed off
-          if (rm.windConst) p.px += -42 * dt;                           // 大风天 run-mod: gentle constant headwind, lean forward
+          if (em.wind) p.px += em.windDir * em.windForce * dt;          // Wind: counter-walk or get pushed off
+          if (rm.windConst) p.px += -42 * dt;                           // Windy Day run-mod: gentle constant headwind, lean forward
           if (em.quake) addShake(state, 6, 0.1);
           if (Math.abs(steerX) > 0.1) p.facing = steerX > 0 ? 1 : -1;
           if (p.onPlat) p.runPhase += Math.abs(steerX) * dt * 16;
@@ -387,7 +385,7 @@
           const gift = coil || wings || oof;
           // 3 real Roblox-obby gear feels: Gravity Coil = MOON jump (very low grav,
           // launch sky-high); Wings = floaty glide-fly; OOF Spring = bouncy.
-          // (vy>0 = rising, vy<0 = falling — never clamp the rise, that was the 便秘 bug.)
+          // (vy>0 = rising, vy<0 = falling — never clamp the rise, that was the stuck bug.)
           const gMul = coil ? 0.40 : wings ? 0.62 : oof ? 0.80 : 1;
           p.vy -= T.jump.gravity * (rm.gravK || 1) * gMul * dt;
           // Wings + OOF keep the air-jump primed → tap to FLAP/bounce and stay up.
@@ -397,7 +395,7 @@
           // Wings GLIDE: cap only the DESCENT (vy<0) so you float down gently and
           // clear gaps — the jump itself stays full-power and snappy.
           if (wings && p.vy < -150) p.vy = -150;
-          if (p.stamina < T.jump.stamMax) p.stamina = Math.min(T.jump.stamMax, p.stamina + T.jump.stamRegen * (gift ? 1.9 : 1) * dt);  // 耐力回充
+          if (p.stamina < T.jump.stamMax) p.stamina = Math.min(T.jump.stamMax, p.stamina + T.jump.stamRegen * (gift ? 1.9 : 1) * dt);  // Stamina regen
           if (p.spinT > 0) p.spinT -= dt;                                    // double-jump flip anim
           p.py += p.vy * dt;
           if (p.squashT > 0) p.squashT -= dt;
@@ -427,7 +425,7 @@
                 if (!pl.kind) {                                          // solid ground → respawn anchor
                   p.lastSafe = { x: pl.x, y: pl.y }; p.lastSafePlat = pl;
                   if (pl.checkpoint && !pl._reached) { pl._reached = true; $sfx('pickup');
-                    try { if (window.Juice) window.Juice.popup('✓ 存档', wx2sx(pl.x), wy2sy(pl.y) - 42, { color:'#5af5e0', size:14 }); } catch (_) {} }
+                    try { if (window.Juice) window.Juice.popup('✓ Saved', wx2sx(pl.x), wy2sy(pl.y) - 42, { color:'#5af5e0', size:14 }); } catch (_) {} }
                 }
                 if (wasAir) {
                   const hard = landVy < -480;
@@ -437,7 +435,7 @@
                   try { const sx = wx2sx(p.px), sy = wy2sy(pl.y);
                     if (window.Juice) { window.Juice.hitstop(hard ? T.juice.hardHitstop : T.juice.landHitstop);
                       window.Juice.burst(sx, sy, 'dust', palOf(state).top);
-                      if (p.combo >= 3) window.Juice.popup('连跳 ×' + p.combo, sx, sy - 30, { color:'#ffe24a', size:16 + Math.min(10, p.combo) });
+                      if (p.combo >= 3) window.Juice.popup('Combo ×' + p.combo, sx, sy - 30, { color:'#ffe24a', size:16 + Math.min(10, p.combo) });
                     } else if (typeof window.spawnParticles === 'function') window.spawnParticles(state.particles, p.px, p.py, palOf(state).top, 6);
                   } catch (_) {}
                   if (pl.type === 'end' && !p.finished) { p.finished = true; doFinish(true); }
@@ -454,7 +452,7 @@
 
           // GIFT FLIGHT banks progress: wings/coil/OOF sail forward WITHOUT landing, so
           // p.lastSafe never advanced and a fall dumped you back at the takeoff point
-          // (the "飞到 75% 摔下来又回到起点" bug). While a flight gift is active, advance the
+          // (the "flew to 75% then fell and went back to start" bug). While a flight gift is active, advance the
           // respawn anchor to the furthest solid ground you've sailed OVER — a fall then
           // keeps the progress you flew to. (Reaching finishX still wins outright, below.)
           if (!p.onPlat && (p._giftWingsT > 0 || p._giftCoilT > 0 || p._giftOofT > 0)) {
@@ -466,20 +464,20 @@
             if (best && best !== p.lastSafe) {
               p.lastSafe = { x: best.x, y: best.y }; p.lastSafePlat = best;
               if (best.checkpoint && !best._reached) { best._reached = true; $sfx('pickup');
-                try { if (window.Juice) window.Juice.popup('✓ 存档', wx2sx(best.x), wy2sy(best.y) - 42, { color:'#5af5e0', size:14 }); } catch (_) {} }
+                try { if (window.Juice) window.Juice.popup('✓ Saved', wx2sx(best.x), wy2sy(best.y) - 42, { color:'#5af5e0', size:14 }); } catch (_) {} }
             }
           }
 
           // Reaching the finish line counts as a WIN even mid-air — so a gift flight
           // (wings/coil/OOF) that sails OVER the obstacles to the end actually wins,
-          // instead of overshooting into the void and wasting the flight (白飞).
+          // instead of overshooting into the void and wasting the flight (flew for nothing).
           // Checked BEFORE the fall-death so flying past the last platform still wins.
           if (!p.finished && p.px >= state.finishX) { p.finished = true; doFinish(true); }
 
           // fall → respawn at last safe ground (obby checkpoint), or game over if none
           else if (p.py < T.fall.deathY) killPlayer(state);
 
-          // coins — grab them mid-jump (爽点 + reward).
+          // coins — grab them mid-jump (satisfying + reward).
           for (const pl of state.platforms) {
             if (!pl.coin || pl.coin.taken) continue;
             if (Math.abs(p.px - pl.x) < pl.w / 2 + 8 && Math.abs(p.py - (pl.y + pl.coin.dy)) < 18) {
@@ -490,13 +488,13 @@
 
           // HUD score line + keep state.kills live (so a timer-end shows the real score)
           state.kills = scoreOf(p, state);
-          try { if (window.scoreEl) window.scoreEl.textContent = '分 ' + (state.kills || 0); } catch (_) {}   // top-right = live score (clean, gives a "why")
+          try { if (window.scoreEl) window.scoreEl.textContent = 'Score ' + (state.kills || 0); } catch (_) {}   // top-right = live score (clean, gives a "why")
         }
 
         // camera follows X (rest at restX). Vertical = DEAD-ZONE follow: keep the
         // player inside a comfort band on screen — stable on small hops, but it
         // tracks them UP into the sky on big gift launches (wings/coil/OOF) so the
-        // paid effect is never lost off-screen (user: "宁可让视角跟着飞到天空").
+        // paid effect is never lost off-screen (user: "Rather let the camera follow into the sky").
         if (p.onPlat) p._groundY = p.py;
         View.camX += (p.px - View.camX) * T.cam.followLerp;
         const SC = View.SCALE, rY = View.restY;
@@ -520,8 +518,8 @@
   function palOf(state) { return state.theme || PALETTES.grass; }
 
   // GIFT sky easter eggs — fly high enough (wings/coil/OOF) and the sky turns to
-  // space, with Roblox-culture memes revealing the higher you go: MOON (嫦娥 + 玉兔 +
-  // a Transformer) → DEEP SPACE (火星 + 🚀 + 马斯克 + a 👽 UFO). Pure cosmetic, driven
+  // space, with Roblox-culture memes revealing the higher you go: MOON (Chang'e + Jade Rabbit +
+  // a Transformer) → DEEP SPACE (Mars + 🚀 + Musk + a 👽 UFO). Pure cosmetic, driven
   // by altitude above your launch platform — the payoff for the "fly to the moon"
   // moment a paid gift creates (made to be screenshot/shared). Normal jumps never
   // reach the threshold, so it only shows on a gift flight.
@@ -646,19 +644,19 @@
 
     ctx.save();
     if (state.shakeT > 0) { const m = state.shakeMag; ctx.translate((Math.random()-0.5)*m, (Math.random()-0.5)*m); }
-    if (em.mirror) { ctx.translate(W/2, 0); ctx.scale(-1, 1); ctx.translate(-W/2, 0); }   // 左右镜像 event
-    if (em.vflip) { ctx.translate(0, H/2); ctx.scale(1, -1); ctx.translate(0, -H/2); }    // 上下颠倒 event — 整屏垂直翻转(HUD 在 restore 后画,不受影响)
+    if (em.mirror) { ctx.translate(W/2, 0); ctx.scale(-1, 1); ctx.translate(-W/2, 0); }   // Left/Right mirror event
+    if (em.vflip) { ctx.translate(0, H/2); ctx.scale(1, -1); ctx.translate(0, -H/2); }    // Upside down event — whole screen flips vertically (HUD drawn after restore, unaffected)
 
     // sky — per-run backdrop overrides the theme sky so every 30s LOOKS different
     const bd = bgOf(state);
     const topC = bd.skyTop || pal.skyTop, botC = bd.sky || pal.sky, gkey = topC + botC + H;
-    if (state._skyGradKey !== gkey) {                              // cache — sky is constant within a run; don't realloc the gradient every frame (千元机 GC)
+    if (state._skyGradKey !== gkey) {                              // cache — sky is constant within a run; don't realloc the gradient every frame (cheap phone GC)
       const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, topC); g.addColorStop(1, botC);
       state._skyGrad = g; state._skyGradKey = gkey;
     }
     ctx.fillStyle = state._skyGrad; ctx.fillRect(-40, -40, W + 80, H + 80);
     drawSkyAccent(ctx, bd, state, W, H);                 // stars / moon / sun / lightning — sky-fixed, behind everything
-    drawSkyEasterEggs(ctx, state, W, H);                 // GIFT: fly high → space + Roblox memes (moon嫦娥玉兔变形金刚 / 火星马斯克外星人)
+    drawSkyEasterEggs(ctx, state, W, H);                 // GIFT: fly high → space + Roblox memes (Moon Chang'e/Rabbit/Transformer / Mars Musk/Alien)
     if (bd.weather === 'clouds') drawClouds(ctx, W, H, bd.cloud);
     drawHills(ctx, pal, W, H, bd);
     drawCloudsSprite(ctx, state, W, H);                  // Kenney parallax clouds (grass/snow themes) — additive polish over the sky
@@ -736,9 +734,9 @@
     c.restore();
   }
 
-  // Sky-fixed accents drawn BEHIND the slabs: starfield + moon (月球重力夜),
-  // low sun (巨人落日), ambient lightning veil (混沌风暴). Deterministic from
-  // state.time → no RNG, no flicker, and "不输入不动" stays true.
+  // Sky-fixed accents drawn BEHIND the slabs: starfield + moon (Lunar gravity night),
+  // low sun (Giant sunset), ambient lightning veil (Chaos Storm). Deterministic from
+  // state.time → no RNG, no flicker, and "No input = No movement" stays true.
   function drawSkyAccent(c, bd, state, W, H) {
     const t = state ? state.time : 0;
     if (bd.weather === 'stars' || bd.moon) {                       // twinkling starfield, slow parallax
@@ -759,7 +757,7 @@
       c.beginPath(); c.arc(mx - 9, my - 6, 6, 0, Math.PI * 2); c.arc(mx + 11, my + 8, 8, 0, Math.PI * 2); c.arc(mx + 3, my - 12, 4, 0, Math.PI * 2); c.fill();
       c.restore();
     }
-    if (bd.sun) {                                                  // low huge sunset disc (巨人模式)
+    if (bd.sun) {                                                  // low huge sunset disc (Giant Mode)
       const sx = W * 0.5, sy = H * 0.42, r = 56; c.save();   // lower — clear of the runmod banner at 0.30 (sits behind the player)
       const gg = c.createRadialGradient(sx, sy, 6, sx, sy, r + 40);
       gg.addColorStop(0, 'rgba(255,238,180,0.95)'); gg.addColorStop(0.5, 'rgba(255,170,90,0.5)'); gg.addColorStop(1, 'rgba(255,140,80,0)');
@@ -788,17 +786,17 @@
   }
 
   // Falling weather — drawn BEHIND the platforms so it reads as atmosphere and
-  // never covers the player, a hazard, or an event warning (公平不偷袭).
+  // never covers the player, a hazard, or an event warning (fair, no cheap shots).
   function drawWeather(c, bd, state, W, H) {
     const t = state ? state.time : 0, w = bd.weather;
-    if (w === 'rain') {                                            // 混沌风暴 — slanted downpour
+    if (w === 'rain') {                                            // Chaos Storm — slanted downpour
       c.save(); c.strokeStyle = 'rgba(180,200,230,0.5)'; c.lineWidth = 1.4;
       for (let i = 0; i < 60; i++) {
         const x = wrap(i * 53.7 + t * 40, W + 40) - 20, y = wrap(i * 89.3 + t * 900, H + 40) - 20;
         c.beginPath(); c.moveTo(x, y); c.lineTo(x - 6, y + 18); c.stroke();
       }
       c.restore();
-    } else if (w === 'snow') {                                     // 迷你模式 — gentle drifting snow
+    } else if (w === 'snow') {                                     // Mini Mode — gentle drifting snow
       c.save(); c.fillStyle = '#ffffff';
       for (let i = 0; i < 54; i++) {
         const sway = Math.sin(t * 1.3 + i) * 12;
@@ -807,7 +805,7 @@
         c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fill();
       }
       c.restore();
-    } else if (w === 'leaves') {                                   // 大风天 — diagonal wind streaks + tumbling leaves (blow LEFT, matches headwind)
+    } else if (w === 'leaves') {                                   // Windy Day — diagonal wind streaks + tumbling leaves (blow LEFT, matches headwind)
       c.save(); c.strokeStyle = 'rgba(255,240,210,0.18)'; c.lineWidth = 2;
       for (let i = 0; i < 7; i++) { const yy = wrap(i * 140 - t * 220, H + 80) - 40; c.beginPath(); c.moveTo(W + 20, yy); c.lineTo(-20, yy + 60); c.stroke(); }
       const cols = ['#e8a04a', '#d4762e', '#c4922a', '#b8602a'];
@@ -822,7 +820,7 @@
 
   // a solid 3D-ish block seen from the side: bright TOP face + darker FRONT face.
   function drawPlatform(c, pl, pal, t, isThunder) {
-    if (pl._shattered) return;                                   // 地震震碎 → block dropped (rebuilds when quake ends)
+    if (pl._shattered) return;                                   // Quake shatters → block dropped (rebuilds when quake ends)
     let jx = 0, jy = 0;
     if (pl._crackUntil != null) { const s = t * 42 + (pl.baseX || pl.x); jx = Math.sin(s) * 1.8; jy = Math.cos(s * 1.3) * 1.3; }   // shudder while cracking
     const sx = wx2sx(pl.x) + jx, topY = wy2sy(pl.y) + jy;
@@ -897,7 +895,7 @@
         const wave = Math.sin(t * 4) * 4; c.fillStyle = pal.end; c.beginPath();
         c.moveTo(sx + 2, topY - 8 - poleH); c.lineTo(sx + 30 + wave, topY - 8 - poleH + 8); c.lineTo(sx + 2, topY - 8 - poleH + 18); c.closePath(); c.fill(); }
     }
-    // 地震 — cracking shudder overlay: jagged dark fissures + a red warning tint (then it drops)
+    // Quake — cracking shudder overlay: jagged dark fissures + a red warning tint (then it drops)
     if (pl._crackUntil != null) { c.save();
       c.fillStyle = 'rgba(180,40,20,0.22)'; c.fillRect(x, topY - 8, w, thick + 20);
       c.strokeStyle = 'rgba(20,10,6,0.7)'; c.lineWidth = 1.6; c.beginPath();
@@ -929,9 +927,9 @@
   // meme, big & shareable, strong-but-timed (12-14s) + a one-time death-save, so a
   // struggling player gets a dramatic second wind without it being auto-win.
   const ROBLOX_GIFTS = {
-    wings: { ico: '🪽', name: 'Dominus 大翅膀', tone: '#b06bff', dur: 14 },   // giant glowing wings → glide/fly
-    coil:  { ico: '🌀', name: '反重力线圈',      tone: '#5fe0ff', dur: 14 },   // low-grav float (classic Gravity Coil)
-    oof:   { ico: '🚀', name: 'OOF 火箭弹簧',    tone: '#ffd24a', dur: 12 },   // mega-bounce spring + the iconic OOF
+    wings: { ico: '🪽', name: 'Dominus Wings', tone: '#b06bff', dur: 14 },   // giant glowing wings → glide/fly
+    coil:  { ico: '🌀', name: 'Gravity Coil',      tone: '#5fe0ff', dur: 14 },   // low-grav float (classic Gravity Coil)
+    oof:   { ico: '🚀', name: 'OOF Rocket',    tone: '#ffd24a', dur: 12 },   // mega-bounce spring + the iconic OOF
   };
   const ROBLOX_GIFT_KEYS = ['wings', 'coil', 'oof'];
 
@@ -1040,17 +1038,17 @@
   }
 
   // CLEAN HUD — three non-overlapping bands below the engine top bar (~0-40px):
-  // progress (y~46-59), stats row (y~80), 二段跳 meter (y~94-102). No more pile-up.
+  // progress (y~46-59), stats row (y~80), Double Jump meter (y~94-102). No more pile-up.
   function drawHud(c, p, pal, W, H) {
     const pad = 14, y = 80;                                     // below the progress bar (by=52)
     c.textAlign = 'left'; c.font = 'bold 12px monospace';
-    c.fillStyle = '#ffd633'; c.fillText('● ' + (p.coins || 0), pad, y);                 // 金币
-    c.fillStyle = '#5af5e0'; c.fillText('躲过 ' + (p.dodges || 0), pad + 54, y);          // dodges survived
-    // 二段跳 stamina on its own row — cyan when there's enough to air-jump
+    c.fillStyle = '#ffd633'; c.fillText('● ' + (p.coins || 0), pad, y);                 // Coins
+    c.fillStyle = '#5af5e0'; c.fillText('Dodged ' + (p.dodges || 0), pad + 54, y);          // dodges survived
+    // Double Jump stamina on its own row — cyan when there's enough to air-jump
     const sm = T.jump.stamMax, ready = (p.stamina || 0) >= T.jump.stamCost;
     c.font = 'bold 11px monospace'; c.fillStyle = ready ? '#9be7ff' : '#ffffff88';
-    c.fillText('二段跳', pad, y + 22);
-    const bx = pad + 50, by = y + 14, bw = 66, bh = 7;
+    c.fillText('Double Jump', pad, y + 22);
+    const bx = pad + 80, by = y + 14, bw = 66, bh = 7;
     c.fillStyle = 'rgba(0,0,0,0.5)'; c.fillRect(bx, by, bw, bh);
     c.fillStyle = ready ? '#5af5e0' : '#7a8a99'; c.fillRect(bx, by, bw * Math.max(0, Math.min(1, (p.stamina || 0) / sm)), bh);
     c.fillStyle = '#ffffff99'; c.fillRect(bx + bw * (T.jump.stamCost / sm) - 1, by - 1, 2, bh + 2);   // "enough" tick
@@ -1059,7 +1057,7 @@
     const pct = Math.max(0, Math.min(1, p.px / Math.max(1, state.finishX)));
     const bx = 14, bw = W - 28 - 18, by = 52, bh = 7;           // just under the engine top bar — no overlap
     c.font = 'bold 11px monospace'; c.textAlign = 'left'; c.fillStyle = '#ffffffdd';
-    c.fillText('到终点 ' + Math.floor(pct * 100) + '%', bx, by - 6);
+    c.fillText('To finish ' + Math.floor(pct * 100) + '%', bx, by - 6);
     c.fillStyle = 'rgba(0,0,0,0.5)'; c.fillRect(bx, by, bw, bh);
     c.fillStyle = (state.theme && state.theme.end) || '#ff77aa'; c.fillRect(bx, by, bw * pct, bh);
     const mx = bx + bw * pct; c.fillStyle = (state.theme && state.theme.player) || '#ffcc44';
@@ -1068,9 +1066,9 @@
     for (let r = 0; r < 3; r++) for (let cc = 0; cc < 3; cc++) if ((r + cc) % 2 === 0) c.fillRect(fx + cc * 4, fy + r * 4, 4, 4);
     c.strokeStyle = '#000'; c.strokeRect(fx, fy, 12, 12);
   }
-  // Beginner-first onboarding (小白/大妈 must get goal+controls in <5s). Held the
+  // Beginner-first onboarding (beginners/non-gamers must get goal+controls in <5s). Held the
   // full 7s danger-free window, then fades. GOAL stated huge + first, controls
-  // pointed where they physically are, a persistent "→ 终点" so nobody gets lost.
+  // pointed where they physically are, a persistent "→ Finish" so nobody gets lost.
   function drawStartHint(c, t, W, H) {
     if (t >= 7) return;
     const fade = t < 6 ? 1 : Math.max(0, 7 - t);
@@ -1079,17 +1077,17 @@
     // THE GOAL — huge, first, unmissable: run right to the flag = win
     c.fillStyle = 'rgba(0,0,0,0.55)'; c.fillRect(0, H * 0.15, W, 44);                 // own zone, ABOVE the 30% runmod banner — no more overlap
     c.fillStyle = '#ffe24a'; c.font = 'bold 20px monospace';
-    c.fillText('目标:跑到最右边终点旗 = 赢!', W / 2, H * 0.195);
+    c.fillText('Goal: Run to the finish flag on the right = Win!', W / 2, H * 0.195);
     // controls — pointed at where the thumbs actually go
     c.font = 'bold 16px monospace'; c.fillStyle = 'rgba(126,214,255,' + pulse.toFixed(2) + ')';
-    c.fillText('← 按住左边拖着走', W * 0.28, H * 0.66);
+    c.fillText('← Hold left side to move', W * 0.28, H * 0.66);
     c.fillStyle = 'rgba(98,241,222,' + pulse.toFixed(2) + ')';
-    c.fillText('点右边跳 →', W * 0.75, H * 0.66);
+    c.fillText('Tap right to jump →', W * 0.75, H * 0.66);
     if (t > 2.2) {                                                   // then layer in the next two ideas
       c.fillStyle = '#ffffff'; c.font = 'bold 13px monospace';
-      c.fillText('空中再点一下 = 二段跳(跳更远)', W / 2, H * 0.45);
+      c.fillText('Tap again mid-air = Double Jump (Jump further)', W / 2, H * 0.45);
       c.fillStyle = '#ffd24a';
-      c.fillText('看到 ⚠ 预警就照字躲 · 别踩红熔岩', W / 2, H * 0.49);
+      c.fillText('See ⚠ warning, dodge as it says · Don\'t step on red lava', W / 2, H * 0.49);
     }
     // persistent "this way →" toward the goal so a beginner never wonders where to go
     c.fillStyle = 'rgba(255,226,74,' + (0.45 + 0.55 * pulse).toFixed(2) + ')'; c.font = 'bold 34px monospace';
@@ -1110,7 +1108,7 @@
       const k = active ? 1 : Math.min(1, (t - crush.startedAt) / Math.max(0.1, crush.activateAt - crush.startedAt));
       c.save();
       if (isMeteor) {
-        // 陨石:地上一个落点阴影圈(预警)+ 一颗带火尾的陨石砸下来
+        // Meteor: shadow on the ground (warning) + a fire-trailed rock falling
         c.fillStyle = 'rgba(255,90,30,' + (active ? 0.40 : (0.18 + 0.22 * pul)).toFixed(2) + ')';
         c.beginPath(); c.ellipse(cx, groundSy - 2, halfW, halfW * 0.42, 0, 0, Math.PI * 2); c.fill();
         c.strokeStyle = '#ff7a3c'; c.lineWidth = 2; c.beginPath(); c.ellipse(cx, groundSy - 2, halfW, halfW * 0.42, 0, 0, Math.PI * 2); c.stroke();
@@ -1151,13 +1149,13 @@
         c.beginPath(); c.moveTo(xx, yy); c.lineTo(xx + dir * 28, yy + 11); c.lineTo(xx, yy + 22); c.closePath(); c.fill(); }
       c.globalAlpha = 0.16; c.strokeStyle = e.cfg.color; c.lineWidth = 2;
       for (let i = 0; i < 9; i++) { const yy = (i * 99 + state.time * 130) % H; c.beginPath(); c.moveTo(0, yy); c.lineTo(W, yy + dir * 26); c.stroke(); } c.restore(); }
-    if (e && e.cfg.redlight) {   // 红灯:强红色暗角 + 巨大"别动!" —— 一眼 Red-Light-Green-Light,立刻松手站住
+    if (e && e.cfg.redlight) {   // Red Light: strong red vignette + huge "FREEZE!" —— instantly Red-Light-Green-Light, release and stand still
       const pul = 0.5 + 0.5 * Math.sin(state.time * 6); c.save();
       const g = c.createRadialGradient(W / 2, H / 2, H * 0.18, W / 2, H / 2, H * 0.64);
       g.addColorStop(0, 'rgba(255,40,40,0)'); g.addColorStop(1, 'rgba(220,20,20,' + (0.34 + 0.26 * pul).toFixed(2) + ')');
       c.fillStyle = g; c.fillRect(0, 0, W, H);
-      c.fillStyle = '#fff'; c.font = 'bold 40px monospace'; c.textAlign = 'center'; c.fillText('别动!', W / 2, H * 0.30);
-      c.fillStyle = '#ffd0d0'; c.font = 'bold 15px monospace'; c.fillText('松开手 · 站住不动', W / 2, H * 0.30 + 26);
+      c.fillStyle = '#fff'; c.font = 'bold 40px monospace'; c.textAlign = 'center'; c.fillText('FREEZE!', W / 2, H * 0.30);
+      c.fillStyle = '#ffd0d0'; c.font = 'bold 15px monospace'; c.fillText('Release hand · Stand still', W / 2, H * 0.30 + 26);
       c.textAlign = 'left'; c.restore(); }
   }
   // active-event color wash + phone gag
@@ -1172,10 +1170,10 @@
     if (cfg.phone) { const pw = Math.min(220, W * 0.62), ph = pw * 1.45, px = W / 2 - pw / 2, py = H / 2 - ph / 2;
       c.fillStyle = 'rgba(0,0,0,0.82)'; c.fillRect(px, py, pw, ph); c.strokeStyle = '#7ac8ff'; c.lineWidth = 3; c.strokeRect(px, py, pw, ph);
       c.fillStyle = '#7ac8ff'; c.beginPath(); c.arc(W / 2, py + pw * 0.42, pw * 0.2, 0, Math.PI * 2); c.fill();
-      c.fillStyle = '#fff'; c.font = 'bold ' + Math.round(pw * 0.13) + 'px monospace'; c.textAlign = 'center'; c.fillText('妈妈', W / 2, py + pw * 0.78);
-      c.fillStyle = '#aaa'; c.font = Math.round(pw * 0.08) + 'px monospace'; c.fillText('正在来电…', W / 2, py + pw * 0.95);
+      c.fillStyle = '#fff'; c.font = 'bold ' + Math.round(pw * 0.13) + 'px monospace'; c.textAlign = 'center'; c.fillText('Mom', W / 2, py + pw * 0.78);
+      c.fillStyle = '#aaa'; c.font = Math.round(pw * 0.08) + 'px monospace'; c.fillText('Incoming call...', W / 2, py + pw * 0.95);
       const pulse = 0.5 + 0.5 * Math.sin(state.time * 8); c.fillStyle = 'rgba(90,230,120,' + (0.5 + 0.5 * pulse) + ')'; c.fillRect(px + pw * 0.18, py + ph - pw * 0.34, pw * 0.64, pw * 0.22);
-      c.fillStyle = '#000'; c.font = 'bold ' + Math.round(pw * 0.1) + 'px monospace'; c.fillText('☎ 点一下接听', W / 2, py + ph - pw * 0.19); c.textAlign = 'left'; }
+      c.fillStyle = '#000'; c.font = 'bold ' + Math.round(pw * 0.1) + 'px monospace'; c.fillText('☎ Tap to answer', W / 2, py + ph - pw * 0.19); c.textAlign = 'left'; }
   }
 
   // ============================================================
@@ -1188,15 +1186,15 @@
     p.stamina = Math.max(0, p.stamina - T.jump.stamCost); p.spinT = 0.42;
     $sfx('bigjump'); doubleJumpFx(state, p);
   }
-  function doubleJumpFx(state, p) {   // 周星驰"踩鸟起飞" — kick the air DOWN, launch UP
+  function doubleJumpFx(state, p) {   // Step on air to fly — kick the air DOWN, launch UP
     addShake(state, 5, 0.08);
     try { const sx = wx2sx(p.px), sy = wy2sy(p.py);
       if (window.Juice) {
         window.Juice.hitstop(0.04);                                  // micro-freeze = punch
         window.Juice.flash('#9be7ff', 75);
-        window.Juice.burst(sx, sy + 6, 'dust', '#dff6ff');           // air kicked DOWN at the feet (the "鸟")
+        window.Juice.burst(sx, sy + 6, 'dust', '#dff6ff');           // air kicked DOWN at the feet
         window.Juice.burst(sx, sy - 6, 'spark', '#9be7ff');          // launch sparks UP
-        window.Juice.popup('二段跳!', sx, sy - 54, { color: '#9be7ff', size: 22 });
+        window.Juice.popup('Double Jump!', sx, sy - 54, { color: '#9be7ff', size: 22 });
       } else if (typeof window.spawnParticles === 'function') window.spawnParticles(state.particles, p.px, p.py, '#9be7ff', 10);
     } catch (_) {}
     state.ring = { x: p.px, y: p.py, t: 0 };   // expanding shockwave ring drawn in drawScene
@@ -1208,12 +1206,12 @@
   function rewardDodge(state) {
     const p = state.player; if (!p || !p.alive) return;
     p.dodges = (p.dodges || 0) + 1;
-    const milestone = (p.dodges % 5 === 0);                      // every 5th dodge = a "卧槽" beat
+    const milestone = (p.dodges % 5 === 0);                      // every 5th dodge = a "wow" beat
     const sx = wx2sx(p.px), sy = wy2sy(p.py);
     try { if (window.Juice) {
-      if (milestone) { window.Juice.popup('连躲 ×' + p.dodges + '!', sx, sy - 50, { color: '#ffe24a', size: 26 });
+      if (milestone) { window.Juice.popup('Dodge Streak ×' + p.dodges + '!', sx, sy - 50, { color: '#ffe24a', size: 26 });
         window.Juice.hitstop(0.06); window.Juice.flash('#ffe24a', 70); window.Juice.addTrauma(0.25); }
-      else { window.Juice.popup('躲过! ×' + p.dodges, sx, sy - 48, { color: '#5af5e0', size: 15 + Math.min(11, p.dodges) }); window.Juice.flash('#5af5e0', 45); }
+      else { window.Juice.popup('Dodged! ×' + p.dodges, sx, sy - 48, { color: '#5af5e0', size: 15 + Math.min(11, p.dodges) }); window.Juice.flash('#5af5e0', 45); }
       window.Juice.burst(sx, sy - 18, 'spark', milestone ? '#ffe24a' : '#5af5e0');
     } } catch (_) {}
     $sfx(milestone ? 'cash' : 'pickup');
@@ -1243,30 +1241,30 @@
     else if (p && p.alive && (cfg.thunder || cfg.crush || cfg.laser)) rewardDodge(state);   // survived an instant-strike lethal
     addShake(state, cfg.lethal ? 11 : 6, 0.2);
     try { if (window.showBanner) window.showBanner(cfg.label, cfg.color, 1.1); } catch (_) {}
-    if (cfg.mirror) { try { if (window.Juice) { window.Juice.flash('#b886ff', 95); window.Juice.hitstop(0.05); } } catch (_) {} }   // 镜像 → punch the flip
-    if (cfg.vflip)  { try { if (window.Juice) { window.Juice.flash('#86c5ff', 110); window.Juice.hitstop(0.06); window.Juice.addTrauma(0.3); } } catch (_) {} }   // 上下颠倒 → bigger punch
-    if (cfg.quake)  { try { if (window.Juice) window.Juice.flash('#caa07a', 70); } catch (_) {} }                                    // 地震 → dusty jolt
-    if (cfg.redlight) { try { if (window.Juice) window.Juice.flash('#ff3b3b', 90); } catch (_) {} }                                  // 红灯 → red flash
+    if (cfg.mirror) { try { if (window.Juice) { window.Juice.flash('#b886ff', 95); window.Juice.hitstop(0.05); } } catch (_) {} }   // Mirror → punch the flip
+    if (cfg.vflip)  { try { if (window.Juice) { window.Juice.flash('#86c5ff', 110); window.Juice.hitstop(0.06); window.Juice.addTrauma(0.3); } } catch (_) {} }   // Upside down → bigger punch
+    if (cfg.quake)  { try { if (window.Juice) window.Juice.flash('#caa07a', 70); } catch (_) {} }                                    // Quake → dusty jolt
+    if (cfg.redlight) { try { if (window.Juice) window.Juice.flash('#ff3b3b', 90); } catch (_) {} }                                  // Red Light → red flash
     $sfx(cfg.lethal ? 'hit' : 'tower');
     try { if (p && typeof window.spawnParticles === 'function') window.spawnParticles(state.particles, p.px, p.py, cfg.color, 14); } catch (_) {}
   }
   function tickEvents(state, dt) {
     const now = state.time; const p = state.player;
-    if (state.evt && now >= state.evt.until) { const c = state.evt.cfg; state.evt = null; if (c && (c.wind || c.slip || c.redlight) && p && p.alive) rewardDodge(state); }   // rode out a duration lethal (incl. 红灯:站住到结束)
+    if (state.evt && now >= state.evt.until) { const c = state.evt.cfg; state.evt = null; if (c && (c.wind || c.slip || c.redlight) && p && p.alive) rewardDodge(state); }   // rode out a duration lethal (incl. Red Light: stand still to the end)
     if (state.evtWarn && now >= state.evtWarn.activateAt) { const w = state.evtWarn; state.evtWarn = null; triggerEvent(state, w.key); }
     const grounded = p && p.onPlat;
     if (!state.evt && !state.evtWarn && grounded && now >= (state.evtNextRoll || 0) && now > T.events.firstRollAt && now < T.events.lastRollT) {
       const D = difficulty(now, state.runMod);
       let pool = (state.evtCount > 0 && Math.random() < D.lethalBias) ? LETHAL : FLAVOR;
       if (state.evtCount === 0) pool = ['QUAKE'];                        // first-ever event = ONE gentle taste (no kill, no phone)
-      let cand = pool.filter(k => k !== state._lastEvtKey);             // never the same event twice in a row → kills the "又一遍" repeat feel
-      if (now - (state._lastPhoneT != null ? state._lastPhoneT : -99) < 12) cand = cand.filter(k => k !== 'PHONE');   // phone cooldown ≥12s → rare, no spam (治"多次打电话")
+      let cand = pool.filter(k => k !== state._lastEvtKey);             // never the same event twice in a row → kills the "again?" repeat feel
+      if (now - (state._lastPhoneT != null ? state._lastPhoneT : -99) < 12) cand = cand.filter(k => k !== 'PHONE');   // phone cooldown ≥12s → rare, no spam (cures "calling multiple times")
       if (!cand.length) cand = pool;
       const key = cand[(Math.random() * cand.length) | 0]; const cfg = EVENTS[key];
       state._lastEvtKey = key; if (key === 'PHONE') state._lastPhoneT = now;
       state.evtWarn = { key, cfg, activateAt: now + D.warnDur, startedAt: now };
       if (cfg.thunder) state.thunderTarget = p.onPlat;
-      if (cfg.crush)   state.crushX = p.px;                              // lock the impact at WARN (covers 落石 + 陨石)
+      if (cfg.crush)   state.crushX = p.px;                              // lock the impact at WARN (covers falling rocks + meteor)
       if (cfg.wind)    state._windDir = (Math.random() < 0.5 ? -1 : 1);
       addShake(state, 4, 0.12);
       try { if (window.showBanner) window.showBanner('⚠ ' + cfg.warn, cfg.color, D.warnDur); } catch (_) {}
@@ -1289,13 +1287,13 @@
   // Move / vanish the obby platforms each frame (before the landing check uses them).
   function tickPlatforms(state) {
     const t = state.time;
-    // 事件改造地形 ①: 妖风 makes the obby itself sway — moving platforms swing
+    // Event alters terrain ①: Wind makes the obby itself sway — moving platforms swing
     // wider AND narrow solid ground rocks. Ramped so it eases in/out (no snap).
     // The player rides the sway via p.onPlat._dx, so footing moves under you.
     const windy = (state.evt && state.evt.cfg && state.evt.cfg.wind) || !!(state.runMod && state.runMod.windConst);
     state._windRamp = Math.max(0, Math.min(1, (state._windRamp || 0) + (windy ? 0.06 : -0.06)));
     const wf = state._windRamp;
-    // 事件改造地形 ②: 地震 cracks eligible blocks (~0.55s shudder) then DROPS them;
+    // Event alters terrain ②: Quake cracks eligible blocks (~0.55s shudder) then DROPS them;
     // everything REBUILDS when the quake ends → the path is never lost for good
     // (start/end/checkpoint/kill/bounce/vanish + the block you're on never crack).
     const quaking = !!(state.evt && state.evt.cfg && state.evt.cfg.quake);
@@ -1319,7 +1317,7 @@
     }
     for (const pl of state.platforms) {
       if (pl.move) {
-        const off = Math.sin(t * pl.move.speed + pl.move.phase) * pl.move.range * (1 + 0.6 * wf);   // 妖风 → wider swing
+        const off = Math.sin(t * pl.move.speed + pl.move.phase) * pl.move.range * (1 + 0.6 * wf);   // Wind → wider swing
         if (pl.move.axis === 'x') { const nx = pl.baseX + off; pl._dx = nx - pl.x; pl.x = nx; }
         else { pl.y = pl.baseY + off; pl._dx = 0; }
       } else if (pl.baseX != null && pl.type !== 'start' && pl.type !== 'end' && pl.w < 300) {
@@ -1347,7 +1345,7 @@
       } else {
         p.vy = Math.max(p.vy, T.jump.doubleVy * 0.72);
       }
-      try { if (window.Juice) { window.Juice.flash('#ff5a7a', 100); window.Juice.popup('护盾救命!', wx2sx(p.px), wy2sy(p.py) - 34, { color: '#ffe24a', size: 20 }); } } catch (_) {}
+      try { if (window.Juice) { window.Juice.flash('#ff5a7a', 100); window.Juice.popup('Shield Saved!', wx2sx(p.px), wy2sy(p.py) - 34, { color: '#ffe24a', size: 20 }); } } catch (_) {}
       $sfx('pickup');
       return;
     }
@@ -1359,7 +1357,7 @@
       p.px = p.lastSafe.x; p.py = p.lastSafe.y; p.vy = 0; p.vx = 0; p.airJumped = false; p.stamina = T.jump.stamMax;
       p.onPlat = (p.lastSafePlat && !p.lastSafePlat._gone) ? p.lastSafePlat : null;
       p.coyote = T.jump.coyote; p.immuneT = T.respawn.immune;
-      try { if (window.Juice) window.Juice.popup('摔了!', wx2sx(p.px), wy2sy(p.py) - 34, { color: '#ff6b6b', size: 16 }); } catch (_) {}
+      try { if (window.Juice) window.Juice.popup('Fell!', wx2sx(p.px), wy2sy(p.py) - 34, { color: '#ff6b6b', size: 16 }); } catch (_) {}
     } else { p.alive = false; doFinish(false); }
   }
 
@@ -1369,12 +1367,12 @@
       const score = scoreOf(p, state);
       let best = 0; try { best = parseInt(localStorage.getItem('roblox_best') || '0', 10) || 0; } catch (_) {}
       const isRecord = score > best; if (isRecord) { try { localStorage.setItem('roblox_best', String(score)); } catch (_) {} }
-      const dodgePart = '躲过 ' + (p.dodges || 0) + ' 次';
-      let sub = won ? ('通关! ' + dodgePart) : (pct >= 0.3 ? (dodgePart + ' · ' + Math.floor(pct * 100) + '%') : dodgePart);
-      sub += isRecord ? ' · 新纪录!' : (' · 最佳 ' + Math.max(best, score));   // beat-your-best → 再来一局
+      const dodgePart = 'Dodged ' + (p.dodges || 0) + ' times';
+      let sub = won ? ('Cleared! ' + dodgePart) : (pct >= 0.3 ? (dodgePart + ' · ' + Math.floor(pct * 100) + '%') : dodgePart);
+      sub += isRecord ? ' · New Record!' : (' · Best ' + Math.max(best, score));   // beat-your-best → play again
       state.kills = score;
-      try { if (window.Juice && won) { window.Juice.confetti($W()); window.Juice.popup('🎉 通关!', $W()/2, $H()*0.4, { color:'#ffe24a', size:28, dur:1.4 }); window.Juice.hitstop(0.1); }
-            if (window.Juice && isRecord) window.Juice.popup('新纪录!', $W()/2, $H()*0.46, { color:'#5af5e0', size:22, dur:1.2 }); } catch (_) {}
+      try { if (window.Juice && won) { window.Juice.confetti($W()); window.Juice.popup('🎉 Cleared!', $W()/2, $H()*0.4, { color:'#ffe24a', size:28, dur:1.4 }); window.Juice.hitstop(0.1); }
+            if (window.Juice && isRecord) window.Juice.popup('New Record!', $W()/2, $H()*0.46, { color:'#5af5e0', size:22, dur:1.2 }); } catch (_) {}
       $finish(won, sub);
     } catch (_) {}
   }

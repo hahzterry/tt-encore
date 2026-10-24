@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -503,7 +503,7 @@
   <div class="container">
     <span class="hero-badge">TIKTOK · GAMING · HACKATHON</span>
     <h1 class="hero-title"><span class="bolt">⚡</span>ENCORE</h1>
-    <div class="hero-cn">安 可</div>
+    <div class="hero-cn">ENCORE</div>
     <div class="hero-tagline">LIVE-NATIVE V2G ENGINE</div>
     <div class="hero-stamp">v0.6 · 2026 · INTERNAL PREVIEW</div>
   </div>
@@ -513,19 +513,19 @@
 <section id="problem">
   <div class="container">
     <h2>1 · THE PROBLEM</h2>
-    <div class="h2-sub">游戏 LIVE 的观众,<span class="accent">是被动消费的。</span></div>
-    <p style="color:#aaa;max-width:760px;">主播打出 ace、抢龙、决赛圈最后一击 —— 观众只能看,然后刷条弹幕。
-高光发生的那 5 秒,观众的注意力是峰值的,但他们没有任何动作可以"参与"。
-礼物是单向的,弹幕是文字的,看完就走。<strong style="color:#fff">观众的高光时刻情绪没被接住,转化成关注和回访的概率被白白浪费。</strong></p>
+    <div class="h2-sub">Viewers of Game LIVE, <span class="accent">are passive consumers.</span></div>
+    <p style="color:#aaa;max-width:760px;">Streamers get an ace, steal a dragon, or make the final circle kill—viewers can only watch, then send a chat message.
+For those 5 seconds when the highlight happens, viewer attention is at its peak, but they have no action to "participate" with.
+Gifts are one-way, chat is text-only, and they leave after watching. <strong style="color:#fff">The viewer's emotional peak during the highlight isn't captured, and the chance to convert them into followers and return viewers is wasted.</strong></p>
 
     <div class="pair">
       <div class="stat-card">
         <div class="num">~3.5s</div>
-        <div class="lbl">高光发生时观众平均互动延迟(刷弹幕到提交)</div>
+        <div class="lbl">Average viewer interaction delay when a highlight happens (from typing chat to submitting)</div>
       </div>
       <div class="stat-card good">
         <div class="num">30s</div>
-        <div class="lbl">Encore 给观众的"参与窗口" —— 直接玩一局基于高光的 mini game</div>
+        <div class="lbl">Encore gives viewers a "participation window"—play a mini-game based on the highlight right away</div>
       </div>
     </div>
   </div>
@@ -535,23 +535,23 @@
 <section id="vision">
   <div class="container">
     <h2>2 · WHAT IS ENCORE</h2>
-    <div class="h2-sub">把主播的高光时刻,<span class="accent">实时重构成观众能玩的 30 秒迷你游戏。</span></div>
+    <div class="h2-sub">Reconstruct the streamer's highlight moment in real-time <span class="accent">into a 30-second mini-game viewers can play.</span></div>
 
     <div class="vision-grid">
       <div class="v-card">
         <div class="ico">👁</div>
         <h3>OBSERVE</h3>
-        <p>AI Vision 持续观察 LIVE 画面,识别 kill / clutch / ace / 抢龙 等高光事件。本质是把"主播按高光按钮"自动化。</p>
+        <p>AI Vision continuously watches the LIVE feed, identifying highlights like kills / clutches / aces / dragon steals. Essentially automating the "streamer presses highlight button" action.</p>
       </div>
       <div class="v-card">
         <div class="ico">🧬</div>
         <h3>STRUCTURE</h3>
-        <p>把高光时刻提取成一份 JSON config:游戏类型、地图主题、敌人数、起始 HP、武器、场景描述。这就是 V2G 的"语言"。</p>
+        <p>Extract the highlight into a JSON config: game type, map theme, enemy count, starting HP, weapon, scene description. This is the V2G "language".</p>
       </div>
       <div class="v-card">
         <div class="ico">🎮</div>
         <h3>RECONSTRUCT</h3>
-        <p>客户端在 30 秒内把 config 渲染成一个体素像素风的 mini game,以 bottom sheet 形式弹给当时在场的观众。</p>
+        <p>The client renders the config into a voxel-pixel mini-game within 30 seconds, popping it up as a bottom sheet to the viewers present at that time.</p>
       </div>
     </div>
   </div>
@@ -561,32 +561,32 @@
 <section id="loop">
   <div class="container">
     <h2>3 · THE LOOP</h2>
-    <div class="h2-sub">看 → 玩 → 播 <span class="accent">三元闭环</span></div>
+    <div class="h2-sub">Watch → Play → Broadcast <span class="accent">Three-way closed loop</span></div>
 
     <div class="loop">
       <div class="loop-step watch">
         <div class="stage">STAGE 1</div>
         <div class="ico">📺</div>
         <div class="label">WATCH</div>
-        <div class="desc">主播打游戏,AI 全程观察。<br>识别到高光时刻 → 自动触发。</div>
+        <div class="desc">Streamer plays, AI watches the whole time.<br>Detects a highlight moment → triggers automatically.</div>
       </div>
       <div class="loop-arrow">▶</div>
       <div class="loop-step play">
         <div class="stage">STAGE 2</div>
         <div class="ico">🕹</div>
         <div class="label">PLAY</div>
-        <div class="desc">观众在 bottom sheet 玩 30 秒,<br>玩法 / 场景 / 配色 与刚才的高光一致。</div>
+        <div class="desc">Viewers play for 30 seconds in a bottom sheet,<br>gameplay / scene / colors match the highlight just shown.</div>
       </div>
       <div class="loop-arrow">▶</div>
       <div class="loop-step replay">
         <div class="stage">STAGE 3</div>
         <div class="ico">🎬</div>
         <div class="label">BROADCAST</div>
-        <div class="desc">AI 剪 15s 录像回流直播间。<br>主播实时锐评 Top 3 录像。</div>
+        <div class="desc">AI cuts a 15s clip and feeds it back to the LIVE room.<br>Streamer live-reviews the Top 3 clips.</div>
       </div>
     </div>
 
-    <div class="loop-cn">看  ·  玩  ·  播</div>
+    <div class="loop-cn">WATCH  ·  PLAY  ·  BROADCAST</div>
   </div>
 </section>
 
@@ -594,53 +594,53 @@
 <section id="templates">
   <div class="container">
     <h2>4 · THE 3 TEMPLATES (PHASE 1)</h2>
-    <div class="h2-sub">不是真生成式,<span class="accent">是模板参数化。</span></div>
+    <div class="h2-sub">Not real generative, <span class="accent">but template-parameterized.</span></div>
     <p style="color:#888;max-width:760px;margin-bottom:32px;font-size:13px;">
-      Phase 1 (Path B) 的核心决定:AI 不写游戏代码,只产 JSON config。3 个预制模板分别对位 TikTok 游戏 LIVE 的三大内容供给。
-      <strong style="color:#ccc">覆盖率约 60-70%。</strong>
+      Phase 1 (Path B) core decision: AI does not write game code, only produces JSON config. 3 pre-built templates cover the three main content categories of TikTok Gaming LIVE.
+      <strong style="color:#ccc">Coverage ~60-70%.</strong>
     </p>
 
     <div class="tpl-grid">
       <div class="tpl-card fps">
-        <span class="badge">FPS · 战术射击</span>
+        <span class="badge">FPS · Tactical Shooter</span>
         <h3>COVER STRIKE</h3>
-        <div class="ref">参考: Valorant / CS / COD</div>
+        <div class="ref">Refs: Valorant / CS / COD</div>
         <ul>
-          <li>右手拖屏瞄准 · 后坐力曲线</li>
-          <li>弹匣 12 发 + 快速换弹</li>
-          <li>掩体战术 + Peek 加爆头</li>
-          <li>1v3 残局节奏</li>
+          <li>Right-drag to aim · Recoil curve</li>
+          <li>12-round mag + fast reload</li>
+          <li>Cover tactics + Peek & headshot</li>
+          <li>1v3 clutch pacing</li>
         </ul>
-        <div class="feel">"每杀都是 3 发的窗口 · 谁先 peek 谁赢"</div>
-        <div class="themes">主题: DESERT · SNOW · CYBER · JUNGLE</div>
+        <div class="feel">"Every kill is a 3-shot window · Whoever peeks first wins"</div>
+        <div class="themes">Themes: DESERT · SNOW · CYBER · JUNGLE</div>
       </div>
 
       <div class="tpl-card moba">
-        <span class="badge">MOBA · 端游 / 王者</span>
+        <span class="badge">MOBA · PC / Mobile</span>
         <h3>DRAGON PIT</h3>
-        <div class="ref">参考: LoL / Honor of Kings / Dota</div>
+        <div class="ref">Refs: LoL / Honor of Kings / Dota</div>
         <ul>
-          <li>技能预瞄拖拽 · 4 技能 + 法力</li>
-          <li>小兵线 + 补刀经济</li>
-          <li>草丛隐身 + 防御塔反制</li>
-          <li>1v3 龙坑反杀</li>
+          <li>Skill pre-aim & drag · 4 skills + mana</li>
+          <li>Minion waves + last-hit economy</li>
+          <li>Grass invisibility + tower counterplay</li>
+          <li>1v3 Dragon pit turnaround</li>
         </ul>
-        <div class="feel">"补刀和草丛是决策 · 技能会 miss"</div>
-        <div class="themes">主题: GRASS · LAVA · ICE · TWILIGHT</div>
+        <div class="feel">"Last hits and grass are decisions · Skills can miss"</div>
+        <div class="themes">Themes: GRASS · LAVA · ICE · TWILIGHT</div>
       </div>
 
       <div class="tpl-card br">
-        <span class="badge">BR · 大逃杀</span>
+        <span class="badge">BR · Battle Royale</span>
         <h3>FINAL CIRCLE</h3>
-        <div class="ref">参考: PUBG / Apex / Fortnite</div>
+        <div class="ref">Refs: PUBG / Apex / Fortnite</div>
         <ul>
-          <li>大地图跟随相机 · 缩圈毒气</li>
-          <li>武器稀有度 4 档 (C / R / E / L)</li>
-          <li>长按 E 开镜 · 小队 AI 互打</li>
-          <li>最后一人活到时间归零</li>
+          <li>Large map follow-cam · Shrinking gas circle</li>
+          <li>Weapon rarity 4 tiers (C / R / E / L)</li>
+          <li>Hold E to scope · Squad AI fights each other</li>
+          <li>Last one alive until time runs out</li>
         </ul>
-        <div class="feel">"听见远处的枪声 · 捡到 SR 才有决赛圈"</div>
-        <div class="themes">主题: FOREST · DESERT · ISLAND · WASTELAND</div>
+        <div class="feel">"Hear distant gunfire · Only a SR gets you to the final circle"</div>
+        <div class="themes">Themes: FOREST · DESERT · ISLAND · WASTELAND</div>
       </div>
     </div>
   </div>
@@ -650,7 +650,7 @@
 <section id="ux">
   <div class="container">
     <h2>5 · INTERACTION & UX</h2>
-    <div class="h2-sub">Bottom sheet,<span class="accent">永不压缩 LIVE 主画面。</span></div>
+    <div class="h2-sub">Bottom sheet, <span class="accent">never compressing the LIVE main view.</span></div>
 
     <div class="ux-row">
       <div class="phone">
@@ -665,14 +665,14 @@
       </div>
 
       <div class="ux-text">
-        <h4>核心 UX 铁律</h4>
-        <p>Encore mini game 以 bottom sheet 形式上滑覆盖,占屏 80%。LIVE 视频依然在播,主播声音依然在响,只是被推到背景层。</p>
+        <h4>Core UX Iron Rules</h4>
+        <p>Encore mini-game slides up as a bottom sheet covering 80% of the screen. The LIVE video keeps playing, the streamer's audio keeps sounding, just pushed to the background layer.</p>
         <ul class="ux-rules">
-          <li>永不 pause LIVE,永不静音,永不挤压 main view</li>
-          <li>玩家任意时刻可以下滑回 LIVE,游戏自动结束</li>
-          <li>30 秒后自动结束,弹回 LIVE,无侵入</li>
-          <li>千元机也跑得动:Canvas 2D + 体素方块,无 WebGL</li>
-          <li>UX 状态机 8 个状态(见飞书 §11.7) —— SAMPLING / DETECTED / WARMUP / PLAY / END / REPLAY_PEEK / GIFT / RESET</li>
+          <li>Never pause LIVE, never mute, never compress main view</li>
+          <li>Player can swipe down to return to LIVE at any time, game auto-ends</li>
+          <li>Auto-ends after 30 seconds, bounces back to LIVE, non-intrusive</li>
+          <li>Runs on $100 phones: Canvas 2D + voxel blocks, no WebGL</li>
+          <li>UX state machine 8 states (see Lark §11.7) — SAMPLING / DETECTED / WARMUP / PLAY / END / REPLAY_PEEK / GIFT / RESET</li>
         </ul>
       </div>
     </div>
@@ -683,32 +683,31 @@
 <section id="economy">
   <div class="container">
     <h2>6 · GIFT ECONOMY</h2>
-    <div class="h2-sub">4 层礼物分层,<span class="accent">不送礼也能玩。</span></div>
+    <div class="h2-sub">4-tier gift hierarchy, <span class="accent">playable without gifting.</span></div>
     <p style="color:#888;max-width:760px;margin-bottom:32px;font-size:13px;">
-      <strong style="color:#ff4655">铁律:禁止"送礼换试玩"。</strong>送礼是放大体验,不是入场券。
-      主播分成 ≥ 普通 LIVE 礼物分成。
+      <strong style="color:#ff4655">Iron rule: Gifting to play is forbidden.</strong> Gifting amplifies the experience, it is not a ticket. Streamer share ≥ regular LIVE gift share.
     </p>
 
     <div class="gift-grid">
       <div class="gift-card">
         <div class="name">ENHANCE</div>
-        <div class="what">改造你的下一局</div>
-        <div class="ex">"火焰子弹"皮肤、"双倍 HP"开局、"额外一条命"…… 个人增益。</div>
+        <div class="what">Modify your next round</div>
+        <div class="ex">"Fire bullet" skin, "Double HP" start, "Extra life"… Personal buffs.</div>
       </div>
       <div class="gift-card">
         <div class="name">SPOTLIGHT</div>
-        <div class="what">为高分录像加曝光</div>
-        <div class="ex">让你的录像更可能进入主播 Top 3 锐评池。社交向。</div>
+        <div class="what">Expose your high-score clip</div>
+        <div class="ex">Increase chance your clip enters the streamer's Top 3 review pool. Social-oriented.</div>
       </div>
       <div class="gift-card">
         <div class="name">SPONSOR</div>
-        <div class="what">主播下一局的强化</div>
-        <div class="ex">给主播在下次 LIVE 高光生成的 Encore 加强化 / 主题。礼物流向主播。</div>
+        <div class="what">Buff the streamer's next round</div>
+        <div class="ex">Give the streamer an enhanced Encore / theme for their next LIVE highlight. Gift flow goes to the streamer.</div>
       </div>
       <div class="gift-card">
         <div class="name">LOOT</div>
-        <div class="what">概率宝箱皮肤</div>
-        <div class="ex">开箱拿稀有装备外观,送回个人收藏。常驻收益。</div>
+        <div class="what">Randomized lootbox skin</div>
+        <div class="ex">Open cases for rare gear skins, sent to personal collection. Recurring revenue.</div>
       </div>
     </div>
   </div>
@@ -718,7 +717,7 @@
 <section id="architecture">
   <div class="container">
     <h2>7 · V2G ARCHITECTURE</h2>
-    <div class="h2-sub">观察 → 推理 → 配置 → 播放,<span class="accent">全链路 ≤ 6 秒。</span></div>
+    <div class="h2-sub">Observe → Infer → Configure → Play, <span class="accent">full chain ≤ 6 seconds.</span></div>
 
     <div class="arch-diagram">
 <pre>
@@ -768,21 +767,21 @@
 <section id="status">
   <div class="container">
     <h2>8 · WHAT'S BUILT TODAY (v0.6)</h2>
-    <div class="h2-sub">原型已跑通,<span class="accent">完整 V2G 链路演示就绪。</span></div>
+    <div class="h2-sub">Prototype is running, <span class="accent">full V2G chain demo is ready.</span></div>
 
     <ul class="build-list">
-      <li class="done"><span class="tick">✓</span><span class="desc">Iso 体素渲染器(w2s 投影 + 块体 + z-sort + 静态 bg bake)</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">3 模板核心机制(掩体战术 / 技能预瞄 / 武器稀有度等)</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">12 套主题(每模板 4 套调色板 + tile)</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">22 个精灵程序化 atlas(占位 + 真 AI 切换无需改代码)</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">每模板独立 ambient FX(粒子 + 色调 grading)</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">地面散落贴花(打破 voxel-grid 模板感)</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">AI 精灵流水线(prompts → rembg → pack)</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">Claude Vision 实时观察 LIVE 视频帧</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">streamer.html + postMessage iframe 协议</span></li>
-      <li class="done"><span class="tick">✓</span><span class="desc">JSON config 注入到游戏(theme + scenario 覆盖)</span></li>
-      <li class="partial"><span class="tick">◐</span><span class="desc">真 AI 精灵切入</span><span class="meta">(管道就绪 / 待跑 MJ-DALL-E 批次)</span></li>
-      <li class="partial"><span class="tick">◐</span><span class="desc">TikTok feed shell 集成</span><span class="meta">(UI 仿真版有,真 SDK 接入待 M11)</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">Iso voxel renderer (w2s projection + blocks + z-sort + static bg bake)</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">3 template core mechanics (cover tactics / skill pre-aim / weapon rarity etc.)</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">12 themes (4 palettes + tiles per template)</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">22 sprite procedural atlases (placeholders, real AI swap needs no code change)</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">Independent ambient FX per template (particles + color grading)</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">Ground decals (breaks voxel-grid template feel)</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">AI sprite pipeline (prompts → rembg → pack)</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">Claude Vision real-time LIVE video frame observation</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">streamer.html + postMessage iframe protocol</span></li>
+      <li class="done"><span class="tick">✓</span><span class="desc">JSON config injection into game (theme + scenario override)</span></li>
+      <li class="partial"><span class="tick">◐</span><span class="desc">Real AI sprite integration</span><span class="meta">(pipeline ready / waiting to run MJ-DALL-E batch)</span></li>
+      <li class="partial"><span class="tick">◐</span><span class="desc">TikTok feed shell integration</span><span class="meta">(UI mockup exists, real SDK integration pending M11)</span></li>
     </ul>
   </div>
 </section>
@@ -791,40 +790,40 @@
 <section id="decisions">
   <div class="container">
     <h2>9 · LOCKED PRODUCT DECISIONS</h2>
-    <div class="h2-sub">设计真理在飞书,<span class="accent">代码追随文档。</span></div>
+    <div class="h2-sub">Design truth lives in Lark, <span class="accent">code follows docs.</span></div>
 
     <div class="decisions">
       <div class="dec-card">
         <div class="label">PATH</div>
-        <div class="text">Path B(模板参数化),不做真生成式。AI 出 JSON config → 路由到 3 模板。</div>
+        <div class="text">Path B (template parameterization), no real generative. AI produces JSON config → routed to 3 templates.</div>
       </div>
       <div class="dec-card">
         <div class="label">ART</div>
-        <div class="text">抽象像素风(Roblox / MC 系)。规避所有游戏 IP 风险,千元机兼容。</div>
+        <div class="text">Abstract pixel style (Roblox / MC). Avoids all game IP risk, compatible with $100 phones.</div>
       </div>
       <div class="dec-card">
         <div class="label">ENTRY POINT</div>
-        <div class="text">LIVE-first。M12 之前不做短视频流入口(转化率塌方)。</div>
+        <div class="text">LIVE-first. No short-video feed entry point before M12 (conversion collapses).</div>
       </div>
       <div class="dec-card">
         <div class="label">UX RULE</div>
-        <div class="text">Bottom sheet 上滑覆盖,永不压缩 LIVE 主画面。8-状态有限状态机。</div>
+        <div class="text">Bottom sheet slides up over, never compresses LIVE main view. 8-state finite state machine.</div>
       </div>
       <div class="dec-card">
         <div class="label">MONETIZATION</div>
-        <div class="text">4 层礼物经济(Enhance / Spotlight / Sponsor / Loot)。禁止"送礼换试玩"。</div>
+        <div class="text">4-tier gift economy (Enhance / Spotlight / Sponsor / Loot). Gifting to play is forbidden.</div>
       </div>
       <div class="dec-card">
         <div class="label">TEMPLATE COVERAGE</div>
-        <div class="text">3 套模板必备(FPS + MOBA + BR),覆盖约 60-70% 游戏 LIVE 内容。</div>
+        <div class="text">3 templates required (FPS + MOBA + BR), covering ~60-70% of Gaming LIVE content.</div>
       </div>
       <div class="dec-card">
         <div class="label">CREATOR SHARE</div>
-        <div class="text">Encore 礼物中主播分成 ≥ 普通 LIVE 礼物分成。生态绑定。</div>
+        <div class="text">Streamer share of Encore gifts ≥ regular LIVE gift share. Ecosystem binding.</div>
       </div>
       <div class="dec-card">
         <div class="label">DEMO SCOPE</div>
-        <div class="text">客户端 + 局域网部署。无后端服务(observer.py 是本地代理,不是 backend)。</div>
+        <div class="text">Client + LAN deployment. No backend services (observer.py is a local proxy, not backend).</div>
       </div>
     </div>
   </div>
@@ -834,43 +833,43 @@
 <section id="roadmap">
   <div class="container">
     <h2>10 · ROADMAP</h2>
-    <div class="h2-sub">从 demo 到 M12,<span class="accent">5 个里程碑。</span></div>
+    <div class="h2-sub">From demo to M12, <span class="accent">5 milestones.</span></div>
 
     <div class="roadmap">
       <div class="rm-item done">
         <div class="when">M8 · DONE</div>
         <div class="title">Demo prototype (v0.6)</div>
-        <div class="body">3 模板 + 主题切换 + V2G 链路打通 + Claude Vision 接入。可上台演示。</div>
+        <div class="body">3 templates + theme switching + V2G chain working + Claude Vision integrated. Ready for stage demo.</div>
       </div>
 
       <div class="rm-item now">
         <div class="when">M9 · NOW</div>
-        <div class="title">AI 美术批量切入</div>
-        <div class="body">跑 22 个 prompt 通过 Midjourney / DALL-E / SD,过 process.py → pack.py。视觉接近 Astrocade 水准。</div>
+        <div class="title">Batch AI art integration</div>
+        <div class="body">Run 22 prompts through Midjourney / DALL-E / SD, via process.py → pack.py. Visual quality approaching Astrocade level.</div>
       </div>
 
       <div class="rm-item next">
         <div class="when">M10 · NEXT</div>
-        <div class="title">TikTok feed shell + 真分享链路</div>
-        <div class="body">15 秒录像剪回 LIVE 弹幕区 / 主播 Top 3 锐评池。需要接 TikTok SDK + CDN。</div>
+        <div class="title">TikTok feed shell + real share chain</div>
+        <div class="body">15s clip fed back to LIVE chat area / streamer Top 3 review pool. Requires TikTok SDK + CDN.</div>
       </div>
 
       <div class="rm-item next">
         <div class="when">M11 · NEXT</div>
-        <div class="title">第 4 个模板家族(可选)</div>
-        <div class="body">塔防 / 自走棋 / Vampire-Survivors 风格三选一。需先改飞书 Brief 的"模板覆盖"条款。</div>
+        <div class="title">4th template family (optional)</div>
+        <div class="body">Choose from Tower Defense / Auto-chess / Vampire-Survivors style. Must first update Lark Brief's "template coverage" clause.</div>
       </div>
 
       <div class="rm-item phase2">
         <div class="when">PHASE 2 · M14+</div>
-        <div class="title">生成式行为 DSL</div>
-        <div class="body">LLM 每条 Encore 输出独立 DSL(波次 / 单位 / 技能 / 胜负条件),引擎解释执行。真正打开"每条都不一样"的天花板。是 Astrocade-tier 的竞争位。</div>
+        <div class="title">Generative behavioral DSL</div>
+        <div class="body">LLM outputs an independent DSL per Encore (waves / units / skills / win conditions), engine interprets and executes. Truly opens the "every run is different" ceiling. This is the Astrocade-tier competitive slot.</div>
       </div>
 
       <div class="rm-item phase2">
         <div class="when">PHASE 2 · M16+</div>
-        <div class="title">真实直播平台 + 高并发后端</div>
-        <div class="body">TikTok LIVE 平台官方接入,frame sampling 服务端化,百万级并发观看时的成本控制(模型选型 / 缓存 / 降级)。</div>
+        <div class="title">Real live platform + high-concurrency backend</div>
+        <div class="body">TikTok LIVE platform official integration, server-side frame sampling, cost control at million-level concurrent viewership (model selection / caching / degradation).</div>
       </div>
     </div>
   </div>
@@ -881,7 +880,7 @@
   <div class="container">
     <div>📐 Design truth: <a href="https://bytedance.my.larkoffice.com/docx/VdRFd5MkBopEjyxAJ70mqmvJyfc">Product Brief v0.1</a> · <a href="https://bytedance.larkoffice.com/docx/LfbydvhwCopawvx6UthmmOcoyNf">Demo Dev Plan v0.2</a></div>
     <div style="margin-top:8px;">🎮 Live demo: <a href="../prototype/encore_prototype.html">encore_prototype.html</a> · 🎬 V2G demo: <a href="../prototype/live/feed.html">live/feed.html</a> (3-room feed) · <a href="../prototype/live/streamer.html">live/streamer.html</a> (single room)</div>
-    <div class="meta">⚡ ENCORE · TIKTOK GAMING · HACKATHON · 2026 · 内部预览,请勿外传</div>
+    <div class="meta">⚡ UGC BOOTH · TIKTOK GAMING</div>
   </div>
 </footer>
 

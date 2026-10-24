@@ -99,7 +99,7 @@ v0.7 高保真重建 (已完成):
 **2026-06-04 当天追加** (5 个 PR):
 - **PR #34 玩家录屏 race fix** — `PlayerRecorder.stop()` 返回 Promise, 加 `waitForReady()`,解决 winner clip 下半截显示 mock 不是玩家真实录像的问题
 - **PR #35 移动端 MediaRecorder 兼容** — iOS Safari only-mp4 codec + `start(timeslice=1000)` 分块, debug chip via `?debug=1`
-- **PR #38/39 Slide 7 重做** — 老 slide 7 (iframe + CONTROLS + FYI 三堵墙) 砍掉,变成: 大 QR + 3 直播间 tile + 2 outcome chip (📹 短视频 / 🎁 Enhance);随 Polly feed.html 改动二次更新 tile 内容为 3 个房主 (TK Sói / ROADKING88 / PIXELMAX)
+- **PR #38/39 Slide 7 重做** — 老 slide 7 (iframe + CONTROLS + FYI 三堵墙) 砍掉,变成: 大 QR + 3 直播间 tile + 2 outcome chip (📹 短视频 / 🎁 Enhance);随 Polly feed.html 改动二次更新 tile 内容为 3 个房主 (Wizard of Hahz / ROADKING88 / PIXELMAX)
 - **Polly 7595de1 3 直播间 feed shell** — 新 `feed.html` 3 iframe 上下滑动, landing + QR 改指向 feed.html, lazy-load 邻居房间, dot indicator + swipe hint
 - **PR #40 TikTok-fidelity UI pass (5 个 commit)** — 把 streamer.html 跟 Figma 真 TikTok 设计稿对齐:
   - **底部操作栏**: 老 ☺ 🤝 🎁 ↗ emoji 圆圈 → 真 Figma 资产 `rose.png` (3D 玫瑰) + `gift.png` (粉礼盒) + `share.svg` (白箭头) + 10px 文字标签
@@ -128,7 +128,7 @@ v0.7 高保真重建 (已完成):
 - [ ] **真机/真浏览器测试** — 手机 Safari + Chrome 各跑一遍 3-room feed 滑动 + Encore 触发 + 玩 + 发视频 + 送礼
 - [ ] **V2G observer 接入 D-module** — Zihui 把 cachedDetection 写到 streamer.html 的 `pickConfig` hook, 让随机模板变成真实 Vision 检测
 - [ ] **Sub-doc 同步当前实现** — Lark wiki 子页 (PsFTd9fQDooQCkxVZMkmSZMyyhf) 写的还是旧的 4-state FSM, 要更到 4-phase + 4-entry mode + highlight popup + 3-room feed
-- [ ] **演示 storyboard** — 1 分钟脚本 (开 feed → 滑到 TK Sói 房 → highlight → play → MOBA → result → ranking → ack → 再滑到 ROADKING88 房演示第二轮)
+- [ ] **演示 storyboard** — 1 分钟脚本 (开 feed → 滑到 Wizard of Hahz 房 → highlight → play → MOBA → result → ranking → ack → 再滑到 ROADKING88 房演示第二轮)
 - [ ] **评委 Q&A 应答表** — 重点准备: 跟「萌宠快跑」互动游戏的差别 (有现成对比, 见 `.claude/plans/prancy-cuddling-duckling.md`)
 
 ### 📋 P2 — 锦上添花

@@ -34,7 +34,7 @@
   // wu = world unit. Screen scroll px/s ≈ wu/s × PXF (PXF≈1.864 on 430×932).
   const TUNING = {
     // ── speed ──
-    baseSpeedWU:      195,   // cruise → ~363px/s at t=0 (old 100 → 186); fast enough that 爽感 doesn't read "grandpa"
+    baseSpeedWU:      195,   // cruise → ~363px/s at t=0 (old 100 → 186); fast enough that the rush doesn't read "grandpa"
     rampMul:          1.6,   // end-of-round speed multiplier (linear ramp)
     nitroMul:         1.8,   // nitro forward multiplier (stacks on throttle)
     throttleUpMul:    1.9,   // joystick full-up = accelerate
@@ -50,7 +50,7 @@
     camBackFrac:      0.86,  // lowest row (braking)
 
     // ── lanes ──
-    laneCount:        5,     // wider boulevard → real room to weave (was 3, "没得跑")
+    laneCount:        5,     // wider boulevard → real room to weave (was 3, "nowhere to run")
     laneMax:          2,     // lanes span -2..+2
     laneSnapWU:       520,   // lateral lerp speed → cross one lane in ~100ms
     laneSwipeThreshPx: 40,
@@ -88,7 +88,7 @@
     copBulletDmg:     12,
     copInvulnS:       1.2,
 
-    // ── combat: shoot back & WASTE cop cars (干掉警车 = the GTA power high) ──
+    // ── combat: shoot back & WASTE cop cars (wasting cops = the GTA power high) ──
     copHp:            3,     // bullets to destroy a cruiser
     playerFireRateS:  0.28,  // auto drive-by fire cadence when a cop is behind
     playerBulletSpeedWU: 560,
@@ -122,57 +122,57 @@
     robTimeS:         0.3,   // time to complete one grab (snappy)
     robberPopS:       0.9,   // gangster lean-out (head+gun+flash) visible this long after grab
     shopCountDefault: 4,
-    // 抢店后被追 (random event #1, user-named): a guard chases — slower than your
+    // Chased after robbery (random event #1, user-named): a guard chases — slower than your
     // throttle, gives up after a gap; catch = a bump, shake = relief + bonus.
     chaserSpeedWU:    205,
     chaserLifeS:      5.5,
     chaserDmg:        14,
     chaserGiveUpWU:   360,
     chaserBonus:      120,
-    // 离谱追兵 KINDS (R8) — one chaser system, many absurd pursuers. All slower than
-    // full throttle so you can ALWAYS outrun them (操作空间, never malice). label =
+    // Absurd chaser KINDS (R8) — one chaser system, many absurd pursuers. All slower than
+    // full throttle so you can ALWAYS outrun them (room to act, never malice). label =
     // the shout bubble; fires = lobs a dodgeable projectile.
     chaserKinds: {
-      clerk:   { speed: 210, dmg: 12, r: 0.32, body:'#d8c0a0', shirt:'#3a7ad0', label:'喂! 站住!',   fires:true,  fireCd:1.6, col:'#3a7ad0' },   // 店员持枪
-      copFoot: { speed: 215, dmg: 14, r: 0.34, body:'#e8c0a0', shirt:'#16224a', label:'别跑!',       fires:true,  fireCd:1.8, col:'#2b6bff' },   // 警察徒步
-      biker:   { speed: 235, dmg: 12, r: 0.34, body:'#e8c0a0', shirt:'#1a1a22', label:'给我等着!',    fires:false, fireCd:0,   col:'#39c06a' },   // 骑共享单车
-      rpg:     { speed: 170, dmg: 26, r: 0.36, body:'#d8c0a0', shirt:'#5a4a2a', label:'吃我一炮!',    fires:true,  fireCd:2.6, col:'#ff6a3b' },   // 扛火箭筒(慢但狠,放冷炮可躲)
-      owner:   { speed: 200, dmg: 8,  r: 0.32, body:'#e0b890', shirt:'#b03030', label:'你赔我车!',    fires:false, fireCd:0,   col:'#b03030' },   // 撞车车主挥扳手骂街
+      clerk:   { speed: 210, dmg: 12, r: 0.32, body:'#d8c0a0', shirt:'#3a7ad0', label:'Hey! Stop!',   fires:true,  fireCd:1.6, col:'#3a7ad0' },   // clerk with a gun
+      copFoot: { speed: 215, dmg: 14, r: 0.34, body:'#e8c0a0', shirt:'#16224a', label:'Don\'t run!',       fires:true,  fireCd:1.8, col:'#2b6bff' },   // cop on foot
+      biker:   { speed: 235, dmg: 12, r: 0.34, body:'#e8c0a0', shirt:'#1a1a22', label:'Wait up!',    fires:false, fireCd:0,   col:'#39c06a' },   // riding a shared bike
+      rpg:     { speed: 170, dmg: 26, r: 0.36, body:'#d8c0a0', shirt:'#5a4a2a', label:'Eat this!',    fires:true,  fireCd:2.6, col:'#ff6a3b' },   // carrying an RPG (slow but brutal, dodgeable rocket)
+      owner:   { speed: 200, dmg: 8,  r: 0.32, body:'#e0b890', shirt:'#b03030', label:'You broke my car!',    fires:false, fireCd:0,   col:'#b03030' },   // angry car owner with a wrench
     },
-    // 撒钱卡车 (random event #2, user-named): an armored truck spills a cash trail across lanes.
+    // Cash truck (random event #2, user-named): an armored truck spills a cash trail across lanes.
     cashFirstS:       4.0,    // R6: earlier — a 30s round should hit 2-3 events, not 0-1
     cashEveryS:       8.0,
     cashVal:          45,
     cashTrailN:       10,
-    // 警车翻飞 (random event #3, user-named): a chasing cop randomly wipes out — comedic,
-    // clears one cruiser + a little heat. Addresses "打警车/警车打我很无聊".
+    // Cop car wipeout (random event #3, user-named): a chasing cop randomly wipes out — comedic,
+    // clears one cruiser + a little heat. Addresses "shooting cops / cops shooting me is boring".
     copWipeChance:    0.012,  // per-second prob while chasing — RARE surprise (was 0.05: kept ★5 nearly cop-free, killed the high-heat tension the user wants). A flip is a delightful comedic beat, not a constant pressure valve.
     copWipeMinHeatGap: 6.0,   // a cop won't flip unless this long since the last flip (no chain-wipes that suppress the whole force)
     copWipeRelief:    0.3,    // ★heat shed when one flips (small — heat is the tension, don't bleed it fast)
-    // 狂暴模式 (random event #4, user-named "变形/碾压"): rare glowing pickup → a few
+    // Rampage mode (random event #4, user-named "Transform/Crush"): rare glowing pickup → a few
     // seconds of smash-everything invincible rampage (abstract heavy-mode, no IP).
     tankFirstS:       12.0,   // R6: earlier
     tankEveryS:       17.0,
     tankDurS:         3.5,
     tankSmashReward:  60,
-    // 直升机探照灯 (random event #5, user-named): at high heat a chopper sweeps a
-    // spotlight across the road; staying IN the beam keeps you hot — dodge it. Chase张力.
-    chopperHeat:      2.5,    // R6: lowered 3.5→2.5 so robbing 2 shops (★3) brings the chopper EVERY round — the GTA "🚁 出动了" escalation the user wants
+    // Helicopter searchlight (random event #5, user-named): at high heat a chopper sweeps a
+    // spotlight across the road; staying IN the beam keeps you hot — dodge it. Chase tension.
+    chopperHeat:      2.5,    // R6: lowered 3.5→2.5 so robbing 2 shops (★3) brings the chopper EVERY round — the GTA "🚁 deployed" escalation the user wants
     chopperSweepWU:   115,
     chopperBeamLanes: 0.9,
     chopperHeatRate:  0.22,
     chopperFireCd:    0.42,   // while you're in the beam the heli machine-guns you (real punishment, not just "stays hot")
     chopperBulletDmg: 9,
-    // 爆胎漂移 (random event #6, user-named "开着开着爆胎"): a tyre blows → the car
+    // Tyre blowout drift (random event #6, user-named "blowout while driving"): a tyre blows → the car
     // drifts to one side & steering goes loose for a beat; counter-steer to save it
-    // (操作空间, never an instant death). No damage — it's a skill check, not malice.
+    // (room to act, never an instant death). No damage — it's a skill check, not malice.
     tireFirstS:       8.0,    // R6: earlier
     tireEveryS:       15.0,   // avg gap between blowouts
     tireDriftS:       1.4,    // how long the drift lasts
     tireDriftWU:      230,    // sideways slide velocity during the blowout
     tireSteerCut:     0.18,   // snap authority is GUTTED during the drift so the slide actually carries the car (you FEEL it). Counter-steer = change lane → the car chases the new target as the drift eases.
 
-    // ── 锁链拖 ATM (R8 · 速度与激情《8》梗): rob a shop → its safe/ATM is chained to
+    // ── Tow chained ATM (R8 · Fast & Furious 8 meme): rob a shop → its safe/ATM is chained to
     //    your bumper, dragging behind with sparks. Tow it = bonus $ ticking up, but
     //    the car drags heavier (slight steer drag). Lasts a few s then the chain
     //    snaps → the safe bursts open in a cash explosion. ──
@@ -182,31 +182,31 @@
     towTickVal:       40,     // $ per tick
     towBurstVal:      300,    // $ when the safe finally bursts open
 
-    // ── 整活彩蛋 (R8 · 脑壳疼级 meme): low-prob absurd one-offs — a chicken stampede
+    // ── Absurd easter eggs (R8 · brain-pain tier meme): low-prob absurd one-offs — a chicken stampede
     //    crossing the road, a UFO buzzing over, a giant donut rolling down a lane.
     //    Pure spectacle; the chicken/donut are dodgeable nudges, never a cheap death. ──
     memeFirstS:       9.0,
-    memeEveryS:       13.0,   // avg gap; still RARE enough to feel like a "刷到了哈哈" moment
+    memeEveryS:       13.0,   // avg gap; still RARE enough to feel like a "haha I saw that" moment
     memeChickenN:     9,      // how many chickens stampede across
 
-    // ── 爽感 / juice: a camera ZOOM-PUNCH on the big GTA power beats (waste a cop,
+    // ── Juice: a camera ZOOM-PUNCH on the big GTA power beats (waste a cop,
     //    shake the cops, deep rampage). A quick scale-in that eases back makes a
-    //    kill feel WEIGHTY — the cinematic "卧槽好爽" the user is missing. ──
-    zoomPunchAmt:     0.22,   // R9.2: peak extra scale (1.22×) on a big beat — user said the punch felt "一般", so HIT harder
+    //    kill feel WEIGHTY — the cinematic "wow that felt good" the user is missing. ──
+    zoomPunchAmt:     0.22,   // R9.2: peak extra scale (1.22×) on a big beat — user said the punch felt "meh", so HIT harder
     zoomPunchS:       0.40,   // R9.2: longer hold so the slam reads (was 0.32)
 
-    // ── R10 屏震 = bounded TRAUMA model (was raw random jitter w/ no cap → "太晃很晕").
+    // ── R10 Screen shake = bounded TRAUMA model (was raw random jitter w/ no cap → "too shaky, dizzy").
     //    pushShake adds trauma 0..1; screen offset = trauma² × maxPx (quadratic so small
     //    hits barely move, big hits punch then settle fast). Hard pixel cap kills the
     //    nausea from stacked events; hitstop carries the impact, not the shake. ──
     shakeMaxPx:       6,      // R12: cap 6px. Frequency is the fix (small events no longer shake),
     traumaDecayPerS:  2.6,    //      so the few REAL impacts can still punch without nausea.
-    traumaSmall:      0.0,    // R12: small/frequent events NO LONGER shake (flash/sound instead — 降频)
+    traumaSmall:      0.0,    // R12: small/frequent events NO LONGER shake (flash/sound instead — lower frequency)
     traumaMed:        0.55,   // R12: solid beats (WASTED cop, safe burst, blowout) → ~1.8px, felt but mild
     traumaBig:        0.90,   // R12: REAL collisions (car crash, cop slam, bust) → ~4.9px, a real punch
 
-    // ── R10 难度曲线 (前松中紧末高潮). Speed/traffic/cop scale by a smoothstep over the
-    //    round (see difficulty01); these extra knobs keep the INTRO gentle for a 小白. ──
+    // ── R10 Difficulty curve (loose start, tight middle, climax finale). Speed/traffic/cop scale by a smoothstep over the
+    //    round (see difficulty01); these extra knobs keep the INTRO gentle for a beginner. ──
     easyIntroS:       8.0,    // first 8s = onboarding zone: no roadblocks, sparser traffic, cops held off (firstCopDelayS)
     easyTrafficMul:   1.6,    // traffic gap widened up to ×(1+this) at t=0, easing to ×1 by easyIntroS
 
@@ -272,13 +272,13 @@
   const tint  = (b, t) => mix(b, '#ffffff', t);
 
   // ─── REGIONAL THEMES — every round is a visibly different GTA locale (the user
-  //     wanted "每把不一样,一眼看出洛杉矶/迈阿密/纽约/墨西哥",招牌/警车/路边/配色
-  //     因地制宜,戳到老玩家的怀旧点). Each region carries its full palette + a
+  //     wanted "every run is different, instantly recognizable as LA/Miami/NY/Mexico", signs/cop cars/roadside/color schemes
+  //     localized, hitting the nostalgia of veteran players). Each region carries its full palette + a
   //     roadside `prop` style (palm/neon/skyscraper/cactus) + a place NAME. The
   //     low sun is kept (GTA cinematic) but tinted per region. ──
   const REGIONS = {
     losSantos: {
-      name: 'LOS SANTOS', sub: '加州 · 黄昏大道', prop: 'palm',
+      name: 'LOS SANTOS', sub: 'California · Sunset Blvd', prop: 'palm',
       sky:'#ff8a4c', sky2:'#ffd79a', sun:'#fff0c0', sunGlow:'#ffd98a',
       road:'#37332e', roadEdge:'#f0c84a', offRoad:'#a98a5e',
       building:'#caa46a', buildingLit:'#e6c98c', palmTrunk:'#7a5a34', palmLeaf:'#2e7d3a',
@@ -288,7 +288,7 @@
       neonA:'#ff3b6b', neonB:'#ffd24a', bill:['#e23b6d','#3bb0e2','#f0c020','#7a4fd0','#ff6a3b'],
     },
     viceCity: {
-      name: 'VICE CITY', sub: '迈阿密 · 霓虹海岸', prop: 'neon',
+      name: 'VICE CITY', sub: 'Miami · Neon Coast', prop: 'neon',
       sky:'#5b2a8c', sky2:'#ff79c8', sun:'#fff0a0', sunGlow:'#ff8ad6',
       road:'#2a2440', roadEdge:'#ff5fbf', offRoad:'#3a3060',
       building:'#3aa6c0', buildingLit:'#5ad6e0', palmTrunk:'#6a4a8a', palmLeaf:'#26c6a8',
@@ -298,7 +298,7 @@
       neonA:'#19e0e0', neonB:'#ff5fbf', bill:['#ff2bd6','#19e0e0','#ffe14a','#a04fff','#ff6ad6'],
     },
     libertyCity: {
-      name: 'LIBERTY CITY', sub: '纽约 · 阴雨峡谷', prop: 'skyscraper',
+      name: 'LIBERTY CITY', sub: 'New York · Rainy Canyon', prop: 'skyscraper',
       sky:'#3a4452', sky2:'#7b8a99', sun:'#c8d2dc', sunGlow:'#a8b6c4',
       road:'#24262b', roadEdge:'#c8b030', offRoad:'#3c4048',
       building:'#5a6470', buildingLit:'#7e8a98', palmTrunk:'#4a5058', palmLeaf:'#3a6a4a',
@@ -308,7 +308,7 @@
       neonA:'#ffb020', neonB:'#5a8bff', bill:['#e8c020','#cdd4dc','#5a8bff','#b03030','#3aa06a'],
     },
     mexico: {
-      name: 'BONITA', sub: '墨西哥 · 赤土烈日', prop: 'cactus',
+      name: 'BONITA', sub: 'Mexico · Red Earth Sun', prop: 'cactus',
       sky:'#ff9a3c', sky2:'#ffe0a0', sun:'#fff4d0', sunGlow:'#ffce80',
       road:'#4a3a30', roadEdge:'#e0a020', offRoad:'#c08a4a',
       building:'#d4884a', buildingLit:'#e6a86a', palmTrunk:'#7a5a34', palmLeaf:'#4a8a3a',
@@ -405,9 +405,9 @@
   // nitro on vertical joystick drags.
 
   // ─── ramp: cruise speed multiplier grows 1.0 → rampMul over the round ─
-  // R10 科学难度曲线 (前松→中紧→末高潮). 0..1 progress through the round mapped by a
+  // R10 Scientific difficulty curve (loose start → tight middle → climax finale). 0..1 progress through the round mapped by a
   // gentle-start / accelerating-end ease (smootherstep-ish): the first ~8s stay easy so
-  // a 小白 learns to drive + grab the first shop, then it climbs and peaks in the finale.
+  // a beginner learns to drive + grab the first shop, then it climbs and peaks in the finale.
   function difficulty01(s) {
     const k = Math.min(1, (s.elapsed || 0) / TUNING.durationS);
     return k * k * (3 - 2 * k);                          // smoothstep: flat start, steep middle, eases into the peak
@@ -462,14 +462,14 @@
     };
   }
 
-  // 抢店后被追: a guard bursts out behind you on a scooter and chases for a few seconds.
+  // Chased after robbery: a guard bursts out behind you on a scooter and chases for a few seconds.
   // spawnChaser(s, opts) — opts: { kind, wx, wy, banner }. kind picks the absurd
   // pursuer profile from TUNING.chaserKinds; falls back to a generic guard.
   function spawnChaser(s, opts) {
     opts = opts || {};
     const ws = $Iso().WS;
     const kind = opts.kind || 'clerk';
-    const K = (TUNING.chaserKinds && TUNING.chaserKinds[kind]) || { speed: TUNING.chaserSpeedWU, dmg: TUNING.chaserDmg, r: 0.34, body:'#e8c0a0', shirt:'#3a3f4a', label:'站住!', fires:false, fireCd:0, col:'#ffca3a' };
+    const K = (TUNING.chaserKinds && TUNING.chaserKinds[kind]) || { speed: TUNING.chaserSpeedWU, dmg: TUNING.chaserDmg, r: 0.34, body:'#e8c0a0', shirt:'#3a3f4a', label:'Stop!', fires:false, fireCd:0, col:'#ffca3a' };
     s.chasers.push({
       kind, wx: opts.wx != null ? opts.wx : s.player.wx,
       wy: opts.wy != null ? opts.wy : s.player.wy - ws * 2.5,
@@ -477,11 +477,11 @@
       fires: !!K.fires, fireCd: (K.fireCd || 1.6) * (0.6 + Math.random()*0.6),
       bob: Math.random() * Math.PI * 2, K,
     });
-    const txt = opts.banner || ({ clerk:'🏪 店员拎枪追出来了!', copFoot:'🚓 警察弃车徒步追!', biker:'🚲 有人骑车追上来!', rpg:'🚀 扛火箭筒的来了! 躲冷炮', owner:'😡 车主下来追你了!' }[kind] || '🏃 有人追出来了!');
+    const txt = opts.banner || ({ clerk:'🏪 Clerk ran out with a gun!', copFoot:'🚓 Cop is chasing on foot!', biker:'🚲 Someone is chasing on a bike!', rpg:'🚀 RPG guy incoming! Dodge the rocket', owner:'😡 Car owner is chasing you!' }[kind] || '🏃 Someone is chasing you!');
     if (window.showBanner) window.showBanner(txt, K.col || '#ffca3a', 1.2);
   }
 
-  // 整活彩蛋: spawn one absurd meme. chicken=stampede across, ufo=buzzes over with a
+  // Absurd easter egg: spawn one absurd meme. chicken=stampede across, ufo=buzzes over with a
   // tractor beam, donut=a giant pastry rolling down a lane (a dodgeable nudge).
   function spawnMeme(s, P) {
     const ws = P.ws, aheadWY = s.camWY + P.CAM_SY / P.PXF + ws * 2.5;
@@ -491,19 +491,19 @@
       const birds = [];
       for (let i = 0; i < TUNING.memeChickenN; i++) birds.push({ wx: s.roadCenterX - dir*(ws*3) + (Math.random()-0.5)*ws, wy: aheadWY + (Math.random()-0.5)*ws*2, ph: Math.random()*6 });
       s.meme = { kind: 'chicken', t: 4.0, dir, birds };
-      if (window.showBanner) window.showBanner('🐔 一群鸡冲过马路!', '#ffd24a', 1.2);
+      if (window.showBanner) window.showBanner('🐔 A flock of chickens crosses the road!', '#ffd24a', 1.2);
     } else if (roll < 0.78) {
       s.meme = { kind: 'ufo', t: 4.5, x: s.roadCenterX, dir: Math.random()<0.5?1:-1, ph: 0 };
-      if (window.showBanner) window.showBanner('🛸 那是个 UFO 吗?!', '#7af5e0', 1.4);
+      if (window.showBanner) window.showBanner('🛸 Is that a UFO?!', '#7af5e0', 1.4);
     } else {
       const lane = (Math.random() * (TUNING.laneMax*2+1) | 0) - TUNING.laneMax;
       s.meme = { kind: 'donut', t: 5.0, wx: laneWX(s, lane), wy: aheadWY, spin: 0 };
-      if (window.showBanner) window.showBanner('🍩 巨型甜甜圈滚下来了!', '#ff9ad0', 1.3);
+      if (window.showBanner) window.showBanner('🍩 Giant donut rolling down!', '#ff9ad0', 1.3);
     }
     punchZoom(s, 0.08);
   }
 
-  // 撒钱卡车: an armored truck spills a snaking trail of cash pickups across the lanes.
+  // Cash truck: an armored truck spills a snaking trail of cash pickups across the lanes.
   function spawnCashTrail(s, P) {
     const ws = P.ws, baseWY = s.camWY + P.CAM_SY / P.PXF + ws * 2;
     let lane = (Math.random() * (TUNING.laneMax*2+1) | 0) - TUNING.laneMax;
@@ -511,7 +511,7 @@
       s.pickups.push({ wx: laneWX(s, lane), wy: baseWY + i * ws * 1.15, r: ws * 0.27, taken: false });
       if (Math.random() < 0.45) lane = Math.max(-TUNING.laneMax, Math.min(TUNING.laneMax, lane + (Math.random() < 0.5 ? -1 : 1)));
     }
-    if (window.showBanner) window.showBanner('💸 撒钱卡车! 捡钱', '#ffd24a', 1.1);
+    if (window.showBanner) window.showBanner('💸 Cash truck! Grab the cash', '#ffd24a', 1.1);
   }
 
   // Pick a lane for traffic; bias toward the player's lane so the player must act.
@@ -538,7 +538,7 @@
     const lanes = ALL_LANES();
     const open = new Set(); while (open.size < 2) open.add(lanes[(Math.random() * lanes.length) | 0]);   // 2 lanes always stay open
     const aheadWU = P.CAM_SY / P.PXF + ws * 1.5;
-    // R9.3 警匪花样: at high heat the roadblock becomes a SWAT BARRICADE — police
+    // R9.3 Cop tactics: at high heat the roadblock becomes a SWAT BARRICADE — police
     // cruisers parked across lanes (block_swat) with light bars, not plain barrels.
     const swat = s.heat >= 3;
     for (const lane of lanes) {
@@ -549,7 +549,7 @@
       });
     }
     s.trafficQuiet = TUNING.roadblockQuietS;     // keep the open lane clear briefly
-    if (window.showBanner) window.showBanner(swat ? '🚧 SWAT 路障! 找空档冲' : '⚠ 前方路障', swat ? '#2b7bff' : '#ffcc44', 1100);
+    if (window.showBanner) window.showBanner(swat ? '🚧 SWAT Blockade! Find a gap' : '⚠ Roadblock ahead', swat ? '#2b7bff' : '#ffcc44', 1100);
   }
 
   // ─── local particles / shake ────────────────────────────────
@@ -571,12 +571,12 @@
     const add = mag >= 20 ? TUNING.traumaBig : mag >= 13 ? TUNING.traumaMed : TUNING.traumaSmall;
     s.trauma = Math.min(1, (s.trauma || 0) + add);
   }
-  // camera zoom-punch on big power beats (scale 1→1+amt→1, eased back) — the 爽感 hit
+  // camera zoom-punch on big power beats (scale 1→1+amt→1, eased back) — the rush hit
   function punchZoom(s, scale) { s._zoomT = TUNING.zoomPunchS; s._zoomAmt = (scale != null ? scale : TUNING.zoomPunchAmt); }
 
-  // R12 中央大字通道: ONE managed event card at a time, at a fixed clean spot (clear of the
+  // R12 Central big text channel: ONE managed event card at a time, at a fixed clean spot (clear of the
   // top HUD, the #banner at 30%, and the world floaters). Replaces the 13 scattered J.popup
-  // calls that piled up at H*0.24-0.40 = "遮挡/bug感". A new toast replaces the old one.
+  // calls that piled up at H*0.24-0.40 = "blocked/buggy feel". A new toast replaces the old one.
   function gtaToast(s, text, color, big) {
     s.toast = { text, color: color || '#ffd24a', big: !!big, t: 1.1, t0: 1.1 };
   }
@@ -608,8 +608,8 @@
     if (now > before) {                              // a new ★ → fanfare (R12: no shake, flash+hitstop only)
       s._heatFlashT = 0.5;
       const J = $J(); if (J) { J.hitstop(0.08); J.flash('#ff2b2b', 80); }
-      gtaToast(s, '★'.repeat(now) + ' 通缉升级', '#ff3b3b', true);   // R12: 中央通道
-      // (engine siren muted — its tone read as "难听"; chase tension is carried by
+      gtaToast(s, '★'.repeat(now) + ' Wanted Level Up', '#ff3b3b', true);   // R12: central channel
+      // (engine siren muted — its tone read as "ugly"; chase tension is carried by
       //  the proximity heartbeat overlay instead. A cleaner siren can be synthesised later.)
     }
   }
@@ -624,8 +624,8 @@
       const bonus = TUNING.evadeBonusPerStar * before;
       s.cash += bonus; s._evadeT = 1.4;
       const J = $J(); if (J) { J.confetti($W()); J.hitstop(0.14); }
-      gtaToast(s, '甩掉警察! +$' + bonus, '#5af5e0', true);   // R12: 中央通道
-      pushShake(s, 10); punchZoom(s, 0.10);                 // 爽感: the "got away" relief beat
+      gtaToast(s, 'EVADED! +$' + bonus, '#5af5e0', true);   // R12: central channel
+      pushShake(s, 10); punchZoom(s, 0.10);                 // rush: the "got away" relief beat
       try { if (window.stopSiren) window.stopSiren(); } catch (_) {}
       if (window.showBanner) window.showBanner('🏁 WANTED EVADED · +$' + bonus, '#5af5e0', 1.2);
     }
@@ -633,7 +633,7 @@
   // active-cop budget grows with the wanted level (★1≈1-2 cars, ★5≈5)
   function copBudget(s) { return Math.max(1, Math.min(TUNING.heatMax, Math.ceil(s.heat * TUNING.copsPerStar))); }
 
-  // ── clean two-tone police siren, synthesised here (the engine's was "难听").
+  // ── clean two-tone police siren, synthesised here (the engine's was "ugly").
   //    Fully guarded: ANY audio failure is a silent no-op, never a console error
   //    and never a regression (worst case = no siren, same as muted). ──
   let _siren = null, _sirenInit = false;
@@ -644,7 +644,7 @@
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return (_siren = null);
       const ctx = new AC();
       const gain = ctx.createGain(); gain.gain.value = 0; gain.connect(ctx.destination);
-      // Focused band-pass "wail" (the old sawtooth+lowpass read as a buzzy moan = 难听).
+      // Focused band-pass "wail" (the old sawtooth+lowpass read as a buzzy moan = ugly).
       const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 950; bp.Q.value = 4.5; bp.connect(gain);
       const osc = ctx.createOscillator(); osc.type = 'triangle'; osc.frequency.value = 900; osc.connect(bp);   // smoother carrier than saw
       const osc2 = ctx.createOscillator(); osc2.type = 'sine'; osc2.frequency.value = 900; osc2.detune.value = 7; osc2.connect(bp); // a little body
@@ -657,7 +657,7 @@
   }
   // v = loudness (0..~0.08, driven by heat+proximity). prox = 0..1 nearest-cop
   // closeness. Real US siren escalation: a slow WAIL when cops are distant →
-  // snaps to a fast YELP/chirp when one is right behind you (that's the 紧张感).
+  // snaps to a fast YELP/chirp when one is right behind you (that's the tension).
   function sirenVol(v, prox) {
     try { const s2 = siren(); if (!s2) return; if (s2.ctx.state === 'suspended') s2.ctx.resume();
       const vol = Math.max(0, Math.min(0.085, v));
@@ -683,7 +683,7 @@
     if (c === 3 || c === 5 || c === 8 || c === 12) {           // milestone fanfare
       s._comboFlashT = 0.6; if (c >= 5) punchZoom(s, 0.08 + Math.min(0.06, c*0.004));   // deeper rampage → bigger punch
       const J = $J(); if (J) { J.hitstop(0.05); J.flash(c >= 8 ? '#ff3bd6' : '#ffd24a', 60);
-        J.popup((c >= 12 ? '🔥 UNREAL' : c >= 8 ? '🔥 INSANE' : c >= 5 ? '🔥 RAMPAGE' : '连击') + ' ×' + c, $W()/2, $H()*0.40, { color: c >= 8 ? '#ff3bd6' : '#ffd24a', size: 26, dur: 0.9 }); }
+        J.popup((c >= 12 ? '🔥 UNREAL' : c >= 8 ? '🔥 INSANE' : c >= 5 ? '🔥 RAMPAGE' : 'Combo') + ' ×' + c, $W()/2, $H()*0.40, { color: c >= 8 ? '#ff3bd6' : '#ffd24a', size: 26, dur: 0.9 }); }
     }
   }
 
@@ -695,9 +695,9 @@
   // driver gets a dramatic save without auto-win (heat climbs right back, you
   // still have to finish the run). A 3-gift pool → every send differs.
   const GTA_GIFTS = {
-    cartel: { ico: '🚁', name: '黑帮空袭 · CARTEL', tone: '#ff5a3c', dur: 9 },   // chopper hovers + bombs your path
-    fbi:    { ico: '🚔', name: 'FBI 护送 · ESCORT',  tone: '#54a8ff', dur: 9 },   // armored SUVs ride shotgun
-    tank:   { ico: '🛡', name: '犀牛坦克 · RHINO',  tone: '#7dd66a', dur: 8 },   // become a tank, plow everything
+    cartel: { ico: '🚁', name: 'Cartel Airstrike', tone: '#ff5a3c', dur: 9 },   // chopper hovers + bombs your path
+    fbi:    { ico: '🚔', name: 'FBI Escort',  tone: '#54a8ff', dur: 9 },   // armored SUVs ride shotgun
+    tank:   { ico: '🛡', name: 'Rhino Tank',  tone: '#7dd66a', dur: 8 },   // become a tank, plow everything
   };
   const GTA_GIFT_KEYS = ['cartel', 'fbi', 'tank'];
 
@@ -824,7 +824,7 @@
     onAction() { if (this.castPress) this.castPress('q'); },                 // tap (release-timed) path — kept as fallback
     onActionDown() { if (this.castPress) this.castPress('q'); },             // fire-on-press → nitro works while steering thumb is down
 
-    skills() { return [ { key: 'q', ico: '⚡', label: '氮气', color: '#00f0ff' }, null, null, null ]; },
+    skills() { return [ { key: 'q', ico: '⚡', label: 'NITRO', color: '#00f0ff' }, null, null, null ]; },
 
     applyGiftBoost(boost) {
       const s = $state(); if (!s || !s.gtaActive || !s.player) return false;
@@ -888,8 +888,8 @@
         if (q) { q.style.top = 'auto'; q.style.left = 'auto'; q.style.bottom = '0'; q.style.right = '0';
                  q.style.width = '76px'; q.style.height = '76px'; q.style.fontSize = '15px'; }
         const pills = document.getElementById('pills'); if (pills) pills.style.display = 'none';
-        // R9.1: make the steering joystick BIGGER + actually VISIBLE (user: "摇杆太小/看不到").
-        // Bigger ring = more travel room (helps the 断触 feel too); brighter so the thumb finds it.
+        // R9.1: make the steering joystick BIGGER + actually VISIBLE (user: "joystick too small/can't see it").
+        // Bigger ring = more travel room (helps the dropped-input feel too); brighter so the thumb finds it.
         const joy = document.getElementById('joy');
         if (joy) { joy.style.width = '150px'; joy.style.height = '150px';
           joy.style.background = 'rgba(255,255,255,0.10)'; joy.style.border = '3px solid rgba(255,255,255,0.40)'; }
@@ -956,16 +956,16 @@
         shops: generateShops(shopCount, ws, roadCenterX, startWY),
         obstacles: [], trafficN: 0, trafficAcc: 0, trafficQuiet: 0, roadblockAcc: 0,
         cops: [], copBullets: [], playerBullets: [], copSpawnAcc: 0, copCount: 0, copsMaxActive: TUNING.copMaxActive,
-        chasers: [],   // 抢店后被追
-        pickups: [], cashAcc: 0, cashNextS: TUNING.cashFirstS,   // 撒钱卡车
-        powerups: [], tankAcc: 0, tankNextS: TUNING.tankFirstS,   // 狂暴模式
-        chopper: null,   // 直升机探照灯
-        tireAcc: 0, tireNextS: TUNING.tireFirstS,   // 爆胎漂移
+        chasers: [],   // Chased after robbery
+        pickups: [], cashAcc: 0, cashNextS: TUNING.cashFirstS,   // Cash truck
+        powerups: [], tankAcc: 0, tankNextS: TUNING.tankFirstS,   // Rampage mode
+        chopper: null,   // Helicopter searchlight
+        tireAcc: 0, tireNextS: TUNING.tireFirstS,   // Tyre blowout drift
         floaters: [], sparks: [], _engineOn: false, _speedLinesT: 0,
         shakeT: 0, shakeMag: 0, trauma: 0, robCombo: 0, _zoomT: 0, _zoomAmt: 0,
-        tow: null, towAcc: 0,   // 锁链拖 ATM
-        meme: null, memeAcc: 0, memeNextS: TUNING.memeFirstS,   // 整活彩蛋
-        toast: null,   // R12 中央大字通道: one managed event card at a time (no overlap/bug感)
+        tow: null, towAcc: 0,   // Tow chained ATM
+        meme: null, memeAcc: 0, memeNextS: TUNING.memeFirstS,   // Absurd easter eggs
+        toast: null,   // R12 Central big text channel: one managed event card at a time (no overlap/buggy feel)
         kills: 0, cash: 0, robbedCount: 0, bots: [],
         skills: { q: { cd: TUNING.nitroCooldownS, _cd: 0 } },
         _autoDisable: false,   // QA hook: deterministic dodge test
@@ -1005,7 +1005,7 @@
       if (s._heatFlashT > 0) s._heatFlashT = Math.max(0, s._heatFlashT - dt);
       if (s._evadeT > 0) s._evadeT = Math.max(0, s._evadeT - dt);
       if (s._zoomT > 0) s._zoomT = Math.max(0, s._zoomT - dt);
-      if (s.toast && (s.toast.t -= dt) <= 0) s.toast = null;   // R12 中央通道倒计时
+      if (s.toast && (s.toast.t -= dt) <= 0) s.toast = null;   // R12 central channel countdown
       if (s._comboFlashT > 0) s._comboFlashT = Math.max(0, s._comboFlashT - dt);
       if (s.comboT > 0) { s.comboT -= dt; if (s.comboT <= 0) s.robCombo = 0; }   // RAMPAGE chain expires if you stop chaining
       updateHeat(s, dt);                                   // wanted-level decay → evade payoff
@@ -1023,17 +1023,17 @@
         if (Math.abs(mvy) > 0.15) manualInput = true;
         // Lane steer: ONE lane per clear sideways push, edge-latched. You CAN steer
         // while accelerating (the old "sideways must beat forward" gate made holding
-        // up+right feel like the wheel was stuck = 便秘). Hysteresis (STEER>RESET) so a
+        // up+right feel like the wheel was stuck = constipated). Hysteresis (STEER>RESET) so a
         // steady diagonal push never wobbles — it's strictly one-lane-per-press.
         // R8.1: thresholds LOWERED (0.55→0.40) so a natural thumb push — even a
         // diagonal one while accelerating up — reliably flips the lane. The old
-        // 0.55 ate gentle sideways intent → felt "断触/便秘" (user feedback). Still
+        // 0.55 ate gentle sideways intent → felt "dropped input / constipated" (user feedback). Still
         // edge-latched w/ hysteresis (STEER>RESET) so a held push = ONE lane, no wobble.
         // R9 ANALOG STEER: the joystick's sideways position maps DIRECTLY to where the
         // car sits across the road — push half-right, sit half-right; slam full-left,
         // glide to the far-left lane in one motion; rest between lanes. This is the
-        // "从最左滑到最右、灵活" feel the user asked for (replaces the old one-lane-per-
-        // push latch that felt 便秘). Keyboard a/d (web, no analog axis) keeps a clean
+        // "slide from far left to far right, flexible" feel the user asked for (replaces the old one-lane-per-
+        // push latch that felt constipated). Keyboard a/d (web, no analog axis) keeps a clean
         // one-lane-per-press step so the web build still has discrete control.
         const K = $keys();
         const kbLeft = !!(K['a'] || K['arrowleft']), kbRight = !!(K['d'] || K['arrowright']);
@@ -1117,36 +1117,36 @@
             if (shop._isFirst) s._firstHintDone = true;                     // first heist done → retire the onboarding hint
             bumpCombo(s); p._robberPop = TUNING.robberPopS;                 // chain the rampage
             const mul = comboMul(s), gain = Math.round(shop.money * mul); s.cash += gain;   // chain → bigger payout
-            addHeat(s, TUNING.heatPerRob);                 // 干坏事 → wanted level climbs
-            spawnChaser(s, { kind: 'clerk', wx: shop.wx, wy: s.player.wy - $Iso().WS * 2.5 });   // 抢完店 → 店员拎枪追出来
-            // 锁链拖 ATM (速度与激情梗): chain the shop's safe/ATM to your bumper. BANK/ATM
+            addHeat(s, TUNING.heatPerRob);                 // commit a crime → wanted level climbs
+            spawnChaser(s, { kind: 'clerk', wx: shop.wx, wy: s.player.wy - $Iso().WS * 2.5 });   // After robbing → clerk runs out with a gun
+            // Tow chained ATM (Fast & Furious meme): chain the shop's safe/ATM to your bumper. BANK/ATM
             //   shops drag a vault; others a cash crate. Replaces any prior tow.
             s.tow = { t: TUNING.towDurS, kind: (shop.kind && /BANK|GOLD|PAWN/.test(shop.kind.name)) ? 'safe' : 'crate', col: (shop.kind && shop.kind.sign) || '#caa46a', wx: p.wx, wy: p.wy - ws * 1.6 };
             s.towAcc = 0;
             punchZoom(s, 0.10);
-            if (window.showBanner) window.showBanner('⛓️ 保险箱拴车上了! 拖着跑!', '#ffd24a', 1.3);
+            if (window.showBanner) window.showBanner('⛓️ Safe chained to car! Drag it!', '#ffd24a', 1.3);
             pushShake(s, TUNING.robTrauma);
             const px = P.sx(shop.wx), py = P.sy(shop.wy);
             for (let i = 0; i < 5; i++) pushSpark(s, px + (Math.random()-0.5)*24, py + (Math.random()-0.5)*24, '#ffd24a', 26);
             s.floaters.push({ wx: shop.wx, wy: shop.wy, text: '💰 +$' + gain, color: '#ffd24a', life: 1.3 });
             const J = $J();
             if (J) { J.hitstop(TUNING.bigSlowmoS); J.flash('#fff3a0', 80); J.burst(px, py, 'cash', '#ffd24a'); if (J.vignettePulse) J.vignettePulse(0.4);
-                     J.popup('抢到 $' + gain + (s.robCombo >= 2 ? '  ×' + mul.toFixed(1) : ''), $W()/2, $H()*0.34, { color:'#ffd24a', size: 22 + Math.min(14, s.robCombo*3), dur: 1.0 }); }
+                     J.popup('Robbed $' + gain + (s.robCombo >= 2 ? '  ×' + mul.toFixed(1) : ''), $W()/2, $H()*0.34, { color:'#ffd24a', size: 22 + Math.min(14, s.robCombo*3), dur: 1.0 }); }
             const SFX = $SFX(); try { if (SFX.cash) SFX.cash(); } catch (_) {}
-            if (window.showBanner) window.showBanner(`💰 +$${gain}` + (s.robCombo >= 2 ? ` 连击×${mul.toFixed(1)}` : ''), '#ffd24a', 0.9);
+            if (window.showBanner) window.showBanner(`💰 +$${gain}` + (s.robCombo >= 2 ? ` Combo×${mul.toFixed(1)}` : ''), '#ffd24a', 0.9);
           }
         } else if (shop.progress > 0) shop.progress = Math.max(0, shop.progress - dt * 0.6);
       }
 
       // ── traffic + roadblock spawning (R10: gap follows the difficulty curve via rf;
-      //    plus an extra EARLY-GAME widening so the first ~8s stay sparse for a 小白). ──
+      //    plus an extra EARLY-GAME widening so the first ~8s stay sparse for a beginner). ──
       const earlyEase = s.elapsed < TUNING.easyIntroS ? (1 + (1 - s.elapsed / TUNING.easyIntroS) * TUNING.easyTrafficMul) : 1;
       const trafficGap = TUNING.trafficIntervalS * (1 - TUNING.trafficRampCut * (rf - 1) / (TUNING.rampMul - 1)) * earlyEase;
       s.roadblockAcc += dt;
       if (s.elapsed > TUNING.easyIntroS && s.roadblockAcc >= TUNING.roadblockEveryS) { s.roadblockAcc = 0; spawnRoadblock(s, P); }   // no roadblocks in the intro
       s.trafficAcc += dt;
       if (s.trafficQuiet <= 0 && s.trafficAcc >= trafficGap) { s.trafficAcc = 0; spawnTraffic(s, P); }
-      // 撒钱卡车: periodic cash-trail + pickup collection (greed vs dodge)
+      // Cash truck: periodic cash-trail + pickup collection (greed vs dodge)
       s.cashAcc += dt;
       if (s.cashAcc >= s.cashNextS) { s.cashAcc = 0; s.cashNextS = TUNING.cashEveryS; spawnCashTrail(s, P); }
       for (const pk of s.pickups) {
@@ -1157,26 +1157,26 @@
         }
       }
       s.pickups = s.pickups.filter(pk => !pk.taken && (pk.wy - p.wy) > -ws * 2);
-      // 狂暴模式: a rare glowing power-up spawns ahead; grab it → smash-all invincible rampage
+      // Rampage mode: a rare glowing power-up spawns ahead; grab it → smash-all invincible rampage
       if (p._tankT > 0) p._tankT = Math.max(0, p._tankT - dt);
       s.tankAcc += dt;
       if (s.tankAcc >= s.tankNextS) { s.tankAcc = 0; s.tankNextS = TUNING.tankEveryS;
         const tl = (Math.random()*(TUNING.laneMax*2+1)|0) - TUNING.laneMax;
         s.powerups.push({ wx: laneWX(s, tl), wy: s.camWY + P.CAM_SY/P.PXF + ws*2, r: ws*0.34 });
-        if (window.showBanner) window.showBanner('⭐ 狂暴道具 在前面!', '#ff3bd6', 1.2);
+        if (window.showBanner) window.showBanner('⭐ Rampage power-up ahead!', '#ff3bd6', 1.2);
       }
       for (const pu of s.powerups) {
         if (pu.taken) continue;
         if (Math.abs(pu.wx - p.wx) < p.r + pu.r && Math.abs(pu.wy - p.wy) < p.r + pu.r) {
           pu.taken = true; p._tankT = TUNING.tankDurS; s._speedLinesT = 1.5;   // R12: pickup = flash+zoom, no shake
           const Jt = $J(); if (Jt) { Jt.hitstop(0.08); Jt.flash('#ff3bd6', 90); if (Jt.vignettePulse) Jt.vignettePulse(0.6); }
-          gtaToast(s, '🔥 狂暴模式!', '#ff3bd6', true);   // R12: 中央通道
+          gtaToast(s, '🔥 RAMPAGE MODE!', '#ff3bd6', true);   // R12: central channel
         }
       }
 
-      // 爆胎漂移: a random tyre blowout sends the car drifting sideways with loose
-      // steering for a beat — counter-steer to save it (操作空间, no damage). Skill
-      // check, not malice. Suppressed during 狂暴 (you're a tank, no flats).
+      // Tyre blowout drift: a random tyre blowout sends the car drifting sideways with loose
+      // steering for a beat — counter-steer to save it (room to act, no damage). Skill
+      // check, not malice. Suppressed during Rampage (you're a tank, no flats).
       if (p._tireT > 0) p._tireT = Math.max(0, p._tireT - dt);
       s.tireAcc += dt;
       if (s.tireAcc >= s.tireNextS && p._tankT <= 0 && p._tireT <= 0) {
@@ -1184,18 +1184,18 @@
         p._tireT = TUNING.tireDriftS; p._tireDir = Math.random() < 0.5 ? -1 : 1;
         pushShake(s, 16); s.robCombo = s.robCombo;   // a blowout does NOT break the rampage chain
         const Jb = $J(); if (Jb) { Jb.hitstop(0.05); Jb.chroma(70); }
-        gtaToast(s, '💥 爆胎! 稳住方向', '#ffca3a', false);   // R12: 中央通道
+        gtaToast(s, '💥 BLOWOUT! Hold the wheel', '#ffca3a', false);   // R12: central channel
         const SFXb = $SFX(); try { if (SFXb.hit) SFXb.hit(); } catch (_) {}
-        if (window.showBanner) window.showBanner('💥 爆胎! 打方向稳住', '#ffca3a', 1.0);
+        if (window.showBanner) window.showBanner('💥 Blowout! Steer to stabilize', '#ffca3a', 1.0);
       }
       if (p._tireT > 0) p.wx += p._tireDir * TUNING.tireDriftWU * (p._tireT / TUNING.tireDriftS) * dt;   // slide eases off as it ends
       s.powerups = s.powerups.filter(pu => !pu.taken && (pu.wy - p.wy) > -ws * 2);
-      // 直升机探照灯: at high heat a chopper sweeps a spotlight; in the beam keeps you hot — dodge it
+      // Helicopter searchlight: at high heat a chopper sweeps a spotlight; in the beam keeps you hot — dodge it
       if (s.heat >= TUNING.chopperHeat) {
-        if (!s.chopper) { s.chopper = { x: s.roadCenterX, dir: 1, ph: 0 };   // 🚁 出动 — the escalation beat
+        if (!s.chopper) { s.chopper = { x: s.roadCenterX, dir: 1, ph: 0 };   // 🚁 deployed — the escalation beat
           const Jc = $J(); if (Jc) { Jc.flash('#ffe070', 70); }   // R12: no shake (spawn event, flash only)
-          gtaToast(s, '🚁 警用直升机出动!', '#ffe070', false);   // R12: 中央通道
-          if (window.showBanner) window.showBanner('🚁 直升机出动 · 躲开探照灯', '#ffe070', 1.3); }
+          gtaToast(s, '🚁 Police helicopter deployed!', '#ffe070', false);   // R12: central channel
+          if (window.showBanner) window.showBanner('🚁 Helicopter deployed · Dodge the spotlight', '#ffe070', 1.3); }
         s.chopper.ph += dt;
         s.chopper.x += s.chopper.dir * TUNING.chopperSweepWU * dt;
         if (s.chopper.x >= s.latRight) { s.chopper.x = s.latRight; s.chopper.dir = -1; }
@@ -1218,15 +1218,15 @@
             p.hp = Math.max(0, p.hp - TUNING.chopperBulletDmg); s.robCombo = 0;
             pushSpark(s, P.sx(p.wx), P.sy(p.wy), '#ffd84a', 8);
             const SFX = $SFX(); try { if (SFX.hit) SFX.hit(); } catch (_) {}
-            if (window.showBanner) window.showBanner(`🚁 直升机扫射! HP ${p.hp}`, '#ff6a4a', 0.5);
+            if (window.showBanner) window.showBanner(`🚁 Helicopter strafing! HP ${p.hp}`, '#ff6a4a', 0.5);
             if (p.hp <= 0) { return this._bust(s); }
-            if (!s.chopper._warned) { s.chopper._warned = true; gtaToast(s, '🚁 直升机开火!快躲开探照灯!', '#ff6a4a', false); }
+            if (!s.chopper._warned) { s.chopper._warned = true; gtaToast(s, '🚁 Helicopter firing! Dodge the spotlight!', '#ff6a4a', false); }
           }
         }
       } else if (s.chopper) s.chopper = null;
 
       // ── obstacles: advance + collision. Boosting through a CIVILIAN car
-      // bulldozes it aside (干坏事 power fantasy); otherwise you eat it with a
+      // bulldozes it aside (commit-a-crime power fantasy); otherwise you eat it with a
       // real knockback (dodge matters). Concrete roadblocks always hurt. ──
       const boostingNow = p.boostT > 0;
       for (const o of s.obstacles) {
@@ -1235,22 +1235,22 @@
         if (o.hit) continue;
         if (Math.abs(o.wx - p.wx) < (p.r + o.r) && Math.abs(o.wy - p.wy) < (p.r + o.r) && (p.invulnT || 0) <= 0) {   // R9 analog: collide by real x-distance, not lane equality
           const px = P.sx(o.wx), py = P.sy(p.wy);
-          if (p._tankT > 0) {                                    // 狂暴: smash ALL (cars + blocks) aside, no damage
+          if (p._tankT > 0) {                                    // Rampage: smash ALL (cars + blocks) aside, no damage
             o.smashed = true; o.vx = (o.wx < p.wx ? -1 : 1) * TUNING.smashKnockWU * 1.4; o.vy = -TUNING.baseSpeedWU * 0.4;
-            s.cash += TUNING.tankSmashReward;   // R12: 狂暴碾压频繁 → 不震(flash+debris 给反馈)
+            s.cash += TUNING.tankSmashReward;   // R12: rampage crush is frequent → no shake (flash+debris gives feedback)
             const Jt2 = $J(); if (Jt2) { Jt2.flash('#ff3bd6', 36); Jt2.burst(px, py, 'debris', '#ff8adf'); }
             continue;
           }
           if (o.type === 'car' && boostingNow) {                 // SMASH — bulldoze it aside
             o.smashed = true; o.vx = (o.wx < p.wx ? -1 : 1) * TUNING.smashKnockWU; o.vy = -TUNING.baseSpeedWU * 0.3;
             p.hp = Math.max(0, p.hp - TUNING.smashHpCost); s.smashes = (s.smashes || 0) + 1;
-            addHeat(s, TUNING.heatPerSmash);   // R12: boosting-smash 频繁 → 不震(hitstop+flash 给冲击)
+            addHeat(s, TUNING.heatPerSmash);   // R12: boosting-smash is frequent → no shake (hitstop+flash gives impact)
             const J = $J(); if (J) { J.hitstop(0.06); J.flash('#ffffff', 50); J.burst(px, py, 'debris', '#cfd6e0'); }
             for (let i = 0; i < 8; i++) pushSpark(s, px, py, '#ffd24a', 16);
             bumpCombo(s);
             if (J) J.popup('💥 SMASH' + (s.robCombo >= 2 ? ' ×' + s.robCombo : ''), px, py - 20, { color: '#ffd24a', size: 18 });
             const SFX = $SFX(); try { if (SFX.hit) SFX.hit(); } catch (_) {}
-            // 撞了人家的车 → 1/3 概率车主弹出来挥扳手骂街追你(搞笑骚扰,不致命)
+            // Hit someone's car → 1/3 chance the owner pops out with a wrench chasing you (comedic harassment, not fatal)
             if (Math.random() < 0.34 && s.chasers.length < 4) spawnChaser(s, { kind: 'owner', wx: o.wx, wy: o.wy });
           } else {                                               // EAT IT — damage + knockback + slow-mo
             o.hit = true;
@@ -1258,10 +1258,10 @@
             p.invulnT = 0.9; s.robCombo = 0;
             p._knock = (o.wx < p.wx ? 1 : -1) * TUNING.copHitKnockWU * 0.7; p._stunT = TUNING.copHitStunS * 0.7;
             pushShake(s, 20); addHeat(s, TUNING.heatPerSmash);
-            const J = $J(); if (J) { J.hitstop(0.08); J.flash('#ff5533', 70); J.chroma(55); J.burst(px, py, 'debris', '#aab2c0'); }   // R10: chroma 110→55 防晕
+            const J = $J(); if (J) { J.hitstop(0.08); J.flash('#ff5533', 70); J.chroma(55); J.burst(px, py, 'debris', '#aab2c0'); }   // R10: chroma 110→55 to prevent nausea
             for (let i = 0; i < 6; i++) pushSpark(s, px, py, '#ff7744', 18);
             const SFX = $SFX(); try { if (SFX.hit) SFX.hit(); } catch (_) {}
-            if (window.showBanner) window.showBanner(`撞车! HP ${p.hp}`, '#ff7744', 0.6);
+            if (window.showBanner) window.showBanner(`Crash! HP ${p.hp}`, '#ff7744', 0.6);
             if (p.hp <= 0) { return this._bust(s); }
           }
         }
@@ -1273,8 +1273,8 @@
       const budget = Math.min(copBudget(s), Math.ceil(TUNING.heatMax * Math.max(0.5, s.copRate)));
       const copInterval = TUNING.copIntervalS * (1 - TUNING.copIntervalHeatCut * (s.heat / TUNING.heatMax));
       s.copSpawnAcc += dt;
-      // R10 前松: hold cops back through the onboarding window (minus a 2s grace so an
-      // early robber still sees heat build, just not an instant swarm) → 小白 learns first.
+      // R10 Loose start: hold cops back through the onboarding window (minus a 2s grace so an
+      // early robber still sees heat build, just not an instant swarm) → beginner learns first.
       const copsAllowed = s.elapsed > (TUNING.easyIntroS - 2);
       if (copsAllowed && s.heat > 0.3 && s.copSpawnAcc >= copInterval && s.cops.length < budget) {
         s.cops.push(spawnCop(s)); s.copCount += 1; s.copSpawnAcc = 0;
@@ -1287,7 +1287,7 @@
       const ramming = s.heat >= TUNING.copRamHeat;
       for (const cop of s.cops) {
         if (cop._wipe > 0) { cop._wipe -= dt; cop._spin = (cop._spin || 0) + dt * 14;
-          if (cop._wipe <= 0) { cop._dead = true;                       // car flips out → the cop EJECTS and keeps chasing on foot (荒诞)
+          if (cop._wipe <= 0) { cop._dead = true;                       // car flips out → the cop EJECTS and keeps chasing on foot (absurd)
             if (s.chasers.length < 4) { const roll = Math.random(); const kind = roll < 0.5 ? 'copFoot' : (roll < 0.8 ? 'biker' : 'rpg');
               spawnChaser(s, { kind, wx: cop.wx, wy: cop.wy }); } }
           continue; }
@@ -1296,7 +1296,7 @@
           s._copWipeCd = TUNING.copWipeMinHeatGap;   // gate: rare, and only when ≥2 cops so a flip never empties the force
           cop._wipe = 0.7; s.heat = Math.max(0, s.heat - TUNING.copWipeRelief); s.stars = Math.ceil(s.heat - 1e-6);
           pushShake(s, 10); const Jw = $J(); if (Jw) { Jw.hitstop(0.05); }
-          if (window.showBanner) window.showBanner('🚓💥 警车翻车!', '#ffca3a', 1.0);
+          if (window.showBanner) window.showBanner('🚓💥 Cop car flipped!', '#ffca3a', 1.0);
           continue;
         }
         const dxw = p.wx - cop.wx, dyw = p.wy - cop.wy, len = Math.hypot(dxw, dyw) || 1;
@@ -1312,7 +1312,7 @@
           s.copBullets.push({ wx: cop.wx, wy: cop.wy, vx: Math.cos(ang)*TUNING.copBulletSpeedWU, vy: Math.sin(ang)*TUNING.copBulletSpeedWU, life: 1.6, _minD: 1e9 });
           const SFX = $SFX(); try { if (SFX.shot) SFX.shot(); } catch (_) {}
         }
-        if (p._tankT > 0 && Math.hypot(p.wx - cop.wx, p.wy - cop.wy) < p.r + cop.r) {   // 狂暴: ram cops dead
+        if (p._tankT > 0 && Math.hypot(p.wx - cop.wx, p.wy - cop.wy) < p.r + cop.r) {   // Rampage: ram cops dead
           cop._dead = true; s.cash += TUNING.copKillReward; bumpCombo(s); pushShake(s, 16);
           const Jt3 = $J(); if (Jt3) { Jt3.flash('#ff3bd6', 50); Jt3.burst(P.sx(cop.wx), P.sy(cop.wy), 'debris', '#ff8adf'); }
           continue;
@@ -1324,16 +1324,16 @@
           cop.wy -= ws * 0.8;                                  // cop recoils back from the impact
           pushShake(s, TUNING.copHitTraumaBig); addHeat(s, TUNING.heatPerCopHit);
           const px = P.sx(p.wx), py = P.sy(p.wy);
-          const J = $J(); if (J) { J.hitstop(TUNING.copHitstopS); J.flash('#ff2b2b', 80); J.chroma(70); J.burst(px, py, 'debris', '#9aa3b2'); if (J.vignettePulse) J.vignettePulse(0.5); }   // R10: chroma 150→70 flash 120→80 (防晕,冲击靠 hitstop)
+          const J = $J(); if (J) { J.hitstop(TUNING.copHitstopS); J.flash('#ff2b2b', 80); J.chroma(70); J.burst(px, py, 'debris', '#9aa3b2'); if (J.vignettePulse) J.vignettePulse(0.5); }   // R10: chroma 150→70 flash 120→80 (anti-nausea, impact carried by hitstop)
           for (let i = 0; i < 10; i++) pushSpark(s, px, py, '#ffd24a', 22);
           const SFX = $SFX(); try { if (SFX.hit) SFX.hit(); } catch (_) {}
-          if (window.showBanner) window.showBanner(`💥 警车撞击! HP ${p.hp}`, '#ff3344', 0.7);
+          if (window.showBanner) window.showBanner(`💥 Cop car slam! HP ${p.hp}`, '#ff3344', 0.7);
           if (p.hp <= 0) { return this._bust(s); }
         }
       }
 
-      // ── 离谱追兵: kinds pursue from behind; gun-kinds lob a dodgeable shot; catch
-      //    = bump, outrun = relief + bonus. All slower than full throttle (操作空间). ──
+      // ── Absurd chasers: kinds pursue from behind; gun-kinds lob a dodgeable shot; catch
+      //    = bump, outrun = relief + bonus. All slower than full throttle (room to act). ──
       for (const ch of s.chasers) {
         ch.life -= dt; ch.bob = (ch.bob || 0) + dt * 12;
         const cdx = p.wx - ch.wx, cdy = p.wy - ch.wy, clen = Math.hypot(cdx, cdy) || 1;
@@ -1353,19 +1353,19 @@
           ch.hitCd = 1.0; p.hp = Math.max(0, p.hp - (ch.dmg || TUNING.chaserDmg)); s.robCombo = 0;
           p._knock = Math.sign(p.wx-ch.wx||1)*TUNING.copHitKnockWU*0.5; p._stunT = TUNING.copHitStunS*0.5;
           pushShake(s, 12); const Jc=$J(); if(Jc){ Jc.hitstop(0.06); Jc.flash('#ffca3a',70); }
-          if (window.showBanner) window.showBanner('被追上了! HP '+p.hp, '#ff7744', 0.6);
+          if (window.showBanner) window.showBanner('Caught up! HP '+p.hp, '#ff7744', 0.6);
           if (p.hp <= 0) { return this._bust(s); }
         }
       }
       { const cbefore = s.chasers.length;
         s.chasers = s.chasers.filter(ch => ch.life > 0 && (p.wy - ch.wy) < TUNING.chaserGiveUpWU);
         if (cbefore > 0 && s.chasers.length === 0) {
-          s.cash += TUNING.chaserBonus; gtaToast(s, '甩掉了! +$'+TUNING.chaserBonus, '#5af5e0', false);   // R12: 中央通道
-          if (window.showBanner) window.showBanner('🏁 甩掉追兵 +$'+TUNING.chaserBonus, '#5af5e0', 1.0);
+          s.cash += TUNING.chaserBonus; gtaToast(s, 'Lost them! +$'+TUNING.chaserBonus, '#5af5e0', false);   // R12: central channel
+          if (window.showBanner) window.showBanner('🏁 Lost the chaser +$'+TUNING.chaserBonus, '#5af5e0', 1.0);
         }
       }
 
-      // ── 锁链拖 ATM: drag the chained safe behind, tick bonus $, then it bursts open ──
+      // ── Tow chained ATM: drag the chained safe behind, tick bonus $, then it bursts open ──
       if (s.tow) {
         s.tow.t -= dt;
         // the loot trails ~1.6 tiles behind the car, easing toward that anchor
@@ -1381,28 +1381,28 @@
           const tp = gProj(s), bx = tp.sx(s.tow.wx), by = tp.sy(s.tow.wy);
           s.cash += TUNING.towBurstVal; pushShake(s, 18); punchZoom(s, 0.12);
           const Jb = $J(); if (Jb) { Jb.hitstop(0.10); Jb.flash('#fff3a0', 70); Jb.burst(bx, by, 'cash', '#ffd24a'); Jb.burst(bx, by, 'debris', '#9aa3b2'); }
-          gtaToast(s, '💥 保险箱崩开 +$' + TUNING.towBurstVal, '#ffd24a', true);   // R12: 中央通道
+          gtaToast(s, '💥 Safe burst open +$' + TUNING.towBurstVal, '#ffd24a', true);   // R12: central channel
           for (let i = 0; i < 20; i++) pushSpark(s, bx, by, i%2?'#ffd24a':'#fff3a0', 26);
-          if (window.showBanner) window.showBanner('💥 保险箱崩开! 钱炸一地', '#ffd24a', 1.1);
+          if (window.showBanner) window.showBanner('💥 Safe burst open! Cash everywhere', '#ffd24a', 1.1);
           s.tow = null;
         }
       }
 
-      // ── 整活彩蛋: rare absurd spectacle (chicken / UFO / giant donut) ──
+      // ── Absurd easter eggs: rare absurd spectacle (chicken / UFO / giant donut) ──
       s.memeAcc += dt;
       if (!s.meme && s.memeAcc >= s.memeNextS) { s.memeAcc = 0; s.memeNextS = TUNING.memeEveryS; spawnMeme(s, P); }
       if (s.meme) {
         const m = s.meme; m.t -= dt;
         // R11: every meme is now REWARD or pure-background (no fake-out hazards). Chickens
         // SQUISH for points (comedic, no penalty), the donut is a tasty +$ pickup (matches
-        // "甜点=好" instinct), the UFO is sky-only background — never touches the car.
+        // "dessert = good" instinct), the UFO is sky-only background — never touches the car.
         if (m.kind === 'chicken') { for (const bd of m.birds) { if (bd.gone) continue; bd.wx += m.dir * 90 * dt; bd.ph += dt*14;
-          if (Math.abs(bd.wx - p.wx) < ws*0.4 && Math.abs(bd.wy - p.wy) < ws*0.4) { bd.gone = true; bd.poof = 0.4; s.cash += 15;   // 碾过去 = 加分,无惩罚
+          if (Math.abs(bd.wx - p.wx) < ws*0.4 && Math.abs(bd.wy - p.wy) < ws*0.4) { bd.gone = true; bd.poof = 0.4; s.cash += 15;   // Run them over = points, no penalty
             s.floaters.push({ wx: bd.wx, wy: bd.wy, text: '+$15', color: '#9af59a', life: 0.7 });
-            const Jk=$J(); if(Jk) Jk.popup('🐔 咻!', P.sx(bd.wx), P.sy(bd.wy)-16, {color:'#fff',size:13}); } } }
+            const Jk=$J(); if(Jk) Jk.popup('🐔 Squish!', P.sx(bd.wx), P.sy(bd.wy)-16, {color:'#fff',size:13}); } } }
         else if (m.kind === 'ufo') { m.ph += dt; m.x += m.dir * 70 * dt; if (m.x > s.latRight+ws || m.x < s.latLeft-ws) m.dir *= -1; }   // sky only, no collision
         else if (m.kind === 'donut') { m.wy -= TUNING.baseSpeedWU * 0.2 * dt; m.spin += dt*6;
-          if (!m.eaten && Math.abs(m.wx - p.wx) < ws*0.55 && Math.abs(m.wy - p.wy) < ws*0.55) {   // 吃到 = 加分 + 弹一下爽,无 knockback/stun
+          if (!m.eaten && Math.abs(m.wx - p.wx) < ws*0.55 && Math.abs(m.wy - p.wy) < ws*0.55) {   // Eat it = points + a satisfying bounce, no knockback/stun
             m.eaten = true; m.t = Math.min(m.t, 0.25); s.cash += 80; p._lunge = Math.max(p._lunge||0, 12);
             s.floaters.push({ wx: m.wx, wy: m.wy, text: '🍩 +$80', color: '#9af59a', life: 1.0 });
             pushShake(s, 8); punchZoom(s, 0.06); const Jd=$J(); if(Jd){ Jd.hitstop(0.04); Jd.burst(P.sx(m.wx), P.sy(m.wy), 'cash', '#ffd24a'); } } }
@@ -1433,8 +1433,8 @@
             if (cop.hp <= 0) {                                  // WASTED COP — explode
               cop._dead = true; bumpCombo(s);
               const gain = Math.round(TUNING.copKillReward * comboMul(s)); s.cash += gain;
-              pushShake(s, 28); punchZoom(s, 0.28);             // 爽感: camera SLAMS in on the kill (R9.2 harder)
-              const J = $J(); if (J) { J.hitstop(0.14); J.flash('#ffd24a', 90); if (J.addTrauma) J.addTrauma(0.6); J.burst(px, py, 'debris', '#ff7a3b'); J.burst(px, py, 'cash', '#ffd24a'); J.popup('💥 干掉警车 +$' + gain, px, py - 26, { color:'#ffd24a', size: 20 }); }
+              pushShake(s, 28); punchZoom(s, 0.28);             // rush: camera SLAMS in on the kill (R9.2 harder)
+              const J = $J(); if (J) { J.hitstop(0.14); J.flash('#ffd24a', 90); if (J.addTrauma) J.addTrauma(0.6); J.burst(px, py, 'debris', '#ff7a3b'); J.burst(px, py, 'cash', '#ffd24a'); J.popup('💥 WASTED COP +$' + gain, px, py - 26, { color:'#ffd24a', size: 20 }); }
               for (let i = 0; i < 16; i++) pushSpark(s, px, py, i % 2 ? '#ff7a3b' : '#ffd24a', 30);
               if (window.showBanner) window.showBanner('💥 WASTED COP +$' + gain, '#ffd24a', 0.9);
             }
@@ -1453,14 +1453,14 @@
           pushShake(s, 8); pushSpark(s, P.sx(p.wx), P.sy(p.wy), '#ffd84a', 10);
           const J = $J(); if (J) { J.flash('#ff7744', 70); J.chroma(80); }
           const SFX = $SFX(); try { if (SFX.hit) SFX.hit(); } catch (_) {}
-          if (window.showBanner) window.showBanner(`中枪! HP ${p.hp}`, '#ff7744', 0.6);
+          if (window.showBanner) window.showBanner(`Hit! HP ${p.hp}`, '#ff7744', 0.6);
           if (p.hp <= 0) { return this._bust(s); }
         }
       }
       for (const b of s.copBullets) {
         if (b.life <= 0 && !b._scored && b._minD < p.r + TUNING.nearMissPx[1] && b._minD > p.r + TUNING.nearMissPx[0]) {
           b._scored = true; bumpCombo(s); const nm = Math.round(TUNING.nearMissBonus * comboMul(s)); s.cash += nm;
-          const J = $J(); if (J) { J.hitstop(0.07); J.popup('好险! +' + nm, P.sx(p.wx), P.sy(p.wy) - 30, { color:'#5af5e0', size: 16 }); }
+          const J = $J(); if (J) { J.hitstop(0.07); J.popup('Close call! +' + nm, P.sx(p.wx), P.sy(p.wy) - 30, { color:'#5af5e0', size: 16 }); }
         }
       }
       s.copBullets = s.copBullets.filter(b => b.life > 0);
@@ -1480,12 +1480,12 @@
       updateSparks(s, dt);
       if (s.trauma > 0) s.trauma = Math.max(0, s.trauma - TUNING.traumaDecayPerS * dt);   // R10: trauma bleeds off → punch settles fast
 
-      // ── win conditions (大白话结算: 抢光所有店 OR 活到 30 秒) ──
+      // ── win conditions (plain-language result: rob all shops OR survive 30 seconds) ──
       const allHit = s.robbedCount >= s.shops.length;
-      if (allHit) { return this._win(s, `抢光${s.shops.length}家店! 到手 $${s.cash}`); }
-      if (TUNING.winMode === 'reach' && p.wy >= s.routeLengthWU) { return this._win(s, `成功跑路! 到手 $${s.cash}`); }
+      if (allHit) { return this._win(s, `Robbed all ${s.shops.length} shops! Cash $${s.cash}`); }
+      if (TUNING.winMode === 'reach' && p.wy >= s.routeLengthWU) { return this._win(s, `Escaped successfully! Cash $${s.cash}`); }
       if (TUNING.winMode === 'survive' && s.elapsed >= TUNING.durationS - TUNING.surviveFinishLeadS) {
-        return this._win(s, `成功跑路! 抢了${s.robbedCount}家 · $${s.cash}`);
+        return this._win(s, `Escaped successfully! Robbed ${s.robbedCount} shops · $${s.cash}`);
       }
 
       // ── HUD ── hide BOTH engine pills: the ⚡×N pill overlapped the canvas
@@ -1507,7 +1507,7 @@
       s.gtaActive = false; pushShake(s, 20); sirenVol(0);
       try { window.stopSiren && window.stopSiren(); window.stopEngine && window.stopEngine(); } catch (_) {}
       const SFX = $SFX(); try { if (SFX.lose) SFX.lose(); } catch (_) {}
-      $finish(false, '被警察抓了! 抢了 $' + s.cash);
+      $finish(false, 'Busted by the cops! Cash $' + s.cash);
     },
 
     draw() {
@@ -1540,7 +1540,7 @@
       }
 
       ctx.save(); ctx.translate(oX, oY);
-      // 爽感 ZOOM-PUNCH: on a big beat, scale the world in around the player then ease
+      // Rush ZOOM-PUNCH: on a big beat, scale the world in around the player then ease
       // back (sin envelope). Anchored at the player's screen row so the punch reads
       // as "the camera slams in on the action", not a blind zoom.
       if (s._zoomT > 0) {
@@ -1583,7 +1583,7 @@
         if (!shop.robbed && shop === target) drawShopGuidance(ctx, W, H, sx, sy, laneW, shop, p, s, P);
       }
 
-      // 狂暴 power-up (pulsing magenta orb)
+      // Rampage power-up (pulsing magenta orb)
       for (const pu of s.powerups) {
         if (pu.taken) continue; const usy = g2sy(pu.wy); if (usy < -40 || usy > H+40) continue; const usx = g2sx(pu.wx);
         const pr = 9 + Math.sin(s.elapsed*9)*2;
@@ -1591,7 +1591,7 @@
         ctx.fillStyle = '#ff3bd6'; ctx.beginPath(); ctx.arc(usx, usy, pr, 0, Math.PI*2); ctx.fill();
         ctx.fillStyle = '#fff'; ctx.font = 'bold 11px monospace'; ctx.textAlign='center'; ctx.fillText('★', usx, usy+4); ctx.textAlign='left';
       }
-      // 撒钱 pickups (glinting cash bundles)
+      // Cash pickups (glinting cash bundles)
       for (const pk of s.pickups) {
         if (pk.taken) continue; const psy = g2sy(pk.wy); if (psy < -40 || psy > H+40) continue; const psx = g2sx(pk.wx);
         const tw = Math.sin(s.elapsed*8 + pk.wy*0.1) * 2, gl = 0.5 + 0.5*Math.sin(s.elapsed*9 + pk.wy*0.07);
@@ -1605,16 +1605,16 @@
         ctx.restore();
       }
       // obstacles (traffic cars + roadblocks). R11 good/bad cue: when you CAN smash through
-      // (nitro/tank), they get a GREEN "可碾" ring (good outcome); otherwise a subtle RED
-      // danger underglow so a GTA player instantly reads "避开这个" (avoid).
+      // (nitro/tank), they get a GREEN "smashable" ring (good outcome); otherwise a subtle RED
+      // danger underglow so a GTA player instantly reads "avoid this".
       const canSmash = (p.boostT > 0) || (p._tankT > 0);
       for (const o of s.obstacles) {
         const sy = g2sy(o.wy); if (sy < -80 || sy > H + 80) continue;
         const sx = g2sx(o.wx);
         if (!o.smashed && !o.hit) {
           const bw0 = laneW * (o.w || 0.62);
-          if (canSmash && o.type === 'car') { ctx.strokeStyle = 'rgba(120,245,140,0.7)'; ctx.lineWidth = 2; ctx.strokeRect(sx - bw0/2 - 2, sy - bw0*0.85, bw0 + 4, bw0*1.7); }   // 可碾 = green
-          else { ctx.fillStyle = 'rgba(255,40,40,0.16)'; ctx.beginPath(); ctx.ellipse(sx, sy, bw0*0.62, bw0*0.5, 0, 0, Math.PI*2); ctx.fill(); }                                  // 危险 = red underglow
+          if (canSmash && o.type === 'car') { ctx.strokeStyle = 'rgba(120,245,140,0.7)'; ctx.lineWidth = 2; ctx.strokeRect(sx - bw0/2 - 2, sy - bw0*0.85, bw0 + 4, bw0*1.7); }   // smashable = green
+          else { ctx.fillStyle = 'rgba(255,40,40,0.16)'; ctx.beginPath(); ctx.ellipse(sx, sy, bw0*0.62, bw0*0.5, 0, 0, Math.PI*2); ctx.fill(); }                                  // danger = red underglow
         }
         if (o.type === 'block') {
           const bw = laneW * o.w;
@@ -1642,17 +1642,17 @@
           for (let i = 0; i < TUNING.copHp; i++) { ctx.fillStyle = i < cop.hp ? '#5af55a' : 'rgba(0,0,0,0.4)'; ctx.fillRect(sx - 9 + i*7, sy + laneW*0.5, 5, 3); }
         }
       }
-      // 离谱追兵 — each kind drawn as a distinct absurd little figure + a shout bubble
+      // Absurd chasers — each kind drawn as a distinct absurd little figure + a shout bubble
       for (const ch of s.chasers) {
         const csy = g2sy(ch.wy); if (csy < -70 || csy > H + 70) continue; const csx = g2sx(ch.wx);
         drawChaser(ctx, csx, csy, ch, s.elapsed);
       }
-      if (s.meme) drawMeme(ctx, W, H, s, g2sx, g2sy);   // 整活彩蛋
+      if (s.meme) drawMeme(ctx, W, H, s, g2sx, g2sy);   // Absurd easter eggs
       for (const b of s.copBullets) { const sx = g2sx(b.wx), sy = g2sy(b.wy); ctx.fillStyle = '#ffe24a'; ctx.fillRect(sx-2, sy-5, 4, 10); }
       // player drive-by tracers (going backward toward cops)
       for (const b of s.playerBullets) { const sx = g2sx(b.wx), sy = g2sy(b.wy); ctx.fillStyle = '#bff7ff'; ctx.fillRect(sx-2, sy-5, 4, 11); ctx.fillStyle='#fff'; ctx.fillRect(sx-1, sy-2, 2, 4); }
 
-      // 锁链拖 ATM — the chain + dragged safe behind the car (drawn UNDER the car)
+      // Tow chained ATM — the chain + dragged safe behind the car (drawn UNDER the car)
       if (s.tow) {
         const cx = g2sx(p.wx), cyb = g2sy(p.wy) + laneW*0.5;          // chain anchor (rear bumper)
         const tx = g2sx(s.tow.wx), ty = g2sy(s.tow.wy);
@@ -1680,7 +1680,7 @@
         if (p.hp < 35) { for (let i=0;i<3;i++){ const k=(s.elapsed*1.8+i*0.33)%1; ctx.globalAlpha=(0.45-0.4*k); ctx.fillStyle='#5a5a64'; ctx.beginPath(); ctx.arc(sx+(i-1)*5, sy+18+k*34, 4+k*7, 0, Math.PI*2); ctx.fill(); } ctx.globalAlpha=1; }
         if (p.boostT > 0) { ctx.fillStyle = '#37e0ff'; for (let i=0;i<3;i++){ const fw=8-i*2; ctx.globalAlpha=0.8-i*0.2; ctx.fillRect(sx-fw/2, sy+18+i*8, fw, 10); } ctx.globalAlpha=1; }
         else { ctx.fillStyle = 'rgba(255,40,40,0.9)'; ctx.fillRect(sx - laneW*0.30, sy + laneW*0.52, 5, 4); ctx.fillRect(sx + laneW*0.30 - 5, sy + laneW*0.52, 5, 4); } // brake lights
-        // 爆胎: grey tyre smoke spraying from the blown wheel (the drift side)
+        // Blowout: grey tyre smoke spraying from the blown wheel (the drift side)
         if (p._tireT > 0) { const ws2 = p._tireDir*laneW*0.30; for (let i=0;i<5;i++){ const k=(s.elapsed*3+i*0.2)%1; ctx.globalAlpha=0.5-0.45*k; ctx.fillStyle='#9aa0aa'; ctx.beginPath(); ctx.arc(sx+ws2 - p._tireDir*k*22, sy+laneW*0.40+k*10, 3+k*8, 0, Math.PI*2); ctx.fill(); } ctx.globalAlpha=1; }
         const inv = (p.invulnT||0) > 0 && Math.floor(s.elapsed*12)%2===0;
         if (p._tankT > 0) { ctx.save(); ctx.shadowColor = '#ff3bd6'; ctx.shadowBlur = 18; drawCarTopDown(ctx, sx, sy, laneW*0.80, '#ff3bd6', '#ffd0f5'); ctx.restore(); }
@@ -1697,7 +1697,7 @@
       ctx.globalAlpha = 1;
       // R11 floaters: a clean pop — scale overshoot (1.3→1.0) at birth, smooth upward
       // drift, ease-out fade, and a black OUTLINE so the number reads on any background
-      // (was a raw linear alpha + jump = "bug感/叠字"). age normalised by f.life0.
+      // (was a raw linear alpha + jump = "buggy feel / stacked text"). age normalised by f.life0.
       for (const f of s.floaters) {
         const l0 = f.life0 || (f.life0 = Math.max(f.life, 0.6));   // remember spawn life once
         const age = 1 - Math.max(0, Math.min(1, f.life / l0));     // 0→1 over the lifetime
@@ -1716,11 +1716,11 @@
 
       ctx.restore();
 
-      // 直升机探照灯 (high-heat chase tension): a swept spotlight + chopper silhouette
+      // Helicopter searchlight (high-heat chase tension): a swept spotlight + chopper silhouette
       if (s.chopper) {
         const bx = P.sx(s.chopper.x), beamR = TUNING.chopperBeamLanes * ws * P.PXW;
         // a full-height shaft (cone from the chopper down to the road) + a bright
-        // ground pool — reads instantly as "搜捕" instead of a faint smear.
+        // ground pool — reads instantly as "manhunt" instead of a faint smear.
         const inBeam = Math.abs(p.wx - s.chopper.x) < TUNING.chopperBeamLanes * ws;
         const cy = 60, flick = 0.85 + 0.15 * Math.sin(s.elapsed * 22);   // searchlight buzz
         ctx.save();
@@ -1748,10 +1748,10 @@
       drawWantedHUD(ctx, W, H, s);          // ★ wanted level
       drawRampageHUD(ctx, W, H, s);         // 连击 ×N rampage chain + cash multiplier
       drawLaneHUD(ctx, W, H, s, t);
-      drawGhostJoystick(ctx, W, H, s);      // 常驻 ghost 摇杆: 小白第一眼知道"拇指放这开车"
-      drawGoalBar(ctx, W, H, s);            // 常驻目标条: 抢光发光的店 · 进度 N/总
-      drawToast(ctx, W, H, s);              // 中央大字通道: 一次一条事件卡片(不遮挡)
-      drawIntroCoach(ctx, W, H, s);         // 开局序幕(前几秒): 怎么玩一句话教会
+      drawGhostJoystick(ctx, W, H, s);      // Always-on ghost joystick: beginner instantly knows "thumb goes here to drive"
+      drawGoalBar(ctx, W, H, s);            // Always-on goal bar: Rob the glowing shops · Progress N/Total
+      drawToast(ctx, W, H, s);              // Central big text channel: one event card at a time (no overlap)
+      drawIntroCoach(ctx, W, H, s);         // Intro sequence (first few seconds): teach how to play in one sentence
       const leadMaxWU = (TUNING.camNeutralFrac - TUNING.camTopFrac) * 360 / 0.72;   // H-independent
       const liftN = Math.min(1, Math.max(0, (s._lead || 0) / leadMaxWU));            // how far forward the player is driving
       const slInt = Math.max(Math.min(1, s._speedLinesT/0.4), p.boostT>0?0.75:0, liftN*0.7);
@@ -1771,8 +1771,8 @@
     const k = shop.kind || { icon:'💰', sign:'#d0246b', wall:'#e6b0c8', accent:'#ffd24a', name: shop.name };
     const bw = Math.max(46, laneW * 1.02), bh = 66, x = sx - bw/2, top = sy - bh;
     const robbed = shop.robbed;
-    // R12 真发光: an unrobbed shop GLOWS — a breathing gold halo behind the whole
-    // storefront so a 小白 spots "有钱可抢的店" from far away. Robbed shops go dark.
+    // R12 Real glow: an unrobbed shop GLOWS — a breathing gold halo behind the whole
+    // storefront so a beginner spots "shop with money to rob" from far away. Robbed shops go dark.
     if (!robbed) {
       const gp = 0.55 + 0.45 * Math.sin(elapsed * 4);
       c.save();
@@ -1799,7 +1799,7 @@
     if (robbed) {
       // boarded up + ✓ stamp
       c.strokeStyle = '#6a5a3a'; c.lineWidth = 4; c.beginPath(); c.moveTo(x+4, top+bh*0.5); c.lineTo(x+bw-4, top+bh*0.72); c.stroke();
-      c.fillStyle = '#5af5e0'; c.font = 'bold 13px monospace'; c.fillText('✓ 已抢', sx, top + bh*0.5);
+      c.fillStyle = '#5af5e0'; c.font = 'bold 13px monospace'; c.fillText('✓ Robbed', sx, top + bh*0.5);
     } else {
       // pulsing loot beacon above the sign: icon + big $amount (reads from afar)
       const pulse = 0.7 + 0.3 * Math.sin(elapsed * 6), by = top - 30;
@@ -1808,7 +1808,7 @@
       c.globalAlpha = 1;
       c.fillStyle = '#101014'; c.fillRect(sx-26, by+8, 52, 16);
       c.fillStyle = '#ffd24a'; c.font = 'bold 14px monospace'; c.fillText('$' + shop.money, sx, by+16);
-      // small bouncing ↓ over EVERY unrobbed shop so a 小白 sees the whole street's targets
+      // small bouncing ↓ over EVERY unrobbed shop so a beginner sees the whole street's targets
       const ay = by - 12 + Math.sin(elapsed*5)*2;
       c.fillStyle = `rgba(255,210,80,${0.6+0.4*Math.sin(elapsed*5)})`;
       c.beginPath(); c.moveTo(sx, ay+6); c.lineTo(sx-5, ay-2); c.lineTo(sx+5, ay-2); c.closePath(); c.fill();
@@ -1816,7 +1816,7 @@
       if (shop.progress > 0) {
         c.strokeStyle = 'rgba(0,0,0,0.6)'; c.lineWidth = 5; c.beginPath(); c.arc(sx, sy-bh*0.5, 22, 0, Math.PI*2); c.stroke();
         c.strokeStyle = '#5af5e0'; c.lineWidth = 5; c.beginPath(); c.arc(sx, sy-bh*0.5, 22, -Math.PI/2, -Math.PI/2 + Math.PI*2*shop.progress); c.stroke();
-        c.fillStyle = '#5af5e0'; c.font = 'bold 10px monospace'; c.fillText('抢劫中', sx, sy-bh*0.5);
+        c.fillStyle = '#5af5e0'; c.font = 'bold 10px monospace'; c.fillText('Robbing', sx, sy-bh*0.5);
       }
     }
     c.textAlign='left'; c.textBaseline='alphabetic';
@@ -1824,8 +1824,8 @@
 
   // "Drive into THIS lane to rob" guidance for the current objective shop: a
   // glowing lane carpet from the player up to the shop + a bouncing arrow. The
-  // first shop gets a louder call-out (onboarding). This is the fix for "第一次玩
-  //完全 get 不到要抢".
+  // first shop gets a louder call-out (onboarding). This is the fix for "first time playing,
+  // completely didn't get that you need to rob".
   function drawShopGuidance(c, W, H, sx, sy, laneW, shop, p, s, P) {
     const sameLane = p.playerLane === shop.side;
     const beat = 0.6 + 0.4 * Math.sin(s.elapsed * 5);
@@ -1843,16 +1843,16 @@
     c.font = 'bold 11px monospace'; c.textAlign='center';
     c.fillStyle = '#fff7d0';
     if (!sameLane) {
-      const dir = shop.side < p.playerLane ? '← 往左' : '往右 →';
-      c.fillText(`${dir} 开进这道抢`, sx, ay - 12);
+      const dir = shop.side < p.playerLane ? '← Left' : 'Right →';
+      c.fillText(`${dir} into this lane to rob`, sx, ay - 12);
     } else {
-      c.fillStyle = '#5af5e0'; c.fillText('对准了! 别松油门', sx, ay - 12);
+      c.fillStyle = '#5af5e0'; c.fillText('Aligned! Don\'t let go of the gas', sx, ay - 12);
     }
     // first-shop onboarding: an extra banner-style hint high on screen
     if (shop._isFirst && !s._firstHintDone) {
       c.fillStyle = `rgba(0,0,0,0.55)`; c.fillRect(W/2-118, H*0.16, 236, 26);
       c.fillStyle = '#ffd24a'; c.font = 'bold 12px monospace';
-      c.fillText('你的第一票:换到发光的车道,开过去自动抢', W/2, H*0.16+13);
+      c.fillText('Your first job: Switch to the glowing lane, drive over to auto-rob', W/2, H*0.16+13);
     }
     c.textAlign='left';
   }
@@ -1928,7 +1928,7 @@
     }
   }
 
-  // 离谱追兵 figures: a little running/riding person per kind + a shout bubble.
+  // Absurd chaser figures: a little running/riding person per kind + a shout bubble.
   // Legs bob (run cycle) so they read as frantically chasing — the comedic tone.
   function drawChaser(c, x, y, ch, elapsed) {
     const K = ch.K || {}, run = Math.sin(ch.bob || 0), kind = ch.kind;
@@ -1966,7 +1966,7 @@
     c.restore();
   }
 
-  // 整活彩蛋 render. R11 visual language: chicken & donut are COLLECTIBLE (green reward
+  // Absurd easter egg render. R11 visual language: chicken & donut are COLLECTIBLE (green reward
   // glow so a GTA player reads "drive through it, it's good"); the UFO sits clearly in
   // the SKY (small, no road-reaching beam) so it reads "background, can't touch it".
   function drawMeme(c, W, H, s, g2sx, g2sy) {
@@ -1997,7 +1997,7 @@
       for (let i=0;i<5;i++){ c.fillStyle = (Math.floor(s.elapsed*8)+i)%2 ? '#ff3bd6' : '#ffe14a'; c.beginPath(); c.arc(x-15+i*7.5, y+4, 1.6, 0, Math.PI*2); c.fill(); }   // blinking lights
     } else if (m.kind === 'donut') {
       const x = g2sx(m.wx), y = g2sy(m.wy);
-      // green COLLECTIBLE halo + a small ↑ so it reads "good, eat it" (matches 甜点=好)
+      // green COLLECTIBLE halo + a small ↑ so it reads "good, eat it" (matches dessert=good)
       const pulse = 0.6 + 0.4 * Math.sin(s.elapsed * 5);
       c.strokeStyle = `rgba(120,245,140,${0.5*pulse})`; c.lineWidth = 3; c.beginPath(); c.arc(x, y, 26, 0, Math.PI*2); c.stroke();
       c.fillStyle = `rgba(120,245,140,${0.14*pulse})`; c.beginPath(); c.arc(x, y, 24, 0, Math.PI*2); c.fill();
@@ -2014,7 +2014,7 @@
 
   // The player IS a gangster: a head is ALWAYS visible at the wheel, and on a
   // heist (popT>0) he leans OUT toward the shop with a pistol + muzzle flash +
-  // cash — the "人头露出来 / 人跟枪合一" drive-by the user asked for.
+  // cash — the "head pops out / one with the gun" drive-by the user asked for.
   function drawGangster(c, carSx, carSy, laneW, side, popT, elapsed) {
     const dir = (side >= 0) ? 1 : -1;
     const robbing = popT > 0;
@@ -2058,11 +2058,11 @@
       c.fillStyle = r; c.fillRect(0, 0, W, H);
     }
   }
-  // 常驻目标条 — a first-timer must always see "what am I doing + how do I win".
-  // Sits just under the timer: "抢光发光的店 N/总" + a progress pips row.
+  // Always-on goal bar — a first-timer must always see "what am I doing + how do I win".
+  // Sits just under the timer: "Rob the glowing shops N/Total" + a progress pips row.
   function drawGoalBar(c, W, H, s) {
     const done = s.robbedCount || 0, total = (s.shops && s.shops.length) || 4;
-    const txt = done >= total ? '抢光了! 活到时间到就赢' : `抢光发光的店  ${done}/${total}`;
+    const txt = done >= total ? 'Robbed all! Survive until time runs out to win' : `Rob the glowing shops  ${done}/${total}`;
     // R11: sits at y=62 — in the CENTER gap between the left $ box and right COPS box
     // (drawMiniHUD top=60), BELOW the HP DOM bar (44-58px), so nothing overlaps.
     c.font = 'bold 12px monospace'; const w = Math.max(150, c.measureText(txt).width + 24), x = W/2 - w/2, y = 62;
@@ -2072,14 +2072,14 @@
     c.textAlign = 'left'; c.textBaseline = 'alphabetic';
   }
 
-  // 开局序幕 — the first ~3.5s teach "怎么玩" by SHOWING it: a big centered call-out
-  // that a 完全没玩过的小白 reads in 2 seconds. Fades out once they rob the first shop
+  // Intro sequence — the first ~3.5s teach "how to play" by SHOWING it: a big centered call-out
+  // that a complete beginner reads in 2 seconds. Fades out once they rob the first shop
   // or time passes. The lane carpet/arrow on the first shop (drawShopGuidance) does the
-  // rest. This is the "大妈也能秒懂" onboarding.
+  // rest. This is the "even an old lady gets it instantly" onboarding.
   function drawIntroCoach(c, W, H, s) {
     if (s.robbedCount > 0) return;                  // already robbed → learned, stop coaching
     const t = s.elapsed || 0;
-    // STUCK re-hint: still no heist by 5s → a louder, simpler nudge keeps a 小白 from
+    // STUCK re-hint: still no heist by 5s → a louder, simpler nudge keeps a beginner from
     // floundering (industrial onboarding: never leave the new player lost).
     if (t > 5.0) {
       const pulse = 0.6 + 0.4 * Math.sin(t * 4);
@@ -2087,7 +2087,7 @@
       c.fillStyle = 'rgba(0,0,0,0.5)'; c.fillRect(0, H*0.44, W, 38);
       c.textAlign = 'center'; c.textBaseline = 'middle';
       c.fillStyle = '#ffd24a'; c.font = 'bold 16px sans-serif';
-      c.fillText('👉 开进发光的店就能抢钱!', W/2, H*0.44 + 19);
+      c.fillText('👉 Drive into a glowing shop to rob it!', W/2, H*0.44 + 19);
       c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.restore();
       return;
     }
@@ -2098,17 +2098,17 @@
     c.fillStyle = 'rgba(0,0,0,0.42)'; c.fillRect(0, H*0.40, W, 96);
     c.textAlign = 'center';
     c.fillStyle = '#ffd24a'; c.font = 'bold 22px sans-serif'; c.textBaseline = 'middle';
-    c.fillText('开车去抢钱! 💰', W/2, H*0.40 + 26);
+    c.fillText('Drive to rob shops! 💰', W/2, H*0.40 + 26);
     c.fillStyle = '#fff'; c.font = 'bold 14px sans-serif';
-    c.fillText('滑左摇杆 → 开进发光的店,自动打劫', W/2, H*0.40 + 54);
+    c.fillText('Slide left joystick → drive into glowing shops, auto-rob', W/2, H*0.40 + 54);
     c.fillStyle = '#5af5e0'; c.font = 'bold 12px sans-serif';
-    c.fillText('抢光所有店 或 活到 30 秒 = 赢', W/2, H*0.40 + 78);
+    c.fillText('Rob all shops OR survive 30 seconds = Win', W/2, H*0.40 + 78);
     c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.restore();
   }
 
-  // 常驻 ghost 摇杆 — the engine's floating joystick is invisible until touched, so a
-  // first-timer never sees WHERE to drive ("左摇杆没展示出来"). This draws a persistent
-  // ghost stick in the left-bottom thumb zone: bright + "拖这里开车" during the intro,
+  // Always-on ghost joystick — the engine's floating joystick is invisible until touched, so a
+  // first-timer never sees WHERE to drive ("left joystick isn't shown"). This draws a persistent
+  // ghost stick in the left-bottom thumb zone: bright + "drag here to drive" during the intro,
   // dim after the first heist, hidden while you're actively steering (real knob takes over).
   function drawGhostJoystick(c, W, H, s) {
     const steering = (s._steerMode === 'analog' && s._analogX != null && Math.abs(s._analogX) > 0.05);
@@ -2130,7 +2130,7 @@
     // label during intro
     if (intro) {
       c.globalAlpha = pulse; c.fillStyle = '#fff'; c.font = 'bold 11px sans-serif'; c.textAlign = 'center';
-      c.fillText('拖这里开车', cx, cy + R + 16); c.globalAlpha = 1; c.textAlign = 'left';
+      c.fillText('Drag here to drive', cx, cy + R + 16); c.globalAlpha = 1; c.textAlign = 'left';
     }
     c.restore();
   }
@@ -2144,7 +2144,7 @@
     c.fillText(str, W/2, 86);
     c.shadowBlur = 0; c.textAlign = 'left'; c.textBaseline = 'alphabetic';
   }
-  // RAMPAGE chain: 连击 ×N + live cash multiplier + a draining "keep it alive" bar.
+  // RAMPAGE chain: Combo ×N + live cash multiplier + a draining "keep it alive" bar.
   function drawRampageHUD(c, W, H, s) {
     const n = s.robCombo || 0; if (n < 2) return;
     const mul = Math.min(TUNING.comboCashMax, 1 + n * TUNING.comboCashStep);
@@ -2153,7 +2153,7 @@
     c.save(); c.textAlign = 'center'; c.textBaseline = 'middle';
     c.font = `bold ${Math.round((15 + Math.min(11, n)) * pop)}px monospace`;
     c.shadowColor = col; c.shadowBlur = 8; c.fillStyle = col;
-    c.fillText(`连击 ×${n}   现金×${mul.toFixed(1)}`, W/2, 112);
+    c.fillText(`Combo ×${n}   Cash×${mul.toFixed(1)}`, W/2, 112);
     c.shadowBlur = 0;
     const frac = Math.max(0, Math.min(1, s.comboT / TUNING.comboWindowS)), bw = 124, bx = W/2 - bw/2, by = 124;
     c.fillStyle = 'rgba(0,0,0,0.5)'; c.fillRect(bx, by, bw, 4);

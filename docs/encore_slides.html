@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,11 +88,6 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* center keeps short slides balanced (no awkward bottom whitespace).
-       Every slide has been trimmed to fit ≤ 100vh at 1080p with normal
-       padding, so centering is safe. If content ever exceeds, the
-       overflow is hidden at top + bottom equally, but the slide should
-       be trimmed instead of relying on overflow. */
     justify-content: center;
     max-height: 100%;
     overflow: hidden;
@@ -109,8 +104,6 @@ img, .image-container {
 
 /* ===========================================
    GLOBAL BACKGROUND EFFECTS
-   - subtle grid pattern overlay
-   - scanline overlay (CRT)
    =========================================== */
 body::before {
     /* Grid pattern */
@@ -212,7 +205,6 @@ body::after {
 
 /* ===========================================
    REVEAL ANIMATIONS
-   Triggered when .slide.visible is set by intersection observer
    =========================================== */
 .reveal {
     opacity: 0;
@@ -276,7 +268,6 @@ h2.section-title .red { color: var(--c-red); }
 
 /* ===========================================
    SLIDE 1 — TITLE
-   Big ENCORE wordmark + boot-screen feel + glitch
    =========================================== */
 .title-slide {
     align-items: center;
@@ -493,7 +484,6 @@ h2.section-title .red { color: var(--c-red); }
 
 /* ===========================================
    SLIDE 4 — LOOP
-   3-stage flow with pulsing arrows
    =========================================== */
 .loop-row {
     display: grid;
@@ -860,8 +850,6 @@ h2.section-title .red { color: var(--c-red); }
 
 /* ===========================================
    SLIDE — LIVE DEMO (redesign — QR + 3 game tiles + 2 outcomes)
-   Left: big scannable QR. Right: 3 game options + 2 outcome chips.
-   No iframe, no controls wall.
    =========================================== */
 .demo-redesign {
     display: grid;
@@ -1011,10 +999,6 @@ h2.section-title .red { color: var(--c-red); }
 }
 .demo-frame {
     position: relative;
-    /* Aspect-fixed 9:16 phone frame. Capped at 60vh so the iframe height
-       roughly matches the combined height of the right column's QR +
-       CONTROLS blocks — avoids the demo-row having one column much
-       taller than the other (which was overflowing the slide). */
     width: clamp(240px, 36vh, 360px);
     aspect-ratio: 9 / 16;
     max-height: 60vh;
@@ -1068,9 +1052,6 @@ h2.section-title .red { color: var(--c-red); }
     border-radius: 0 6px 6px 0;
 }
 .demo-side-block:last-child { border-left-color: var(--c-teal); }
-/* QR block — leftmost block on demo-side, red accent so it stands out
-   against the gold / teal of CONTROLS / FYI. White background on the QR
-   itself so the scanner always reads it cleanly against the dark deck. */
 .demo-side-qr { border-left-color: var(--c-red); }
 .demo-side-qr .demo-side-label { color: var(--c-red); }
 .qr-wrap {
@@ -1126,7 +1107,6 @@ h2.section-title .red { color: var(--c-red); }
 }
 .demo-slide .lead code.key-inline { color: var(--c-teal); }
 
-/* Inline iframe-failure fallback panel (sits inside .demo-frame) */
 .demo-fallback {
     position: absolute;
     inset: 0;
@@ -1196,7 +1176,6 @@ h2.section-title .red { color: var(--c-red); }
     max-width: 32ch;
 }
 
-/* "Open in new tab" link in the side panel — always available */
 .demo-open-btn {
     display: inline-block;
     margin-top: clamp(0.4rem, 1vw, 0.6rem);
@@ -1219,7 +1198,6 @@ h2.section-title .red { color: var(--c-red); }
 }
 .demo-open-btn[hidden] { display: none; }
 
-/* On narrower viewports stack vertically; iframe shrinks */
 @media (max-width: 900px) {
     .demo-row { grid-template-columns: 1fr; }
     .demo-frame {
@@ -1292,11 +1270,6 @@ h2.section-title .red { color: var(--c-red); }
 }
 .dec .text strong { color: var(--text-primary); }
 
-/* ===========================================
-   Inline roadmap strip — used at bottom of the merged
-   "商业 + 路线图" slide. Single horizontal row of milestone pills,
-   replaces the old standalone vertical-timeline roadmap slide.
-   =========================================== */
 .rm-strip {
     display: flex;
     flex-wrap: wrap;
@@ -1330,8 +1303,7 @@ h2.section-title .red { color: var(--c-red); }
 .rm-cell.phase2 b { color: var(--c-purple); }
 
 /* ===========================================
-   SLIDE — ROADMAP (vertical timeline) — kept for fallback / future use,
-   the inline .rm-strip above is the canonical version now.
+   SLIDE — ROADMAP (vertical timeline) — kept for fallback / future use
    =========================================== */
 .roadmap {
     position: relative;
@@ -1507,8 +1479,8 @@ h2.section-title .red { color: var(--c-red); }
 <div class="slide-counter" id="slideCounter">01 / 10</div>
 <nav class="nav-dots" id="navDots"></nav>
 <div class="keyboard-hint">
-    <span class="key">←</span><span class="key">→</span> 翻页 ·
-    <span class="key">Space</span> 下一张
+    <span class="key">←</span><span class="key">→</span> Page ·
+    <span class="key">Space</span> Next
 </div>
 
 <!-- ============================================
@@ -1519,7 +1491,7 @@ h2.section-title .red { color: var(--c-red); }
     <div class="slide-content">
         <div class="boot-badge reveal" style="--delay:0.05s">TIKTOK · GAMING · HACKATHON</div>
         <h1 class="title-encore reveal-scale" style="--delay:0.2s"><span class="bolt">⚡</span>ENCORE</h1>
-        <div class="title-cn reveal" style="--delay:0.45s">安 可</div>
+        <div class="title-cn reveal" style="--delay:0.45s">ENCORE</div>
         <div class="title-tagline reveal" style="--delay:0.65s cursor-blink"><span class="cursor-blink">LIVE-NATIVE V2G ENGINE</span></div>
         <div class="title-stamp reveal" style="--delay:0.85s">v0.6 · 2026 · TIKTOK GAMING · DEMO</div>
     </div>
@@ -1530,22 +1502,22 @@ h2.section-title .red { color: var(--c-red); }
      ============================================ -->
 <section class="slide">
     <div class="slide-content">
-        <div class="eyebrow reveal" style="--delay:0.05s">01 · 问题</div>
-        <h2 class="section-title reveal" style="--delay:0.15s">观众只能看,<br><span class="accent">不能玩。</span></h2>
+        <div class="eyebrow reveal" style="--delay:0.05s">01 · PROBLEM</div>
+        <h2 class="section-title reveal" style="--delay:0.15s">Viewers can only watch,<br><span class="accent">they can't play.</span></h2>
         <p class="lead reveal" style="--delay:0.3s">
-            主播打出 1v3 翻盘那一刻,直播间几千个观众都很兴奋 ——
-            但他们能做的就是 <strong>刷弹幕、送礼物、点关注</strong>。没有一个功能让观众也能<strong>自己上手玩一下</strong>。
+            When a streamer pulls off a 1v3 clutch, thousands of viewers in the chat are hyped — 
+            but all they can do is <strong>spam chat, send gifts, and follow</strong>. There is no feature that lets the viewer <strong>play it themselves</strong>.
             <br><br>
-            有些"送礼物影响主播游戏"的小游戏,确实让观众动了手,但代价是<strong>主播变 MC 不再认真打了</strong> —— 反而把游戏直播本身给毁了。
+            Some "gift-to-affect-the-streamer's-game" mini-games do let viewers interact, but the cost is that <strong>the streamer becomes an MC and stops playing seriously</strong> — ruining the actual gameplay stream.
         </p>
         <div class="problem-grid">
             <div class="stat reveal" style="--delay:0.5s">
                 <div class="num">0</div>
-                <div class="lbl">现有功能里能让观众<br>自己玩一下、又不打扰主播的</div>
+                <div class="lbl">Existing features that let viewers play themselves<br>without interrupting the streamer</div>
             </div>
             <div class="stat good reveal" style="--delay:0.65s">
                 <div class="num">30s</div>
-                <div class="lbl">Encore 给观众的小窗口 ——<br>自己玩一把,主播照常打 ranked</div>
+                <div class="lbl">The window Encore gives viewers —<br>play a round yourself, streamer keeps playing ranked</div>
             </div>
         </div>
     </div>
@@ -1556,27 +1528,27 @@ h2.section-title .red { color: var(--c-red); }
      ============================================ -->
 <section class="slide">
     <div class="slide-content">
-        <div class="eyebrow reveal" style="--delay:0.05s">02 · Encore 是什么</div>
-        <h2 class="section-title reveal" style="--delay:0.15s">让观众从"只能看"<span class="accent">变成"也能玩"。</span></h2>
-        <p class="lead reveal" style="--delay:0.22s">不打扰主播打游戏的前提下, 把每个高光时刻自动变成 30 秒可玩小游戏 —— 观众多了<strong>参与感和自己的短视频</strong>, 主播多了<strong>被动产出和打赏入口</strong>, 平台多了<strong>新 UGC 内容池和 install 漏斗</strong>。</p>
+        <div class="eyebrow reveal" style="--delay:0.05s">02 · WHAT IS ENCORE</div>
+        <h2 class="section-title reveal" style="--delay:0.15s">Turn viewers from "watching only"<span class="accent"> to "playing too".</span></h2>
+        <p class="lead reveal" style="--delay:0.22s">Without interrupting the streamer's game, every highlight moment is automatically turned into a 30-second playable mini-game — viewers get <strong>engagement and their own short video</strong>, streamers get <strong>passive output and a tipping entry point</strong>, and the platform gets <strong>a new UGC content pool and install funnel</strong>.</p>
         <div class="vision-grid">
             <div class="v-step reveal-scale" style="--delay:0.3s">
                 <div class="step-num">STEP 01</div>
                 <div class="ico">👁</div>
-                <h3>看见</h3>
-                <p>AI 一直盯着主播在打什么,识别出 1v3 翻盘、抢龙、ace 这种高光时刻 ——<br>就是把"主播按高光按钮"这件事自动化。</p>
+                <h3>SEE</h3>
+                <p>AI constantly watches what the streamer is playing, identifying highlights like 1v3 clutches, dragon steals, or aces —<br>essentially automating the "streamer presses highlight button" action.</p>
             </div>
             <div class="v-step reveal-scale" style="--delay:0.45s">
                 <div class="step-num">STEP 02</div>
                 <div class="ico">🧬</div>
-                <h3>转写</h3>
-                <p>把刚才那个场面提炼成几个参数:什么游戏、几个敌人、什么武器、地图什么样 ——<br>用一份 JSON 描述清楚。</p>
+                <h3>TRANSLATE</h3>
+                <p>Extract the scene into a few parameters: what game, how many enemies, what weapon, what the map looks like —<br>described clearly in a JSON file.</p>
             </div>
             <div class="v-step reveal-scale" style="--delay:0.6s">
                 <div class="step-num">STEP 03</div>
                 <div class="ico">🎮</div>
-                <h3>还原</h3>
-                <p>30 秒内,客户端把这份 JSON 渲染成一个像素小游戏,<br>从屏幕底部弹出来给当时在场的观众玩。</p>
+                <h3>RECONSTRUCT</h3>
+                <p>Within 30 seconds, the client renders this JSON into a pixel mini-game,<br>sliding up from the bottom of the screen for the viewers present at that time to play.</p>
             </div>
         </div>
     </div>
@@ -1587,82 +1559,78 @@ h2.section-title .red { color: var(--c-red); }
      ============================================ -->
 <section class="slide">
     <div class="slide-content">
-        <div class="eyebrow reveal" style="--delay:0.05s">03 · 看 · 玩 · 播</div>
-        <h2 class="section-title reveal" style="--delay:0.15s">三步走完一轮,<span class="accent">主播什么都不用做。</span></h2>
+        <div class="eyebrow reveal" style="--delay:0.05s">03 · WATCH · PLAY · BROADCAST</div>
+        <h2 class="section-title reveal" style="--delay:0.15s">Three steps to complete a loop,<span class="accent">the streamer does nothing.</span></h2>
         <div class="loop-row">
             <div class="loop-box watch reveal-left" style="--delay:0.3s">
                 <div class="loop-stage">STAGE 01</div>
                 <div class="ico">📺</div>
-                <div class="label">看</div>
-                <div class="desc">主播照常打 ranked,AI 在旁边一直看。识别出高光时刻 → 自动触发。</div>
+                <div class="label">WATCH</div>
+                <div class="desc">Streamer plays ranked as usual, AI watches on the side. Detects a highlight → triggers automatically.</div>
             </div>
             <div class="loop-arrow reveal" style="--delay:0.5s">▶</div>
             <div class="loop-box play reveal-scale" style="--delay:0.55s">
                 <div class="loop-stage">STAGE 02</div>
                 <div class="ico">🕹</div>
-                <div class="label">玩</div>
-                <div class="desc">观众在屏幕底部弹出的小窗口里玩 30 秒,玩的是刚才那个高光场面的变体。</div>
+                <div class="label">PLAY</div>
+                <div class="desc">Viewers play for 30 seconds in a small window sliding up from the bottom, playing a variant of the highlight scene.</div>
             </div>
             <div class="loop-arrow a2 reveal" style="--delay:0.7s">▶</div>
             <div class="loop-box replay reveal-right" style="--delay:0.75s">
                 <div class="loop-stage">STAGE 03</div>
                 <div class="ico">🎬</div>
-                <div class="label">播</div>
-                <div class="desc">玩得最好的前 3 名,自动剪成"主播 15s + 玩家 15s"上下分屏短视频(浏览器端 Canvas + MediaRecorder 实合成, 真 .webm 文件可下载可分享), 发到玩家自己 TikTok, @主播, 带 #Encore。</div>
+                <div class="label">BROADCAST</div>
+                <div class="desc">Top 3 players get an automatic "Streamer 15s + Player 15s" split-screen short video (composited in-browser via Canvas + MediaRecorder, a real .webm file you can download and share), posted to the player's TikTok, @ the streamer, with #Encore.</div>
             </div>
         </div>
-        <div class="loop-cn reveal" style="--delay:1s">看 · 玩 · 播</div>
+        <div class="loop-cn reveal" style="--delay:1s">WATCH · PLAY · BROADCAST</div>
     </div>
 </section>
 
 <!-- ============================================
-     SLIDE 04 — LIVE DEMO (扫码就能玩)
-     Reordered 2026-06-04 per PM: demo promoted to right after the
-     solution slide so audience sees a working product before any
-     cost / business talk. Old slide 4 "玩感+体验" (3 templates +
-     UX rule) deleted — already covered in slides 02/03.
+     SLIDE 04 — LIVE DEMO (Scan to play)
      ============================================ -->
 <section class="slide demo-slide">
     <div class="slide-content">
-        <div class="eyebrow reveal" style="--delay:0.05s">04 · 现场演示</div>
-        <h2 class="section-title reveal" style="--delay:0.15s">扫码 <span class="accent">就能玩。</span></h2>
+        <div class="eyebrow reveal" style="--delay:0.05s">04 · LIVE DEMO</div>
+        <h2 class="section-title reveal" style="--delay:0.15s">Scan to <span class="accent">play.</span></h2>
         <div class="demo-redesign">
             <!-- LEFT: Big QR + URL (encodes /prototype/live/feed.html) -->
             <div class="demo-qr-hero reveal-scale" style="--delay:0.3s">
-                <div class="demo-qr-label">SCAN ME · 扫码体验</div>
-                <img src="qr-encore.svg" alt="QR · feed.html · 3 直播间" class="demo-qr-large">
+                <div class="demo-qr-label">SCAN ME · TRY IT NOW</div>
+                <img src="qr-encore.svg" alt="QR · feed.html · 3 Rooms" class="demo-qr-large">
                 <div class="demo-qr-url">encore-deploy.vercel.app</div>
-                <div class="demo-qr-hint">↕ 上下滑动 3 个直播间</div>
+                <div class="demo-qr-hint">↕ Swipe up/down through 3 rooms</div>
             </div>
             <!-- RIGHT: 3 room tiles (one per game mode) + outcome chips -->
             <div class="demo-redesign-right">
-                <div class="demo-section-label reveal" style="--delay:0.4s">3 个直播间 · 上下滑动切换</div>
+                <div class="demo-section-label reveal" style="--delay:0.4s">3 LIVE ROOMS · SWIPE TO SWITCH</div>
                 <div class="demo-game-tiles">
                     <div class="demo-game-tile br reveal-left" style="--delay:0.5s">
                         <div class="tile-badge">FPS</div>
-                        <div class="tile-name">TK SÓI</div>
-                        <div class="tile-hint">Free Fire BR · 缩圈</div>
+                        <div class="tile-name">Wizard of Hahz</div>
+                        <div class="tile-hint">Free Fire BR · Shrinking zone</div>
                     </div>
                     <div class="demo-game-tile gta reveal-left" style="--delay:0.6s">
                         <div class="tile-badge">GTA</div>
                         <div class="tile-name">ROADKING88</div>
-                        <div class="tile-hint">GTA Heist · 抢店开车</div>
+                        <div class="tile-hint">GTA Heist · Rob stores, drive</div>
                     </div>
                     <div class="demo-game-tile obby reveal-left" style="--delay:0.7s">
                         <div class="tile-badge">OBBY</div>
                         <div class="tile-name">PIXELMAX</div>
-                        <div class="tile-hint">Obby Parkour · 跳平台</div>
+                        <div class="tile-hint">Obby Parkour · Jump platforms</div>
                     </div>
                 </div>
-                <div class="demo-section-label reveal" style="--delay:0.8s" style="margin-top:1.2rem;">每个直播间触发高光后</div>
+                <div class="demo-section-label reveal" style="--delay:0.8s" style="margin-top:1.2rem;">AFTER A HIGHLIGHT IS TRIGGERED IN ANY ROOM</div>
                 <div class="demo-outcomes">
                     <div class="demo-outcome video reveal-left" style="--delay:0.9s">
                         <span class="outcome-icon">📹</span>
-                        <span class="outcome-text"><strong>进前 3</strong> → 自动剪上下分屏短视频, 发回你的 TikTok</span>
+                        <span class="outcome-text"><strong>Top 3</strong> → Auto-cut split-screen short video, posted back to your TikTok</span>
                     </div>
                     <div class="demo-outcome gift reveal-left" style="--delay:1.0s">
                         <span class="outcome-icon">🎁</span>
-                        <span class="outcome-text"><strong>想再玩一把</strong> → $0.5 送 Enhance 给主播, 续命刷分</span>
+                        <span class="outcome-text"><strong>Want to play again</strong> → $0.5 Enhance sent to streamer, extend life and climb score</span>
                     </div>
                 </div>
             </div>
@@ -1671,97 +1639,91 @@ h2.section-title .red { color: var(--c-red); }
 </section>
 
 <!-- ============================================
-     SLIDE 05 — 成本 $100K/月封顶
-     v0.9 cost recalc (2026-06-04, Lark doc CJd8dy2Bvom9RZxa2i1lEd45gSe):
-     - 4B/月 = 平台大盘, NOT Encore's model call volume
-     - 过滤层: 90 万主播 × 50% × 每天 3 次 × 30 天 = ~4050 万月候选
-     - M9: 5-20 templates, ~$0 (no model at runtime)
-     - 基础版: 80% template + 20% real-gen = 810 万真生成/月 → $70-72K
-     - 放量版: 真生成 ~30%, 日预算闸门, ≤$100K/月 capped
+     SLIDE 05 — COST $100K/MO CAP
      ============================================ -->
 <section class="slide">
     <div class="slide-content">
-        <div class="eyebrow reveal" style="--delay:0.05s">05 · 成本 $100K/月封顶</div>
-        <h2 class="section-title reveal" style="--delay:0.15s">过滤层先压量,<span class="accent">日预算闸门兜底封顶。</span></h2>
-        <p class="lead reveal" style="--delay:0.22s">大盘 <strong>~4B 高光/月</strong> 是平台量,<strong>不是 Encore 模型调用量</strong>。 过滤层先压到月候选池, 第一阶段只走模板, 第二阶段才上模型且按日封顶:</p>
+        <div class="eyebrow reveal" style="--delay:0.05s">05 · COST CAPPED AT $100K/MO</div>
+        <h2 class="section-title reveal" style="--delay:0.15s">Filter layer reduces volume first,<span class="accent">daily budget gate caps it.</span></h2>
+        <p class="lead reveal" style="--delay:0.22s">The total <strong>~4B highlights/month</strong> is the platform's volume, <strong>not Encore's model call volume</strong>. The filter layer first reduces it to a monthly candidate pool, phase one only runs templates, phase two runs models with a daily cap:</p>
 
         <!-- Funnel: 4B → 45万/天 → 4050万/月 -->
         <div class="cost-funnel reveal" style="--delay:0.3s; display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; margin: 1.2rem 0 1.6rem; font-family: var(--font-mono); font-size: clamp(0.7rem, 0.9vw, 0.88rem);">
             <div style="padding:8px 14px; background: rgba(255,255,255,.06); border-radius:8px; border:1px solid rgba(255,255,255,.1);">
-                <div style="opacity:.55; font-size:.85em;">平台大盘</div>
-                <div style="font-weight:800; color:#fff;">~4B 高光/月</div>
+                <div style="opacity:.55; font-size:.85em;">Platform Total</div>
+                <div style="font-weight:800; color:#fff;">~4B Highlights/Mo</div>
             </div>
             <span style="opacity:.4; font-size:1.4em;">→</span>
             <div style="padding:8px 14px; background: rgba(255,255,255,.06); border-radius:8px; border:1px solid rgba(255,255,255,.1);">
-                <div style="opacity:.55; font-size:.85em;">90 万主播 × 50%</div>
-                <div style="font-weight:800; color:#fff;">45 万/天</div>
+                <div style="opacity:.55; font-size:.85em;">900K Streamers × 50%</div>
+                <div style="font-weight:800; color:#fff;">450K/Day</div>
             </div>
             <span style="opacity:.4; font-size:1.4em;">→</span>
             <div style="padding:8px 14px; background: rgba(255,255,255,.06); border-radius:8px; border:1px solid rgba(255,255,255,.1);">
-                <div style="opacity:.55; font-size:.85em;">每天 ≤ 3 次</div>
-                <div style="font-weight:800; color:#fff;">135 万/天</div>
+                <div style="opacity:.55; font-size:.85em;">≤ 3 Times/Day</div>
+                <div style="font-weight:800; color:#fff;">1.35M/Day</div>
             </div>
             <span style="opacity:.4; font-size:1.4em;">→</span>
             <div style="padding:8px 14px; background: linear-gradient(135deg, var(--c-teal), color-mix(in srgb, var(--c-teal) 60%, transparent)); border-radius:8px;">
-                <div style="opacity:.85; font-size:.85em; color:#0a0a0a;">月候选池</div>
-                <div style="font-weight:800; color:#0a0a0a;">~4050 万/月</div>
+                <div style="opacity:.85; font-size:.85em; color:#0a0a0a;">Monthly Pool</div>
+                <div style="font-weight:800; color:#0a0a0a;">~40.5M/Mo</div>
             </div>
         </div>
 
         <div class="vision-grid">
             <div class="v-step reveal-scale" style="--delay:0.42s">
-                <div class="step-num">M9 · 第一阶段</div>
+                <div class="step-num">M9 · PHASE 1</div>
                 <div class="ico">📦</div>
-                <h3>5-20 套模板<br>~$0 增量</h3>
-                <p>覆盖 Free Fire / Roblox / GTA / MLBB / PUBG / MC 等主流, 归 3-4 类玩法。 平台高光信号 → 匹配模板。 <strong>运行时不调模型</strong>。</p>
+                <h3>5-20 Templates<br>~$0 Incremental</h3>
+                <p>Covering Free Fire / Roblox / GTA / MLBB / PUBG / MC etc., grouped into 3-4 gameplay types. Platform highlight signals → match template. <strong>No model calls at runtime</strong>.</p>
             </div>
             <div class="v-step reveal-scale" style="--delay:0.57s">
-                <div class="step-num">基础版 · 第二阶段</div>
+                <div class="step-num">BASE · PHASE 2</div>
                 <div class="ico">⚡</div>
-                <h3>80% 模板 + 20% 真生成<br>$70-72K / 月</h3>
-                <p>810 万次真生成/月, 路由 <strong>80% mini/Haiku + 15% Sonnet + 5% GPT-5.5/Opus</strong>。 模型调用 $55-57K + 模板刷新监控 $15K。</p>
+                <h3>80% Template + 20% Real Gen<br>$70-72K / Mo</h3>
+                <p>8.1M real generations/month, routing <strong>80% mini/Haiku + 15% Sonnet + 5% GPT-5.5/Opus</strong>. Model calls $55-57K + template refresh monitoring $15K.</p>
             </div>
             <div class="v-step reveal-scale" style="--delay:0.72s">
-                <div class="step-num">放量版 · 第二阶段</div>
+                <div class="step-num">SCALE · PHASE 2</div>
                 <div class="ico">🚦</div>
-                <h3>真生成 ~30%<br>≤ $100K / 月 封顶</h3>
-                <p>日预算 $3,333 自动闸门: <strong>&lt;70%</strong> 头部上贵模型 / <strong>70-90%</strong> 普通房降级 / <strong>&gt;90%</strong> 只走模板。 不靠口头承诺, 系统按日封顶。</p>
+                <h3>Real Gen ~30%<br>≤ $100K / Mo Cap</h3>
+                <p>Daily budget $3,333 auto-gate: <strong>&lt;70%</strong> top streamers get expensive models / <strong>70-90%</strong> normal rooms downgraded / <strong>&gt;90%</strong> templates only. Not a verbal promise, the system caps by day.</p>
             </div>
         </div>
 
         <!-- 回本线 footer note -->
         <p class="lead reveal" style="--delay:0.92s; margin-top: 1rem; font-size: clamp(0.72rem, 0.9vw, 0.85rem); opacity: 0.75;">
-            <strong>回本线</strong>: 一次高光生成 1 份玩法参数, 整房间观众一起玩。 按 $0.5 Enhance, GPT-5.5 ≈ <strong>0.06 笔</strong> 回本, Sonnet ≈ <strong>0.03 笔</strong>, mini/Haiku ≈ <strong>0.01 笔</strong>。 模型只用在值得的房间。
+            <strong>Break-even</strong>: One highlight generates 1 set of gameplay parameters, the whole room plays together. At $0.5 Enhance, GPT-5.5 ≈ <strong>0.06 transactions</strong> to break even, Sonnet ≈ <strong>0.03 transactions</strong>, mini/Haiku ≈ <strong>0.01 transactions</strong>. Models are only used in rooms that are worth it.
         </p>
     </div>
 </section>
 
 <!-- ============================================
-     SLIDE 06 — 收入 + 路线图
+     SLIDE 06 — REVENUE + ROADMAP
      ============================================ -->
 <section class="slide">
     <div class="slide-content">
-        <div class="eyebrow reveal" style="--delay:0.05s">06 · 收入 + 路线图</div>
-        <h2 class="section-title reveal" style="--delay:0.15s">三类收入分阶段,<span class="accent">Phase 1 ~$1.5M / Phase 2 ~$2M / 月。</span></h2>
-        <p class="lead reveal" style="--delay:0.22s">4050 万 月触发 × 平均 5 玩家 = <strong>2.025 亿月玩家 session</strong>(跟成本同口径)。 模型成本 $70-100K/月,<strong>净利率 95%+</strong>。</p>
+        <div class="eyebrow reveal" style="--delay:0.05s">06 · REVENUE + ROADMAP</div>
+        <h2 class="section-title reveal" style="--delay:0.15s">Three revenue streams by phase,<span class="accent">Phase 1 ~$1.5M / Phase 2 ~$2M / Mo.</span></h2>
+        <p class="lead reveal" style="--delay:0.22s">40.5M monthly triggers × avg 5 players = <strong>202.5M monthly player sessions</strong> (same metric as cost). Model cost $70-100K/month, <strong>net margin 95%+</strong>.</p>
         <div class="vision-grid">
             <div class="v-step reveal-scale" style="--delay:0.3s">
-                <div class="step-num">A · 观众付费</div>
+                <div class="step-num">A · VIEWER PAYS</div>
                 <div class="ico">⚡</div>
-                <h3>Enhance · $0.5 续命<br><span style="color:var(--c-teal); font-size:1.4rem;">~$1.5M / 月</span></h3>
-                <p>2.025 亿 session × 3% 转化 × $0.5 × 50% 分成。 主播可设礼物门槛(关 / 50 / 200 / 500 金币)。 玩 Encore + 看 winner clip 永远免费。</p>
+                <h3>Enhance · $0.5 Revive<br><span style="color:var(--c-teal); font-size:1.4rem;">~$1.5M / Mo</span></h3>
+                <p>202.5M sessions × 3% conversion × $0.5 × 50% split. Streamers can set a gift threshold (off / 50 / 200 / 500 coins). Playing Encore + watching winner clips is always free.</p>
             </div>
             <div class="v-step reveal-scale" style="--delay:0.45s">
-                <div class="step-num">B · 厂商付费</div>
+                <div class="step-num">B · PUBLISHER PAYS</div>
                 <div class="ico">🎯</div>
-                <h3>CPI install + 联运<br><span style="color:var(--c-teal); font-size:1.4rem;">~$0.5M / 月</span></h3>
-                <p>12.15M shorts × 400 vv × 0.2% click × 5% install × $1 CPI。 加联运 2 家 × $30K。 估低口径, <strong>跑通后可拉高</strong>。</p>
+                <h3>CPI install + joint ops<br><span style="color:var(--c-teal); font-size:1.4rem;">~$0.5M / Mo</span></h3>
+                <p>12.15M shorts × 400 vv × 0.2% click × 5% install × $1 CPI. Plus joint ops 2 partners × $30K. Conservative estimate, <strong>can be raised once proven</strong>.</p>
             </div>
             <div class="v-step reveal-scale" style="--delay:0.6s">
-                <div class="step-num">C · 多人玩</div>
+                <div class="step-num">C · MULTIPLAYER</div>
                 <div class="ico">🤝</div>
-                <h3>联赛 sponsor<br><span style="color:var(--c-teal); font-size:1.4rem;">~$20K / 月</span></h3>
-                <p>2 个联赛 sponsor × $10K。 直接收入小, <strong>主要价值是拉高 A 留存</strong>。 不做月 Pass / 订阅。</p>
+                <h3>League sponsor<br><span style="color:var(--c-teal); font-size:1.4rem;">~$20K / Mo</span></h3>
+                <p>2 league sponsors × $10K. Direct revenue is small, <strong>main value is boosting retention for A</strong>. No monthly pass / subscription.</p>
             </div>
         </div>
         <div class="rm-strip reveal" style="--delay:0.85s">
@@ -1774,18 +1736,14 @@ h2.section-title .red { color: var(--c-red); }
 </section>
 
 <!-- ============================================
-     SLIDE 07 — 不抢谁的盘子 (vs 互动游戏 / 弹幕游戏)
-     Moved here from old position 5 per PM 2026-06-04: judges naturally
-     ask "wait, what about existing interactive games?" after seeing the
-     demo + cost + revenue — answer it here.
+     SLIDE 07 — NOT TAKING ANYONE'S MARKET (vs Interactive / Bullet-chat games)
      ============================================ -->
 <section class="slide">
     <div class="slide-content">
-        <div class="eyebrow reveal" style="--delay:0.05s">07 · 不抢谁的盘子</div>
-        <h2 class="section-title reveal" style="--delay:0.15s">跟互动 / 弹幕游戏<span class="accent">服务不同人,不抢盘子。</span></h2>
+        <div class="eyebrow reveal" style="--delay:0.05s">07 · NOT TAKING ANYONE'S MARKET</div>
+        <h2 class="section-title reveal" style="--delay:0.15s">Serves different people than<span class="accent"> interactive / bullet-chat games, doesn't steal market.</span></h2>
 
-        <!-- Compact 4-col comparison table (replaces 3 v-step cards which
-             overflowed). Encore column highlighted via accent border + bg. -->
+        <!-- Compact 4-col comparison table -->
         <div class="reveal" style="--delay:0.3s; margin: 1.2rem 0 1rem;">
           <table style="width:100%; border-collapse: separate; border-spacing: 0; font-size: clamp(0.78rem, 1vw, 0.95rem); table-layout: fixed;">
             <colgroup>
@@ -1796,78 +1754,76 @@ h2.section-title .red { color: var(--c-red); }
             </colgroup>
             <thead>
               <tr>
-                <th style="padding: 10px 8px; text-align:left; font-family: var(--font-mono); font-size: .72rem; opacity:.55; letter-spacing:.5px; border-bottom: 1px solid rgba(255,255,255,.1); font-weight: 600;">维度</th>
-                <th style="padding: 10px 12px; text-align:left; font-family: var(--font-mono); font-size: .78rem; color: rgba(255,255,255,.7); border-bottom: 1px solid rgba(255,255,255,.1); font-weight: 700;">🎁 互动游戏<br><span style="font-size:.68rem; opacity:.5; font-weight:500;">萌宠快跑等</span></th>
-                <th style="padding: 10px 12px; text-align:left; font-family: var(--font-mono); font-size: .78rem; color: rgba(255,255,255,.7); border-bottom: 1px solid rgba(255,255,255,.1); font-weight: 700;">💬 弹幕游戏<br><span style="font-size:.68rem; opacity:.5; font-weight:500;">轻量弹幕版</span></th>
-                <th style="padding: 10px 14px; text-align:left; font-family: var(--font-mono); font-size: .85rem; color: var(--accent); border-bottom: 2px solid var(--accent); border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); border-radius: 8px 8px 0 0; font-weight: 800;">⚡ Encore<br><span style="font-size:.7rem; opacity:.75; font-weight:600; color:#fff;">观众自己玩</span></th>
+                <th style="padding: 10px 8px; text-align:left; font-family: var(--font-mono); font-size: .72rem; opacity:.55; letter-spacing:.5px; border-bottom: 1px solid rgba(255,255,255,.1); font-weight: 600;">Dimension</th>
+                <th style="padding: 10px 12px; text-align:left; font-family: var(--font-mono); font-size: .78rem; color: rgba(255,255,255,.7); border-bottom: 1px solid rgba(255,255,255,.1); font-weight: 700;">🎁 Interactive Games<br><span style="font-size:.68rem; opacity:.5; font-weight:500;">e.g., Cute Pet Run</span></th>
+                <th style="padding: 10px 12px; text-align:left; font-family: var(--font-mono); font-size: .78rem; color: rgba(255,255,255,.7); border-bottom: 1px solid rgba(255,255,255,.1); font-weight: 700;">💬 Bullet-chat Games<br><span style="font-size:.68rem; opacity:.5; font-weight:500;">Lightweight bullet-chat version</span></th>
+                <th style="padding: 10px 14px; text-align:left; font-family: var(--font-mono); font-size: .85rem; color: var(--accent); border-bottom: 2px solid var(--accent); border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); border-radius: 8px 8px 0 0; font-weight: 800;">⚡ Encore<br><span style="font-size:.7rem; opacity:.75; font-weight:600; color:#fff;">Viewer Plays Themselves</span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="padding: 12px 8px; opacity:.6; font-size:.85rem; font-weight: 600;">主播</td>
-                <td style="padding: 12px;">化身游戏角色,被礼物驱动,<strong style="opacity:.85;">变 MC</strong></td>
-                <td style="padding: 12px;">反应 + 接弹幕事件,被弹幕推着走</td>
-                <td style="padding: 12px 14px; background: color-mix(in srgb, var(--accent) 8%, transparent); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); color: #fff;"><strong>继续打 ranked,零参与也工作</strong></td>
+                <td style="padding: 12px 8px; opacity:.6; font-size:.85rem; font-weight: 600;">Streamer</td>
+                <td style="padding: 12px;">Becomes game character, driven by gifts, <strong style="opacity:.85;">becomes MC</strong></td>
+                <td style="padding: 12px;">Reacts + responds to chat events, pushed by chat</td>
+                <td style="padding: 12px 14px; background: color-mix(in srgb, var(--accent) 8%, transparent); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); color: #fff;"><strong>Keeps playing ranked, works with zero participation</strong></td>
               </tr>
               <tr>
-                <td style="padding: 12px 8px; opacity:.6; font-size:.85rem; font-weight: 600;">观众</td>
-                <td style="padding: 12px;">间接 — 送礼影响主播游戏</td>
-                <td style="padding: 12px;">间接 — 发弹幕 / 送礼影响事件</td>
-                <td style="padding: 12px 14px; background: color-mix(in srgb, var(--accent) 8%, transparent); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); color: #fff;"><strong>直接 — 每个观众自己玩 30s</strong></td>
+                <td style="padding: 12px 8px; opacity:.6; font-size:.85rem; font-weight: 600;">Viewer</td>
+                <td style="padding: 12px;">Indirect — gifting affects streamer's game</td>
+                <td style="padding: 12px;">Indirect — chatting / gifting affects events</td>
+                <td style="padding: 12px 14px; background: color-mix(in srgb, var(--accent) 8%, transparent); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); color: #fff;"><strong>Direct — every viewer plays 30s themselves</strong></td>
               </tr>
               <tr>
-                <td style="padding: 12px 8px; opacity:.6; font-size:.85rem; font-weight: 600;">品类</td>
-                <td style="padding: 12px;">只 1-2 款 mod 对接的合作游戏</td>
-                <td style="padding: 12px;">平台定制的轻量游戏</td>
-                <td style="padding: 12px 14px; background: color-mix(in srgb, var(--accent) 8%, transparent); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); border-radius: 0 0 8px 8px; color: #fff;"><strong>FPS / MOBA / 吃鸡 / GTA / Roblox 全覆盖</strong></td>
+                <td style="padding: 12px 8px; opacity:.6; font-size:.85rem; font-weight: 600;">Category</td>
+                <td style="padding: 12px;">Only 1-2 mods integrated with partner games</td>
+                <td style="padding: 12px;">Platform custom lightweight games</td>
+                <td style="padding: 12px 14px; background: color-mix(in srgb, var(--accent) 8%, transparent); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); border-radius: 0 0 8px 8px; color: #fff;"><strong>Full coverage of FPS / MOBA / BR / GTA / Roblox</strong></td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <p class="lead reveal" style="--delay:0.65s; margin-top: 0.6rem;">互动游戏服务<strong>娱乐主播 + 想影响主播的观众</strong>;Encore 服务<strong>段位主播 + 想自己动手玩的观众</strong>。 <span class="accent">不抢盘子,是品类保护型产品。</span></p>
+        <p class="lead reveal" style="--delay:0.65s; margin-top: 0.6rem;">Interactive games serve <strong>entertainment streamers + viewers who want to influence the streamer</strong>; Encore serves <strong>ranked streamers + viewers who want to play themselves</strong>. <span class="accent">Not stealing market, it's a category-protecting product.</span></p>
     </div>
 </section>
 
 <!-- ============================================
-     SLIDE 08 — 分工 + 进展 (team + progress)
-     4-column team grid (A/B/C/D + PM) above a compact progress checklist.
-     Replaces old "已经做出来的东西" — team context was missing before.
+     SLIDE 08 — TEAM + PROGRESS
      ============================================ -->
 <section class="slide">
     <div class="slide-content">
-        <div class="eyebrow reveal" style="--delay:0.05s">08 · 分工 + 进展</div>
-        <h2 class="section-title reveal" style="--delay:0.15s">4 人 2 天,<span class="accent">原型已跑通。</span></h2>
-        <p class="lead reveal" style="--delay:0.22s">TikTok Gaming · 4 人团队 · CODEOWNERS 模块隔离, 4 个 Claude Code session 并行不打架</p>
+        <div class="eyebrow reveal" style="--delay:0.05s">08 · TEAM + PROGRESS</div>
+        <h2 class="section-title reveal" style="--delay:0.15s">4 People, 2 Days,<span class="accent">prototype is running.</span></h2>
+        <p class="lead reveal" style="--delay:0.22s">TikTok Gaming · 4-person team · CODEOWNERS module isolation, 4 Claude Code sessions running in parallel without conflicts</p>
         <!-- 4-column team grid -->
         <div class="team-grid reveal" style="--delay:0.3s; display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 1.2rem 0;">
             <div class="team-card" style="background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 14px;">
-                <div style="font-family: var(--font-mono); font-size: .72rem; opacity:.6; letter-spacing:.5px;">A · 玩法引擎</div>
+                <div style="font-family: var(--font-mono); font-size: .72rem; opacity:.6; letter-spacing:.5px;">A · GAMEPLAY ENGINE</div>
                 <div style="font-size: 1.3rem; margin-top:4px; font-weight:800; color: var(--c-purple);">🎮 Mario</div>
-                <div style="font-size: .78rem; opacity:.85; margin-top:6px; line-height:1.4;">3 套真模板 (GTA / Obby / Free Fire BR) · 渲染器 · 输入 · 主题</div>
+                <div style="font-size: .78rem; opacity:.85; margin-top:6px; line-height:1.4;">3 real templates (GTA / Obby / Free Fire BR) · Renderer · Input · Themes</div>
             </div>
             <div class="team-card" style="background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 14px;">
                 <div style="font-family: var(--font-mono); font-size: .72rem; opacity:.6; letter-spacing:.5px;">B · V2G AI</div>
                 <div style="font-size: 1.3rem; margin-top:4px; font-weight:800; color: var(--c-teal);">👁 Zihui</div>
-                <div style="font-size: .78rem; opacity:.85; margin-top:6px; line-height:1.4;">Claude Vision 真接入 · observer.py 抽帧 · JSON schema · 2 真视频跑通</div>
+                <div style="font-size: .78rem; opacity:.85; margin-top:6px; line-height:1.4;">Claude Vision real integration · observer.py frame extraction · JSON schema · 2 real videos running</div>
             </div>
             <div class="team-card" style="background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 14px;">
-                <div style="font-family: var(--font-mono); font-size: .72rem; opacity:.6; letter-spacing:.5px;">C · 美术内容</div>
+                <div style="font-family: var(--font-mono); font-size: .72rem; opacity:.6; letter-spacing:.5px;">C · ART & CONTENT</div>
                 <div style="font-size: 1.3rem; margin-top:4px; font-weight:800; color: var(--c-gold);">🎨 Lingyi</div>
-                <div style="font-size: .78rem; opacity:.85; margin-top:6px; line-height:1.4;">12 套主题 (4 themes × 3 templates) · sprite atlas · 像素美术管道</div>
+                <div style="font-size: .78rem; opacity:.85; margin-top:6px; line-height:1.4;">12 themes (4 themes × 3 templates) · Sprite atlas · Pixel art pipeline</div>
             </div>
             <div class="team-card" style="background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 14px;">
                 <div style="font-family: var(--font-mono); font-size: .72rem; opacity:.6; letter-spacing:.5px;">D · LIVE + UX</div>
                 <div style="font-size: 1.3rem; margin-top:4px; font-weight:800; color: var(--accent);">📱 Polly</div>
-                <div style="font-size: .78rem; opacity:.85; margin-top:6px; line-height:1.4;">streamer.html · 3 直播间 feed · TikTok-fidelity chrome · 短视频合成</div>
+                <div style="font-size: .78rem; opacity:.85; margin-top:6px; line-height:1.4;">streamer.html · 3-room feed · TikTok-fidelity chrome · Short video compositing</div>
             </div>
         </div>
         <!-- progress checklist (compact 4 items) -->
         <ul class="built-grid">
-            <li class="done reveal-left" style="--delay:0.65s"><span class="mark">✓</span><span>3 套真模板 + 12 套主题, embedded 进 sheet 跑</span></li>
-            <li class="done reveal-right" style="--delay:0.7s"><span class="mark">✓</span><span>Claude Vision 真接入, 2 个真 TikTok LIVE 视频跑通</span></li>
-            <li class="done reveal-left" style="--delay:0.75s"><span class="mark">✓</span><span>3 直播间 feed.html 上下滑动 + TikTok-fidelity 高保真 chrome</span></li>
-            <li class="done reveal-right" style="--delay:0.8s"><span class="mark">✓</span><span><strong>短视频真合成</strong> Canvas + MediaRecorder → 真 .webm 可下载 / 分享</span></li>
+            <li class="done reveal-left" style="--delay:0.65s"><span class="mark">✓</span><span>3 real templates + 12 themes, embedded in sheet running</span></li>
+            <li class="done reveal-right" style="--delay:0.7s"><span class="mark">✓</span><span>Claude Vision real integration, 2 real TikTok LIVE videos running</span></li>
+            <li class="done reveal-left" style="--delay:0.75s"><span class="mark">✓</span><span>3-room feed.html swipe up/down + TikTok-fidelity high-fidelity chrome</span></li>
+            <li class="done reveal-right" style="--delay:0.8s"><span class="mark">✓</span><span><strong>Short video real compositing</strong> Canvas + MediaRecorder → real .webm downloadable / shareable</span></li>
         </ul>
     </div>
 </section>
@@ -1880,12 +1836,12 @@ h2.section-title .red { color: var(--c-red); }
     <div class="slide-content">
         <div class="boot-badge reveal" style="--delay:0.05s">END OF PITCH</div>
         <h2 class="closing-title reveal-scale" style="--delay:0.2s">
-            看. 玩. 播.<br>
+            WATCH. PLAY. BROADCAST.<br>
             <span class="x">⚡</span> RUN IT BACK.
         </h2>
         <p class="closing-sub reveal" style="--delay:0.5s">
-            高光不再只属于主播。<br>
-            观众在 30 秒里参与那一刻 —— 然后把它变成主播的下一段内容。
+            Highlights no longer belong only to the streamer.<br>
+            Viewers participate in that moment for 30 seconds — and turn it into the streamer's next piece of content.
         </p>
         <div class="closing-links reveal" style="--delay:0.7s">
             <a class="closing-link" href="../prototype/encore_prototype.html" target="_blank">🎮 PLAY THE DEMO</a>
@@ -1897,16 +1853,6 @@ h2.section-title .red { color: var(--c-red); }
 <script>
 /* ===========================================
    ACCESS GATE — casual "soft" filter, not real security
-   ----------------------------------------------------
-   Prompts for an access code on first visit. Sets a localStorage flag
-   so subsequent loads from the same browser skip the prompt.
-   This is NOT cryptographically secure — anyone can read the source
-   and skip the check, or inspect the network tab. It only cuts down
-   on casual link-sharing leaks. If you need real protection, use
-   Vercel Pro's password-protected deployments.
-   To rotate the code, change ACCESS_CODE below.
-   To clear local memory and re-prompt, run in console:
-       localStorage.removeItem('encore-access');
    =========================================== */
 (function gate() {
     const ACCESS_CODE = 'encore-demo';
@@ -1943,9 +1889,6 @@ h2.section-title .red { color: var(--c-red); }
 
 /* ===========================================
    SLIDE PRESENTATION CONTROLLER
-   - Intersection observer adds .visible to trigger CSS reveals
-   - Keyboard / wheel / touch / nav-dot click navigation
-   - Progress bar tracks slide index
    =========================================== */
 class SlidePresentation {
     constructor() {
@@ -2062,14 +2005,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /* ===========================================
    DEMO IFRAME — robust path resolution
-   Strategy depends on protocol:
-     • HTTP(S): try iframe load + contentDocument check for each candidate
-       until one renders the game. Uses real iframe events (not fetch HEAD)
-       so the same logic works under restricted sandboxes too.
-     • file://  : skip verification entirely (fetch blocked, cross-origin
-       blocks contentDocument access). Just set src to the canonical
-       relative path and trust the file exists. Always show the open-tab
-       link in the side panel so the user has a manual escape hatch.
    =========================================== */
 function setupDemoEmbed() {
     const iframe   = document.getElementById('demo-iframe');
@@ -2087,7 +2022,6 @@ function setupDemoEmbed() {
     ];
 
     // file:// — browser cross-origin blocks both fetch and contentDocument access.
-    // Don't bother verifying; trust the relative path and show the open-tab link.
     if (location.protocol === 'file:') {
         iframe.src = candidates[0];
         openLink.href = candidates[0];
@@ -2118,15 +2052,10 @@ function setupDemoEmbed() {
                 try {
                     const doc = iframe.contentDocument;
                     if (doc) {
-                        // Robust check: ANY of these markers means a real Encore page loaded.
-                        // Mario v2 sometimes dismisses splash quickly, so we don't require
-                        // .template-card specifically. Title check is most reliable.
                         ok = (doc.title && doc.title.toLowerCase().includes('encore'))
                           || !!doc.querySelector('#splash, #wrap, canvas, .template-card');
                     }
                 } catch (_) {
-                    // Cross-origin access blocked → assume it loaded (browser blocks us
-                    // from peeking inside, but the iframe is still rendering content)
                     ok = true;
                 }
                 if (ok) {
@@ -2141,8 +2070,7 @@ function setupDemoEmbed() {
         };
         iframe.addEventListener('load', onLoad);
         iframe.src = path;
-        // Safety net: if onload doesn't fire within 4s (network hang, blocked
-        // by sandbox), advance to the next candidate.
+        // Safety net: if onload doesn't fire within 4s, advance to the next candidate.
         setTimeout(() => {
             if (!settled) {
                 settled = true;

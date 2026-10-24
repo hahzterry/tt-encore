@@ -186,7 +186,7 @@
     // Reset header subtitle to the generic AI tag until startGame names
     // a concrete template
     const subEl = document.querySelector('#sheet-header .brand .text .sub');
-    if (subEl) subEl.textContent = 'AI · forked from TK Sói';
+    if (subEl) subEl.textContent = 'AI · forked from TK Wolf';
     // Re-mount with fresh slide-up animation
     cfg.sheet.style.animation = 'none';
     // Force reflow then re-enable
@@ -748,7 +748,7 @@
         await navigator.share({
           files: [file],
           title: 'My Encore clip',
-          text:  "Played @TK_Soi's highlight — ranked top-3 on Encore ⚡",
+          text:  "Played @TK_Wolf's highlight — ranked top-3 on Encore ⚡",
         });
       } else {
         // No Web Share — fall back to download
@@ -935,7 +935,7 @@
 
     // Enhance CTA → REAL per-game gift: send the rolled gift + start a boosted
     // replay (sendGiftBoost). Replaces the v0.8.1 text-swap mock + its gift-gate
-    // (Enhance only enhances — no "送礼换试玩" gating).
+    // (Enhance only enhances — no "gift to play" gating).
     const enhCta = document.getElementById('result-enhance-cta');
     if (enhCta) enhCta.addEventListener('click', sendGiftBoost);
 
@@ -1072,7 +1072,7 @@
     if (head) head.textContent = (won ? 'Flex it · ' : 'Comeback · ') + g.head;
     if (sub)  sub.textContent  = won ? (g.sub + ' — go viral') : (g.sub + ' — bounce back');
     if (price) price.textContent = g.button;        // 🌹 5
-    // Enhance only ENHANCES — never gate play behind a gift (no 送礼换试玩)
+    // Enhance only ENHANCES — never gate play behind a gift (no pay-to-play)
     const gate = document.getElementById('result-enhance-gate'); if (gate) gate.hidden = true;
   }
 
@@ -1110,7 +1110,7 @@
     const t = currentConfig && currentConfig.template;
     const label = TEMPLATE_LABEL[t] || 'Encore';
     document.getElementById('ranking-sub').textContent =
-      label + " · from TK Sói's highlight";
+      label + " · from TK Wolf's highlight";
     renderRankingList();
   }
 
@@ -1125,9 +1125,9 @@
     const top = [
       { rank: 1, name: 'PixelHawk',   score: youMax,                medal: '🥇', tag: 'VIP'  },
       { rank: 2, name: 'LunaWolf_92', score: youMax,                medal: '🥈' },
-      { rank: 3, name: 'TK Sói',      score: Math.max(1, youMax-1), medal: '🥉', tag: 'Host' },
-      { rank: 4, name: 'Khoa.real',   score: Math.max(1, youMax-1) },
-      { rank: 5, name: 'minhquan',    score: Math.max(1, youMax-1) },
+      { rank: 3, name: 'TK Wolf',     score: Math.max(1, youMax-1), medal: '🥉', tag: 'Host' },
+      { rank: 4, name: 'Kevin_Real',  score: Math.max(1, youMax-1) },
+      { rank: 5, name: 'mikequan',    score: Math.max(1, youMax-1) },
       { rank: 6, name: 'echo.cat',    score: Math.max(1, youMax-2) },
     ];
     top.forEach(row => list.appendChild(makeRow(row, false, youMax)));
@@ -1139,8 +1139,8 @@
 
     const youRow = makeRow({ rank: youRank, name: 'You', score: youScore }, true, youMax);
     list.appendChild(youRow);
-    list.appendChild(makeRow({ rank: youRank + 1, name: 'duy.le',   score: Math.max(0, youScore - 1) }, false, youMax));
-    list.appendChild(makeRow({ rank: youRank + 2, name: 'soimoon',  score: Math.max(0, youScore - 1) }, false, youMax));
+    list.appendChild(makeRow({ rank: youRank + 1, name: 'david.le', score: Math.max(0, youScore - 1) }, false, youMax));
+    list.appendChild(makeRow({ rank: youRank + 2, name: 'moonwolf', score: Math.max(0, youScore - 1) }, false, youMax));
 
     // Auto-scroll so the "You" row is visible — most important row in
     // the leaderboard for the audience. Without this it's below the

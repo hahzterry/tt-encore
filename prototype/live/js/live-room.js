@@ -24,7 +24,7 @@
   // ?mode=… + ?host=…. The chat content should match the room's vibe, not
   // be a single shared pool. We read #host's data-game-mode at startChat()
   // time and pick the matching pool; host-tagged messages get the live
-  // host name substituted in (so "TK Sói" doesn't appear in the GTA room).
+  // host name substituted in (so "Wizard of Hahz" doesn't appear in the GTA room).
   //
   // Sentinel "$HOST" in `name` is replaced with the current top-bar host
   // name on append. That way the same pool definitions work no matter

@@ -18,7 +18,7 @@ TikTok Gaming Hackathon 参赛项目。完整 client-side demo,无后端依赖�
 | 单房间 streamer (直连) | <https://encore-deploy.vercel.app/prototype/live/streamer.html?mode=fps> |
 | 单机 mini-game | <https://encore-deploy.vercel.app/prototype/encore_prototype.html> |
 
-手机扫 slide 7 的 QR → 落地到 feed.html → 上下滑动切换 TK Sói (FPS) / ROADKING88 (GTA) / PIXELMAX (OBBY) 3 个直播间 → 任一房间触发高光 → 玩 30s mini-game → 进前 3 自动剪上下分屏短视频。
+手机扫 slide 7 的 QR → 落地到 feed.html → 上下滑动切换 Wizard of Hahz (FPS) / ROADKING88 (GTA) / PIXELMAX (OBBY) 3 个直播间 → 任一房间触发高光 → 玩 30s mini-game → 进前 3 自动剪上下分屏短视频。
 
 ---
 
@@ -102,7 +102,7 @@ CODEOWNERS 在 `.github/CODEOWNERS`,改别人的代码先 @。
 
 **今天 (2026-06-04) 主要产出**
 - **PR #40 TikTok-fidelity UI pass** — 用 Figma MCP 把真 TikTok LIVE 设计稿对齐到 streamer.html: 底部 Rose/Gift/Share 换成 Figma 原资产 (3D 玫瑰 + 粉礼盒 + 白箭头)、聊天去气泡 + LV.NN 等级徽章、顶部 3 头像堆 + ± 前缀、主播头像首字母 + 按 mode 配色 + 红 live-dot、隐藏 FPS 罗盘避让状态栏。
-- **PR #39 Slide 7 跟 feed.html 对齐** — slide 7 改成展示 3 个 LIVE 直播间 tile (TK Sói / ROADKING88 / PIXELMAX) 而不是 3 套游戏模板。
+- **PR #39 Slide 7 跟 feed.html 对齐** — slide 7 改成展示 3 个 LIVE 直播间 tile (Wizard of Hahz / ROADKING88 / PIXELMAX) 而不是 3 套游戏模板。
 - **`7447294` deploy.sh fix** — vercel.json 漏同步导致 prod `/` 路径 404,补 sync 逻辑。
 - **PR #34/35 玩家录屏 fix** — MediaRecorder race condition + iOS Safari mp4 codec/timeslice 兼容。
 - **PR #38 Slide 7 初代重做** — 老 slide 7 (iframe + CONTROLS + FYI 三堵墙) 砍掉换成 QR + 3 tile + 2 outcome chip。
